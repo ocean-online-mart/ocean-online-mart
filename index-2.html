@@ -1,61 +1,35 @@
 <!doctype html>
 <html lang="en">
-   <head>
+   
+<!-- Mirrored from askbootstrap.com/preview/eatsie/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 08:20:29 GMT -->
+<head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
       <meta name="author" content="">
-      <link rel="icon" type="image/png" href="assets/img/logo/logo-1.png">
-      <title>Ocean Online Mart</title>
+      <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
+      <title>Eatsie - Pick Up & Delivery Food Template</title>
       <!-- Bootstrap core CSS -->
       <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <!-- Icofont Icon-->
       <link href="assets/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
       <!-- Bootstraps icon -->
-      <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
+      <link rel="stylesheet" href="../../../cdn.jsdelivr.net/npm/bootstrap-icons%401.8.1/font/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
-       <style>
-         .cart-drawer {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 350px;
-  height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-  z-index: 1050;
-  transition: right 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.cart-drawer.open {
-  right: 0;
-}
-
-.cart-body {
-  flex: 1;
-  overflow-y: auto;
-}
-
- </style> 
    </head>
    <body class="bg-light">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
          <div class="container">
-            <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
-               <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
-             
-   
+            <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index-2.html">
+               <img src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
+               <img src="assets/img/fav.png" alt="#" class="d-block d-md-none d-lg-none img-fluid">
             </a>
-             
-            
             <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
-                  <b>Delivery in 30 minutes!</b>
-                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+                  <b>Delivery in 15 minutes</b>
+                  <div class="small text-success">Sant Pura, Industrial Area...<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
                </span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -66,38 +40,63 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav ms-auto me-3 top-link">
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="listingpage.html">
-                     Fish & Seafoods
+                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Shop Pages<i class="bi bi-chevron-down small ms-1"></i>
                      </a>
+                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="search.html">Search</a></li>
+                        <li><a class="dropdown-item" href="listing.html">Listing</a></li>
+                        <li><a class="dropdown-item" href="listing-detail.html">Listing Detail</a></li>
+                        <li><a class="dropdown-item" href="product-detail.html">Product Detail</a></li>
+                        <li><a class="dropdown-item" href="cart.html">Cart / Checkout</a></li>
+                        <li><a class="dropdown-item" href="success-order.html">Success Order</a></li>
+                     </ul>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="#">
-                     Value Added
+                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Profile<i class="bi bi-chevron-down small ms-1"></i>
                      </a>
+                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="profile.html">Orders List</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Addresses</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Manage Payments</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Eatsie Cash</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Support / Help</a></li>
+                     </ul>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="searchpage.html">
-                     Boats & Engines
+                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Pick up & Drop<i class="bi bi-chevron-down small ms-1"></i>
                      </a>
+                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="packages.html">Packages From</a></li>
+                        <li><a class="dropdown-item" href="packages-payment.html">Packages Checkout</a></li>
+                        <li><a class="dropdown-item" href="success-send.html">Successfully Send</a></li>
+                     </ul>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="#">
-                     Fishing accessories
+                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Extra Page<i class="bi bi-chevron-down small ms-1"></i>
                      </a>
+                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="about.html">About us</a></li>
+                        <li><a class="dropdown-item" href="jobs.html">Jobs</a></li>
+                        <li><a class="dropdown-item" href="contact.html">Contact Us</a></li>
+                        <li><a class="dropdown-item" href="cupons.html">Cupons</a></li>
+                     </ul>
                   </li>
                </ul>
                <div class="d-flex align-items-center gap-2">
-                  <a href="searchpage.html" class="btn btn-light position-relative rounded-pill rounded-icon">
+                  <a href="search.html" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  
-                 <a href="#" onclick="toggleCart(true)" class="btn btn-light position-relative rounded-pill rounded-icon">
-  <i class="bi bi-cart3"></i>
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
-</a>
-
+                  <a href="cart.html" class="btn position-relative rounded-pill rounded-icon ">
+                  <i class="bi bi-cart-fill"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5
+                  <span class="visually-hidden">Cart</span>
+                  </span>
                   </a>
-                  <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" href="purchase.html" role="button">Purchase Now</a>
+                  <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Sign in</a>
                </div>
             </div>
          </div>
@@ -109,14 +108,11 @@
                <div class="d-flex gap-3 align-items-center">
                   <img src="assets/img/logo/logo-app.png" class="img-fluid d-none d-md-block h-40">
                   <div class="text-white fs-6">Download the app and get <b class="text-warning-light rounded-pill">25% OFF</b> on your first order!</div>
-                  <a href="#app-section" class="text-nowrap ms-auto text-decoration-none d-flex align-items-center text-success border-0 btn btn-light rounded-pill">Download <span class="ms-1 d-none d-md-block">an App Now&nbsp;</span><span><i class="bi bi-chevron-right text-success"></i></span></a>
+                  <a href="#app-section" class="text-nowrap ms-auto text-decoration-none d-flex align-items-center text-success border-0 btn btn-light rounded-pill">Download <span class="ms-1 d-none d-md-block"> Eatsie App Now&nbsp;</span><span><i class="bi bi-chevron-right text-success"></i></span></a>
                </div>
             </div>
          </div>
       </section>
-
-
-      <!-- Search Hero Section -->
       <section class="main-banner bg-white pt-4">
          <div class="container">
             <div id="carouselExampleFade" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel">
@@ -138,10 +134,10 @@
                </button>
             </div>
             <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 g-4">
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l2.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l3.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="searchpage.html"><img src="assets/img/l4.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col"><a href="listing.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col"><a href="packages.html"><img src="assets/img/l3.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col"><a href="listing.html"><img src="assets/img/l4.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col"><a href="listing.html"><img src="assets/img/l2.png" alt="#" class="img-fluid rounded-3"></a></div>
             </div>
          </div>
       </section>
@@ -149,27 +145,27 @@
          <div class="container py-5">
             <div class="d-flex align-items-center justify-content-between mb-4">
                <h5 class="mb-0 fw-bold">Explore our Range of Products</h5>
-               <a class="text-decoration-none text-success" href="listingpage.html">View All <i class="bi bi-arrow-right-circle-fill ms-1"></i></a>
+               <a class="text-decoration-none text-success" href="listing.html">View All <i class="bi bi-arrow-right-circle-fill ms-1"></i></a>
             </div>
             <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-4 homepage-products-range">
                <div class="col">
                   <div class="text-center position-relative border rounded pb-4">
                      <img src="assets/img/1.png" class="img-fluid rounded-3 p-3" alt="...">
                      <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Fresh Fish</h6>
-                        <p class="card-text small text-success">21+ Items</p>
+                        <h6 class="card-title mb-1 fs-14">Fresh Milk</h6>
+                        <p class="card-text small text-success">128 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
                   <div class="text-center position-relative border rounded pb-4">
                      <img src="assets/img/2.png" class="img-fluid rounded-3 p-3" alt="...">
                      <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Prawn</h6>
-                        <p class="card-text small text-success">5+ Items</p>
+                        <h6 class="card-title mb-1 fs-14">Vegetables</h6>
+                        <p class="card-text small text-success">345 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -179,7 +175,7 @@
                         <h6 class="card-title mb-1 fs-14">Fruits</h6>
                         <p class="card-text small text-success">233 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -189,7 +185,7 @@
                         <h6 class="card-title mb-1 fs-14">Bakery & Dairy</h6>
                         <p class="card-text small text-success">4445 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -199,7 +195,7 @@
                         <h6 class="card-title mb-1 fs-14">Beverages</h6>
                         <p class="card-text small text-success">234 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -209,7 +205,7 @@
                         <h6 class="card-title mb-1 fs-14">Breakfast, Snacks</h6>
                         <p class="card-text small text-success">83 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -219,7 +215,7 @@
                         <h6 class="card-title mb-1 fs-14">Oils & Masalas</h6>
                         <p class="card-text small text-success">564 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -229,7 +225,7 @@
                         <h6 class="card-title mb-1 fs-14">Pooja Essentials</h6>
                         <p class="card-text small text-success">233 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -239,7 +235,7 @@
                         <h6 class="card-title mb-1 fs-14">Baby Care</h6>
                         <p class="card-text small text-success">677 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -249,7 +245,7 @@
                         <h6 class="card-title mb-1 fs-14">Beauty & Hygiene</h6>
                         <p class="card-text small text-success">456 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
                <div class="col">
@@ -259,7 +255,17 @@
                         <h6 class="card-title mb-1 fs-14">Cleaning</h6>
                         <p class="card-text small text-success">23 Items</p>
                      </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
+                     <a href="listing.html" class="stretched-link"></a>
+                  </div>
+               </div>
+               <div class="col">
+                  <div class="text-center position-relative border rounded pb-4">
+                     <img src="assets/img/12.png" class="img-fluid rounded-3 p-3" alt="...">
+                     <div class="listing-card-body pt-0">
+                        <h6 class="card-title mb-1 fs-14">Pet Care</h6>
+                        <p class="card-text small text-success">866 Items</p>
+                     </div>
+                     <a href="listing.html" class="stretched-link"></a>
                   </div>
                </div>
             </div>
@@ -269,16 +275,16 @@
          <div class="container">
             <div class="row g-4">
                <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider1.png" class="img-fluid rounded-3"></a>
+                  <a href="listing.html"><img src="assets/img/slider1.jpg" class="img-fluid rounded-3"></a>
                </div>
                <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider2.png" class="img-fluid rounded-3"></a>
+                  <a href="listing.html"><img src="assets/img/slider2.jpg" class="img-fluid rounded-3"></a>
                </div>
                <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider3.png" class="img-fluid rounded-3"></a>
+                  <a href="listing.html"><img src="assets/img/slider3.jpg" class="img-fluid rounded-3"></a>
                </div>
                <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider4.png" class="img-fluid rounded-3"></a>
+                  <a href="listing.html"><img src="assets/img/slider4.jpg" class="img-fluid rounded-3"></a>
                </div>
             </div>
          </div>
@@ -289,7 +295,7 @@
                <div class="row justify-content-center align-items-center app-2 px-lg-4">
                   <div class="col-md-7 px-lg-5">
                      <div class="text-md-start text-center">
-                        <h1 class="fw-bold mb-2 text-dark">Get the Ocean Online Mart app</h1>
+                        <h1 class="fw-bold mb-2 text-dark">Get the Eatsie app</h1>
                         <div class="m-0 text-muted">We will send you a link, open it on your phone to download the app</div>
                      </div>
                      <div class="my-4 me-lg-5">
@@ -302,6 +308,7 @@
                      <div class="text-md-start text-center mt-5 mt-md-1 pb-md-4 pb-lg-5">
                         <p class="mb-3">Download app from</p>
                         <a href="#/"><img alt="#" src="assets/img/play-store.svg" class="img-fluid mobile-app-icon"></a>
+                        <a href="#/"><img alt="#" src="assets/img/app-store.svg" class="img-fluid mobile-app-icon"></a>
                      </div>
                   </div>
                   <div class="col-md-5 pe-lg-5 mt-3 mt-md-0 mt-lg-0">
@@ -318,94 +325,89 @@
                <h5 class="mb-4 fw-bold text-dark">Areas we deliver to</h5>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Pondicherry</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Cuddalore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Chennai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Coimbatore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Ariyalur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Dharmapuri </a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Dindigul</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Chanakyapuri</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Greater Kailash 2</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Jasola</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Lajpat Nagar</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Mehruli</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Rashtrapati Bhavan</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Sarojini Nagar</a></li>
                   </ul>
                </div>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Erode</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Kanchipuram</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Viluppuram</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Karur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Krishnagiri</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Madurai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruvannamalai</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Chhatarpur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Green Park</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">kalkaji</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Ladhi Colony</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Munirka</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Sainik Farm</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">South Ext.</a></li>
                   </ul>
                </div>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Namakkal</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Perambalur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Pudukkottai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Vellore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Salem</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Sivagangai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thanjavur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Connaught Place</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Hauz Khas</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Karol Bagh</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Mahipalpur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">New Friends Colony</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Saket</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Vasant Kunj</a></li>
                   </ul>
                </div>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Nilgiris</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Theni</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thiruvallur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thoothukudi</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruchirappalli</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirunelveli</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirupur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Greater Kailash 1</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Khan Market</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Malviya Nagar</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">RK Puram</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Sarai Kala khan</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Vasant Vihar</a></li>
                   </ul>
                </div>
             </div>
          </div>
       </section>
-      <footer class="bg-footer py-1 pt-4 d-none d-md-block">
+      <footer class="bg-footer py-5 d-none d-md-block">
          <div class="container">
             <div class="row mb-5">
                <div class="col-12 text-white">
-                  <h6 class="fw-bold mb-4">We Accept Bulk orders for All over the India!</h6>
-                  <p class="text-white-50 m-0">Ocean Online Mart is your one-stop online destination for everything related to marine life, fishing, vessels, and oceanic services. From fishing accessories and boat engines to navigation equipment and logistics services, we deliver a vast range of high-quality products and solutions right to your port. Whether you're a commercial fisherman, boat owner, or marine enthusiast, our marketplace is designed to cater to every need with ease, trust, and efficiency.</p>
+                  <h6 class="fw-bold mb-4">You can't stop time, but you can save it</h6>
+                  <p class="text-white-50 m-0">Living in the city, there is never enough time to shop for groceries, pick-up supplies, grab food and wade through traffic on the way back home. How about we take care of all of the above for you? What if we can give you all that time back? Send packages across the city and get everything from food, groceries, medicines and pet supplies delivered right to your doorstep. From any store to your door, just make a list and we’ll make it disappear. Just Eatsie It!</p>
                </div>
             </div>
             <hr class="text-white">
             <div class="row text-white mt-5">
                <div class="col-md-4 col-12">
-                  <div><img src="assets/img/footer.png" alt="" class="img-fluid footer-logo"></div>
+                  <div><img src="assets/img/fav.png" alt="" class="img-fluid footer-logo"></div>
                </div>
                <div class="col-md-2 col-6">
-                  <h6 class="text-uppercase mb-4 fw-bold">Quick Link</h6>
+                  <h6 class="text-uppercase mb-4 fw-bold">Eatsie</h6>
                   <ul class="list-unstyled d-grid gap-2 text-decoration-none">
                      <li><a class="text-decoration-none text-white-50" href="about.html">About us</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="jobs.html">Instant Cook</a></li>
-                      <li><a class="text-decoration-none text-white-50" href="cupons.html">Ready to Cook</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="contact.html">Boats & Engines</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="cupons.html">Fishing accessories</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="cupons.html">Customer Review</a></li>
-
-                  </ul>
-               </div>
-               <div class="col-md-2 col-6">
-                  <h6 class="text-uppercase mb-4 fw-bold">Privacy & Terms</h6>
-                  <ul class="list-unstyled d-grid gap-2">
-                     <li><a class="text-decoration-none text-white-50" href="profile.html">FAQ</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="profile.html">Terms and conditions</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="profile.html">Refund Policy</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="profile.html">Cancellation Policy</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="profile.html">Shipping Policy</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="profile.html">Support / Help</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="jobs.html">Jobs</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="contact.html">Contact Us</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="cupons.html">Cupons</a></li>
                   </ul>
                </div>
                <div class="col-md-2 col-6">
                   <h6 class="text-uppercase mb-4 fw-bold">My Profile</h6>
                   <ul class="list-unstyled d-grid gap-2">
-                     <li><a class="text-decoration-none text-white-50" href="search.html">Search Products</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="listing.html">Track Order</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="listing-detail.html">Feedback</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="product-detail.html">My account</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Orders List</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Addresses</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Manage Payments</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Eatsie Cash</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Support / Help</a></li>
+                  </ul>
+               </div>
+               <div class="col-md-2 col-6">
+                  <h6 class="text-uppercase mb-4 fw-bold">Shop Pages</h6>
+                  <ul class="list-unstyled d-grid gap-2">
+                     <li><a class="text-decoration-none text-white-50" href="search.html">Search</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="listing.html">Listing</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="listing-detail.html">Listing Detail</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="product-detail.html">Product Detail</a></li>
                      <li><a class="text-decoration-none text-white-50" href="cart.html">Cart / Checkout</a></li>
                      <li><a class="text-decoration-none text-white-50" href="success-order.html">Success Order</a></li>
                   </ul>
@@ -413,19 +415,14 @@
                <div class="col-md-2 col-6">
                   <h6 class="text-uppercase mb-4 fw-bold">get in touch</h6>
                   <ul class="list-unstyled d-grid gap-2">
-                     <li><a class="text-decoration-none text-white-50" href="#">Contact us</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Email</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Twitter</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Facebook</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Instagram</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Youtube</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Google Business</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Linkedin</a></li>
                   </ul>
                </div>
             </div>
-         </div>
-         <hr>
-         <div class="col-12 text-white">
-            <p class="text-center">Copyright © 2025 | Ocean Online Mart</p>
          </div>
       </footer>
       <!-- Sign in Modal -->
@@ -437,7 +434,10 @@
                   <div class="login-popup">
                      <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
                      <div class="row g-0">
-                        <div class="d-none d-md-flex col-md-4 col-lg-4 bg-image1"></div>
+                        <div class="d-none d-md-flex col-md-4 col-lg-4 justify-content-center align-items-center">
+   <img src="assets/img/logo/logo.png" class="img-fluid" alt="Logo">
+</div>
+
                         <div class="col-md-8 col-lg-8 py-lg-5">
                            <div class="login p-5">
                               <div class="mb-4 pb-2">
@@ -472,7 +472,10 @@
                   <div class="login-popup">
                      <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
                      <div class="row g-0">
-                        <div class="d-none d-md-flex col-md-4 col-lg-4 bg-image1"></div>
+                        <div class="d-none d-md-flex col-md-4 col-lg-4 justify-content-center align-items-center">
+   <img src="assets/img/logo/logo.png" class="img-fluid" alt="Logo">
+</div>
+
                         <div class="col-md-8 col-lg-8 py-lg-5">
                            <div class="login p-5">
                               <div class="mb-4 pb-2">
@@ -632,130 +635,16 @@
       <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
          <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
          <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a  onclick="toggleCart(true)"   href="#cartDrawer"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-         <a href=""><span class="bi bi-person-badge"></span> Account</a>
+         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
+         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
       </div>
-
-
-      <!-- Cart Sidebar Drawer -->
-<div id="cartDrawer" class="cart-drawer">
-  <div class="cart-header d-flex justify-content-between align-items-center p-3 border-bottom">
-    <h5 class="mb-0">My Cart</h5>
-    <button onclick="toggleCart(false)" class="btn btn-sm btn-close"></button>
-  </div>
-  <div class="cart-body p-3">
-    <p>Your cart is currently empty.</p>
-    <!-- Dynamically fill this section later with JS -->
-  </div>
-  <div class="cart-footer border-top p-3">
-    <button class="btn btn-success w-100">Proceed to Checkout</button>
-  </div>
-</div>
-
       <!-- Bootstrap core JavaScript -->
+       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
-
-
-
-
-      <script>
-    
-    
-    
-    // right slide cart
-
-  function toggleCart(show = true) {
-  const drawer = document.getElementById('cartDrawer');
-  if (show) {
-    drawer.classList.add('open');
-  } else {
-    drawer.classList.remove('open');
-  }
-}
-
-const cartItems = [
-    {
-      name: "White Kelangaan",
-      price: 425,
-      qty: 1,
-      img: "assets/img/fish11.jpg"
-    },
-    {
-      name: "Tender Tilapia",
-      price: 380,
-      qty: 2,
-      img: "assets/img/fish12.jpg"
-    }
-  ];
-
-  function renderCartItems() {
-    const cartBody = document.querySelector(".cart-body");
-    cartBody.innerHTML = "";
-
-    if (cartItems.length === 0) {
-      cartBody.innerHTML = "<p>Your cart is currently empty.</p>";
-      return;
-    }
-
-    cartItems.forEach((item, i) => {
-      const itemHTML = `
-  <div class="d-flex gap-2 mb-3 align-items-start">
-    <div style="width: 150px; height: 60px; flex-shrink: 0;">
-      <img src="${item.img}" class="rounded w-100 h-100" style="object-fit: cover;" />
-    </div>
-    <div class="flex-grow-1">
-      <div class="fw-bold">${item.name}</div>
-      <div class="small text-muted">₹${item.price} × ${item.qty}</div>
-      <div class="d-flex gap-2 mt-1">
-        <button class="btn btn-sm btn-outline-secondary" onclick="updateQty(${i}, -1)">−</button>
-        <span class="px-2">${item.qty}</span>
-        <button class="btn btn-sm btn-outline-secondary" onclick="updateQty(${i}, 1)">+</button>
-      </div>
-    </div>
-  </div>
-`;
-      cartBody.innerHTML += itemHTML;
-    });
-
-    updateTotal();
-  }
-
-  function updateQty(index, change) {
-    cartItems[index].qty += change;
-    if (cartItems[index].qty <= 0) cartItems.splice(index, 1);
-    renderCartItems();
-  }
-
-  function updateTotal() {
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const footer = document.querySelector(".cart-footer");
-    footer.innerHTML = `
-      <div class="d-flex justify-content-between mb-2">
-        <strong>Total:</strong>
-        <strong>₹${total}</strong>
-      </div>
-      <button class="btn btn-success w-100">Proceed to Checkout</button>
-    `;
-  }
-
-  // Run render on open
-  function toggleCart(show = true) {
-    const drawer = document.getElementById('cartDrawer');
-    if (show) {
-      drawer.classList.add('open');
-      renderCartItems();
-    } else {
-      drawer.classList.remove('open');
-    }
-  }
-
-
-  
-      </script>
-   
 </body>
 
+<!-- Mirrored from askbootstrap.com/preview/eatsie/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 08:20:29 GMT -->
 </html>

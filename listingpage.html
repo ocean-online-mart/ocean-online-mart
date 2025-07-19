@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
    <head>
@@ -14,43 +15,150 @@
       <!-- Bootstraps icon -->
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
-       <style>
-         .cart-drawer {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 350px;
+      <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+      <style>.product-card {
+  transition: transform 0.3s ease;
+  border-radius: 16px;
   height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-  z-index: 1050;
-  transition: right 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-img img {
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.product-img .img-hover {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.product-img:hover .img-hover {
+  opacity: 1;
+}
+
+.product-img:hover .img-main {
+  opacity: 0;
+}
+
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+
+  /* catagory css */
+.category-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-container {
+  scroll-behavior: smooth;
+  white-space: nowrap;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #555;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.cart-drawer.open {
-  right: 0;
+ .scroll-btn.left {
+  left: 12px;
+} 
+
+.scroll-btn.right {
+  right: 12px;
 }
 
-.cart-body {
-  flex: 1;
-  overflow-y: auto;
+.category-tab {
+  border: none;
+  background: transparent;
+  text-align: center;
+  flex-shrink: 0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-size: 0.85rem;
+  color: #333;
 }
 
- </style> 
+.category-tab img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+.category-tab:hover {
+  background-color: #e9f7ef;
+}
+
+.category-tab.active {
+  background-color: #02aabd !important; /* Bootstrap's bg-success */
+  color: #fff !important;
+}
+
+.category-tab.active span {
+  color: #fff;
+}
+
+
+
+</style>
    </head>
    <body class="bg-light">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
          <div class="container">
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
-               <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
-             
-   
+               <img src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
+               <img src="assets/img/logo/logo-mobile.png" alt="#" class="d-block d-md-none d-lg-none img-fluid">
             </a>
-             
-            
             <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
@@ -81,7 +189,7 @@
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="#">
+                     <a class="nav-link" href="searchpage.html">
                      Fishing accessories
                      </a>
                   </li>
@@ -90,14 +198,13 @@
                   <a href="searchpage.html" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  
-                 <a href="#" onclick="toggleCart(true)" class="btn btn-light position-relative rounded-pill rounded-icon">
-  <i class="bi bi-cart3"></i>
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
-</a>
-
+                  <a href="cartpage.html" class="btn btn-light position-relative rounded-pill rounded-icon">
+                  <i class="bi bi-cart3"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5
+                  <span class="visually-hidden">Cart</span>
+                  </span>
                   </a>
-                  <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" href="purchase.html" role="button">Purchase Now</a>
+             
                </div>
             </div>
          </div>
@@ -114,203 +221,340 @@
             </div>
          </div>
       </section>
+      
+
+      <!-- listing -->
+<!-- Listing Page Section (Product Grid + Filters) -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+    
+      <!-- Category Switcher Section -->
+<div class="category-wrapper bg-light py-3 px-2 rounded shadow-sm mb-4 position-relative">
+  <!-- Left Arrow -->
+  <!-- <button class="scroll-btn left" onclick="scrollCategory('left')">&#8249;</button> -->
+
+  <!-- Category Tabs -->
+  <div class="container-fluid"><button class="scroll-btn left" onclick="scrollCategory('left')">&#8249;</button>
+    <div id="categoryTabs" class="d-flex gap-3 justify-content-start align-items-center pb-1 scroll-container no-scrollbar category-wrapper position-relative">
+      
+      
+      <button class="category-tab active" onclick="filterCategory(this, 'all')">
+        <img src="assets/img/5.png" alt="All" />
+        <span>All</span>
+      </button>
+      <button class="category-tab" onclick="filterCategory(this, 'curry')">
+        <img src="assets/img/6.png" alt="Curry Cuts" />
+        <span>Curry Cuts</span>
+      </button>
+      <button class="category-tab" onclick="filterCategory(this, 'boneless')">
+        <img src="assets/img/7.png" alt="Boneless & Mince" />
+        <span>Boneless & Mince</span>
+      </button>
+      <button class="category-tab" onclick="filterCategory(this, 'special')">
+        <img src="assets/img/8.png" alt="Speciality Cuts" />
+        <span>Speciality Cuts</span>
+      </button>
+      <button class="category-tab" onclick="filterCategory(this, 'offals')">
+        <img src="assets/img/fish12.jpg" alt="Offals" />
+        <span>Offals</span>
+      </button>
+      <button class="category-tab" onclick="filterCategory(this, 'combos')">
+        <img src="assets/img/fish11.jpg" alt="Combos" />
+        <span>Combos</span>
+      </button>
+      <button class="category-tab" onclick="filterCategory(this, 'premium')">
+        <img src="assets/img/fish.jpg" alt="Premium Cuts" />
+        <span>Premium Cuts</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Right Arrow -->
+  <button class="scroll-btn right" onclick="scrollCategory('right')">&#8250;</button>
+</div>
+  <!-- Sidebar Filters -->
+      <div class="col-lg-3 mb-4">
+        <div class="bg-white p-3 rounded shadow-sm">
+          <h6 class="fw-bold mb-3">Filter by Category</h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="fish">
+            <label class="form-check-label" for="fish">Fish</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="prawns">
+            <label class="form-check-label" for="prawns">Prawns</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="crab">
+            <label class="form-check-label" for="crab">Crab</label>
+          </div>
+
+          <hr>
+          <h6 class="fw-bold mb-3">Filter by Cut Type</h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="whole">
+            <label class="form-check-label" for="whole">Whole</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="boneless">
+            <label class="form-check-label" for="boneless">Boneless</label>
+          </div>
+
+          <hr>
+          <h6 class="fw-bold mb-3">Price Range</h6>
+          <input type="range" class="form-range" min="100" max="1000"><p>
+            <span class="text-muted">Price: $100 - $1000</span>
+          </p>
+          <button class="btn-outline-success text-white btn-success my-3">Filter</button>
+          <p class="small">Adjust to filter</p>
+        </div>
+      </div> 
+
+      <!-- Products Grid -->
+      <div class="col-lg-9">
+        <!-- Sorting Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold mb-0">Seafood Products</h5>
+          <select class="form-select w-auto">
+            <option selected>Sort by</option>
+            <option value="1">Price: Low to High</option>
+            <option value="2">Price: High to Low</option>
+            <option value="3">Popularity</option>
+          </select>
+        </div>
+
+        <!-- Product Cards Grid -->
+<div class="container my-5" data-aos="fade-up">
+  <div class="row g-4" data-aos="fade-up">
+
+    <!-- Loop this block 9 times with different data -->
+    <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Repeat above block 8 more times -->
+     <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- product 3 -->
+    <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- product 4    -->
+
+    <div class="col-md-4 col-sm-6"  data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- product 5 -->
+
+    <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- product 6 -->
+     <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- product 7 -->
+
+     <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- product 8 -->
+     <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- product 9 -->
+     <div class="col-md-4 col-sm-6" data-aos="fade-up">
+      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+        <div class="product-img position-relative">
+          <span class="discount-badge">20% OFF</span>
+          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted">Fresh sea fish delivered to you</p>
+
+          <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
-      <!-- Search Hero Section -->
-      <section class="main-banner bg-white pt-4">
-         <div class="container">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel">
-               <div class="carousel-inner rounded">
-                  <div class="carousel-item active">
-                     <a href="listing.html"><img src="assets/img/banner1.png" class="d-block w-100" alt="..."></a>
-                  </div>
-                  <div class="carousel-item">
-                     <a href="packages.html"><img src="assets/img/banner2.png" class="d-block w-100" alt="..."></a>
-                  </div>
-               </div>
-               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-               <span class="visually-hidden">Previous</span>
-               </button>
-               <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-               <span class="carousel-control-next-icon" aria-hidden="true"></span>
-               <span class="visually-hidden">Next</span>
-               </button>
-            </div>
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 g-4">
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l2.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l3.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="searchpage.html"><img src="assets/img/l4.png" alt="#" class="img-fluid rounded-3"></a></div>
-            </div>
-         </div>
-      </section>
-      <section class="bg-white">
-         <div class="container py-5">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-               <h5 class="mb-0 fw-bold">Explore our Range of Products</h5>
-               <a class="text-decoration-none text-success" href="listingpage.html">View All <i class="bi bi-arrow-right-circle-fill ms-1"></i></a>
-            </div>
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-4 homepage-products-range">
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/1.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Fresh Fish</h6>
-                        <p class="card-text small text-success">21+ Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/2.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Prawn</h6>
-                        <p class="card-text small text-success">5+ Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/3.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Fruits</h6>
-                        <p class="card-text small text-success">233 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/4.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Bakery & Dairy</h6>
-                        <p class="card-text small text-success">4445 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/5.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Beverages</h6>
-                        <p class="card-text small text-success">234 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/6.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Breakfast, Snacks</h6>
-                        <p class="card-text small text-success">83 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/7.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Oils & Masalas</h6>
-                        <p class="card-text small text-success">564 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/8.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Pooja Essentials</h6>
-                        <p class="card-text small text-success">233 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/9.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Baby Care</h6>
-                        <p class="card-text small text-success">677 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/10.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Beauty & Hygiene</h6>
-                        <p class="card-text small text-success">456 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-               <div class="col">
-                  <div class="text-center position-relative border rounded pb-4">
-                     <img src="assets/img/11.png" class="img-fluid rounded-3 p-3" alt="...">
-                     <div class="listing-card-body pt-0">
-                        <h6 class="card-title mb-1 fs-14">Cleaning</h6>
-                        <p class="card-text small text-success">23 Items</p>
-                     </div>
-                     <a href="productdeteails.html" class="stretched-link"></a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
-      <section class="bg-white">
-         <div class="container">
-            <div class="row g-4">
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider1.png" class="img-fluid rounded-3"></a>
-               </div>
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider2.png" class="img-fluid rounded-3"></a>
-               </div>
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider3.png" class="img-fluid rounded-3"></a>
-               </div>
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider4.png" class="img-fluid rounded-3"></a>
-               </div>
-            </div>
-         </div>
-      </section>
-      <section id="app-section" class="bg-white py-5 mobile-app-section">
-         <div class="container">
-            <div class="bg-light rounded px-4 pt-4 px-md-4 pt-md-4 px-lg-5 pt-lg-5 pb-0">
-               <div class="row justify-content-center align-items-center app-2 px-lg-4">
-                  <div class="col-md-7 px-lg-5">
-                     <div class="text-md-start text-center">
-                        <h1 class="fw-bold mb-2 text-dark">Get the Ocean Online Mart app</h1>
-                        <div class="m-0 text-muted">We will send you a link, open it on your phone to download the app</div>
-                     </div>
-                     <div class="my-4 me-lg-5">
-                        <div class="input-group bg-white shadow-sm rounded-pill p-2">
-                           <span class="input-group-text bg-white border-0"><i class="bi bi-phone pe-2"></i> +91 </span>
-                           <input type="text" class="form-control bg-white border-0 ps-0 me-1" placeholder="Enter phone number">
-                           <button class="btn btn-warning rounded-pill py-2 px-4 border-0" type="button">Send app link</button>
-                        </div>
-                     </div>
-                     <div class="text-md-start text-center mt-5 mt-md-1 pb-md-4 pb-lg-5">
-                        <p class="mb-3">Download app from</p>
-                        <a href="#/"><img alt="#" src="assets/img/play-store.svg" class="img-fluid mobile-app-icon"></a>
-                     </div>
-                  </div>
-                  <div class="col-md-5 pe-lg-5 mt-3 mt-md-0 mt-lg-0">
-                     <img alt="#" src="assets/img/mobile-app.png" class="img-fluid">
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
       <!-- Footer -->
       <section class="footer py-5">
          <div class="container">
@@ -437,12 +681,21 @@
                   <div class="login-popup">
                      <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
                      <div class="row g-0">
-                        <div class="d-none d-md-flex col-md-4 col-lg-4 bg-image1"></div>
+
+                        <!-- left side of sign -->
+                       <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
+   <div class="m-auto text-center">
+      <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
+      <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
+      <p class="small">Fast delivery, fresh products, best prices!</p>
+   </div>
+</div>
+<!-- end -->
                         <div class="col-md-8 col-lg-8 py-lg-5">
                            <div class="login p-5">
                               <div class="mb-4 pb-2">
                                  <h5 class="mb-2 fw-bold">Hey! what’s your number?</h5>
-                                 <p class="text-muted mb-0">Please login with this number the next time you sign-in</p>
+                                 <p class="text-muted mb-0"> Enter your WhatsApp number to receive OTP</p>
                               </div>
                               <form>
                                  <div class="input-group bg-white border rounded mb-3 p-2">
@@ -472,12 +725,20 @@
                   <div class="login-popup">
                      <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
                      <div class="row g-0">
-                        <div class="d-none d-md-flex col-md-4 col-lg-4 bg-image1"></div>
+                         <!-- left side of sign -->
+                       <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
+   <div class="m-auto text-center">
+      <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
+      <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
+      <p class="small">Fast delivery, fresh products, best prices!</p>
+   </div>
+</div>
+<!-- end -->
                         <div class="col-md-8 col-lg-8 py-lg-5">
                            <div class="login p-5">
                               <div class="mb-4 pb-2">
                                  <h5 class="mb-2 fw-bold">Confirm your number</h5>
-                                 <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by SMS to 123456-78909
+                                 <p class="text-muted mb-0">An OTP has been sent via WhatsApp 123456-78909
                                     <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" class="text-success text-decoration-none" href="#"><i class="bi bi-pencil-square"></i> Edit</a>
                                  </p>
                               </div>
@@ -632,129 +893,49 @@
       <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
          <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
          <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a  onclick="toggleCart(true)"   href="#cartDrawer"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-         <a href=""><span class="bi bi-person-badge"></span> Account</a>
+         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
+         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
       </div>
-
-
-      <!-- Cart Sidebar Drawer -->
-<div id="cartDrawer" class="cart-drawer">
-  <div class="cart-header d-flex justify-content-between align-items-center p-3 border-bottom">
-    <h5 class="mb-0">My Cart</h5>
-    <button onclick="toggleCart(false)" class="btn btn-sm btn-close"></button>
-  </div>
-  <div class="cart-body p-3">
-    <p>Your cart is currently empty.</p>
-    <!-- Dynamically fill this section later with JS -->
-  </div>
-  <div class="cart-footer border-top p-3">
-    <button class="btn btn-success w-100">Proceed to Checkout</button>
-  </div>
-</div>
-
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
+      <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,     // Animation duration (ms)
+    easing: 'ease-in-out', // Animation easing function
+    mirror: true,      // Reverse the animation when entering viewport
+     
+    once: true         // Only animate once
+  });
 
-
-
-
-      <script>
-    
-    
-    
-    // right slide cart
-
-  function toggleCart(show = true) {
-  const drawer = document.getElementById('cartDrawer');
-  if (show) {
-    drawer.classList.add('open');
-  } else {
-    drawer.classList.remove('open');
+ 
+  function scrollCategory(direction) {
+    const container = document.getElementById('categoryTabs');
+    const scrollAmount = 200;
+    container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
   }
+
+  function filterCategory(element, category) {
+    // Remove 'active' from all
+    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+    
+    // Add active to clicked tab
+    element.classList.add('active');
+
+    // You can now load products for the selected category
+    console.log("Category switched to:", category);
+  }
+
+function scrollCategory(direction) {
+  const container = document.getElementById('categoryTabs');
+  const scrollAmount = 200;
+   container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
 }
 
-const cartItems = [
-    {
-      name: "White Kelangaan",
-      price: 425,
-      qty: 1,
-      img: "assets/img/fish11.jpg"
-    },
-    {
-      name: "Tender Tilapia",
-      price: 380,
-      qty: 2,
-      img: "assets/img/fish12.jpg"
-    }
-  ];
-
-  function renderCartItems() {
-    const cartBody = document.querySelector(".cart-body");
-    cartBody.innerHTML = "";
-
-    if (cartItems.length === 0) {
-      cartBody.innerHTML = "<p>Your cart is currently empty.</p>";
-      return;
-    }
-
-    cartItems.forEach((item, i) => {
-      const itemHTML = `
-  <div class="d-flex gap-2 mb-3 align-items-start">
-    <div style="width: 150px; height: 60px; flex-shrink: 0;">
-      <img src="${item.img}" class="rounded w-100 h-100" style="object-fit: cover;" />
-    </div>
-    <div class="flex-grow-1">
-      <div class="fw-bold">${item.name}</div>
-      <div class="small text-muted">₹${item.price} × ${item.qty}</div>
-      <div class="d-flex gap-2 mt-1">
-        <button class="btn btn-sm btn-outline-secondary" onclick="updateQty(${i}, -1)">−</button>
-        <span class="px-2">${item.qty}</span>
-        <button class="btn btn-sm btn-outline-secondary" onclick="updateQty(${i}, 1)">+</button>
-      </div>
-    </div>
-  </div>
-`;
-      cartBody.innerHTML += itemHTML;
-    });
-
-    updateTotal();
-  }
-
-  function updateQty(index, change) {
-    cartItems[index].qty += change;
-    if (cartItems[index].qty <= 0) cartItems.splice(index, 1);
-    renderCartItems();
-  }
-
-  function updateTotal() {
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const footer = document.querySelector(".cart-footer");
-    footer.innerHTML = `
-      <div class="d-flex justify-content-between mb-2">
-        <strong>Total:</strong>
-        <strong>₹${total}</strong>
-      </div>
-      <button class="btn btn-success w-100">Proceed to Checkout</button>
-    `;
-  }
-
-  // Run render on open
-  function toggleCart(show = true) {
-    const drawer = document.getElementById('cartDrawer');
-    if (show) {
-      drawer.classList.add('open');
-      renderCartItems();
-    } else {
-      drawer.classList.remove('open');
-    }
-  }
-
-
-  
-      </script>
+</script>
    
 </body>
 

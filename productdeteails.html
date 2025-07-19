@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" type="image/png" href="assets/img/logo/logo-1.png">
+      <title>Ocean Online Mart</title>
+      <!-- Bootstrap core CSS -->
+      <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Icofont Icon-->
+      <link href="assets/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+      <!-- Bootstraps icon -->
+      <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
+      <link href="assets/css/style.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.js"></script>
+  <style>
+.product-image-box {
+  height: 350px;
+  width: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image-box img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  transition: opacity 0.4s ease;
+}
+
+.product-image-box .hover-img {
+  opacity: 0;
+  z-index: 2;
+}
+
+.product-image-box:hover .hover-img {
+  opacity: 1;
+}
+
+.product-image-box:hover .main-img {
+  opacity: 0;
+}
+
+
+/* scorll area */
+
+ .scroll-smooth::-webkit-scrollbar {
+    display: none; /* hide scrollbar */
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+ /* related product size */
+    .product-image-wrapper img {
+  max-height: 200px;
+  width: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+
+    body {
+      font-family: Arial, sans-serif;
+      padding-bottom: 100px; /* space for toast */
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .toast-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 12px;
+      width: 280px;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .toast-card.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .toast-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 12px;
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .toast-desc {
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+
+
+  <body class="bg-light">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
+         <div class="container">
+            <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
+               <img src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
+               <img src="assets/img/logo/logo-mobile.png" alt="#" class="d-block d-md-none d-lg-none img-fluid">
+            </a>
+            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
+               <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
+               <span>
+                  <b>Delivery in 30 minutes!</b>
+                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+               </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav ms-auto me-3 top-link">
+                  <li class="nav-item dropdown">
+                     <a class="nav-link" href="#">
+                     Fish & Seafoods
+                     </a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link" href="#">
+                     Value Added
+                     </a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link" href="#">
+                     Boats & Engines
+                     </a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link" href="#">
+                     Fishing accessories
+                     </a>
+                  </li>
+               </ul>
+               <div class="d-flex align-items-center gap-2">
+                  <a href="search.html" class="btn btn-light position-relative rounded-pill rounded-icon">
+                  <i class="icofont-search"></i>
+                  </a>
+                  <a href="cart.html" class="btn btn-light position-relative rounded-pill rounded-icon">
+                  <i class="bi bi-cart3"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5
+                  <span class="visually-hidden">Cart</span>
+                  </span>
+                  </a>
+                  <!-- <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Purchase Now</a> -->
+               </div>
+            </div>
+         </div>
+      </nav>
+      <!-- app link -->
+      <section class="bg-success">
+         <div class="container">
+            <div class="row py-3">
+               <div class="d-flex gap-3 align-items-center">
+                  <img src="assets/img/logo/logo-app.png" class="img-fluid d-none d-md-block h-40">
+                  <div class="text-white fs-6">Download the app and get <b class="text-warning-light rounded-pill">25% OFF</b> on your first order!</div>
+                  <a href="#app-section" class="text-nowrap ms-auto text-decoration-none d-flex align-items-center text-success border-0 btn btn-light rounded-pill">Download <span class="ms-1 d-none d-md-block">an App Now&nbsp;</span><span><i class="bi bi-chevron-right text-success"></i></span></a>
+               </div>
+            </div>
+         </div>
+      </section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+
+    <div class="row g-4 align-items-start">
+ <div class="col-lg-6"> 
+      <!-- Product Image -->
+      <div class="position-relative product-image-box rounded overflow-hidden shadow-sm">
+  <img src="assets/img/fish.jpg" class="w-100 main-img" alt="Main Image">
+  <img src="assets/img/fish12.jpg" class="w-100 hover-img position-absolute top-0 start-0" alt="Hover Image">
+</div>
+        <!-- Optional: Zoom or image switch coming next -->
+      </div>
+
+      
+
+      <!-- Product Info -->
+      <div class="col-lg-6">
+        <h2 class="fw-bold text-dark mb-2">White Kelangaan</h2>
+        <p class="text-muted mb-3">Fresh from the ocean. Packed with flavor and nutrition, ideal for curry or fry.</p>
+
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <h4 class="text-danger fw-bold mb-0">₹ 425</h4>
+          <del class="text-muted fs-6">₹ 530</del>
+          <span class="badge bg-success ms-2">20% OFF</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="quantity" class="form-label small">Quantity</label>
+          <input type="number" id="quantity" class="form-control w-50" value="1" min="1">
+        </div>
+ <div class="mb-2">
+            <h6 class="mb-0">Weight: <b>250g</b></h6>
+          </div>
+        <div class="d-flex gap-2">
+          <a href="#" class="btn btn-success px-4">Buy Now</a>
+          <a href="#" class="btn btn-outline-success px-4">Add to Cart</a>
+        </div>
+
+        <div class="mt-3 small text-muted">Delivered within 1 hour • Quality guaranteed • Freshly packed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Products Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="fw-bold mb-0">Related Products</h4>
+      <button class="btn btn-outline-success btn-sm" onclick="scrollNext()">›</button>
+    </div>
+
+    <div id="related-scroll" class="d-flex overflow-auto gap-3 scroll-smooth pb-2">
+      
+      <!-- Card 1 -->
+      <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">White Kelangaan</h6>
+          <p class="small text-muted mb-2">250g · ₹425 <del class="text-muted">₹480</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish12.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">Tender Tilapia</h6>
+          <p class="small text-muted mb-2">300g · ₹380 <del class="text-muted">₹450</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">Fresh Pomfret</h6>
+          <p class="small text-muted mb-2">200g · ₹540 <del class="text-muted">₹600</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <!-- Add more cards as needed -->
+<!-- card 4 -->
+ <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">Fresh Pomfret</h6>
+          <p class="small text-muted mb-2">200g · ₹540 <del class="text-muted">₹600</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <!-- card 5 -->
+       <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">Fresh Pomfret</h6>
+          <p class="small text-muted mb-2">200g · ₹540 <del class="text-muted">₹600</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <!-- card 6 -->
+       <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">Fresh Pomfret</h6>
+          <p class="small text-muted mb-2">200g · ₹540 <del class="text-muted">₹600</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <!-- card 7 -->
+       <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <h6 class="fw-bold mb-1">Fresh Pomfret</h6>
+          <p class="small text-muted mb-2">200g · ₹540 <del class="text-muted">₹600</del></p>
+          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+      <!-- Footer -->
+      <section class="footer py-5">
+         <div class="container">
+            <div class="row">
+               <h5 class="mb-4 fw-bold text-dark">Areas we deliver to</h5>
+               <div class="col-lg-3 col-md-6 col-6">
+                  <ul class="list-unstyled d-grid gap-2 mb-0">
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Pondicherry</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Cuddalore</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Chennai</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Coimbatore</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Ariyalur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Dharmapuri </a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Dindigul</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-3 col-md-6 col-6">
+                  <ul class="list-unstyled d-grid gap-2 mb-0">
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Erode</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Kanchipuram</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Viluppuram</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Karur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Krishnagiri</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Madurai</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruvannamalai</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-3 col-md-6 col-6">
+                  <ul class="list-unstyled d-grid gap-2 mb-0">
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Namakkal</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Perambalur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Pudukkottai</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Vellore</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Salem</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Sivagangai</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Thanjavur</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-3 col-md-6 col-6">
+                  <ul class="list-unstyled d-grid gap-2 mb-0">
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Nilgiris</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Theni</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Thiruvallur</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Thoothukudi</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruchirappalli</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirunelveli</a></li>
+                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirupur</a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </section>
+      <footer class="bg-footer py-1 pt-4 d-none d-md-block">
+         <div class="container">
+            <div class="row mb-5">
+               <div class="col-12 text-white">
+                  <h6 class="fw-bold mb-4">We Accept Bulk orders for All over the India!</h6>
+                  <p class="text-white-50 m-0">Ocean Online Mart is your one-stop online destination for everything related to marine life, fishing, vessels, and oceanic services. From fishing accessories and boat engines to navigation equipment and logistics services, we deliver a vast range of high-quality products and solutions right to your port. Whether you're a commercial fisherman, boat owner, or marine enthusiast, our marketplace is designed to cater to every need with ease, trust, and efficiency.</p>
+               </div>
+            </div>
+            <hr class="text-white">
+            <div class="row text-white mt-5">
+               <div class="col-md-4 col-12">
+                  <div><img src="assets/img/footer.png" alt="" class="img-fluid footer-logo"></div>
+               </div>
+               <div class="col-md-2 col-6">
+                  <h6 class="text-uppercase mb-4 fw-bold">Quick Link</h6>
+                  <ul class="list-unstyled d-grid gap-2 text-decoration-none">
+                     <li><a class="text-decoration-none text-white-50" href="about.html">About us</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="jobs.html">Instant Cook</a></li>
+                      <li><a class="text-decoration-none text-white-50" href="cupons.html">Ready to Cook</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="contact.html">Boats & Engines</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="cupons.html">Fishing accessories</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="cupons.html">Customer Review</a></li>
+
+                  </ul>
+               </div>
+               <div class="col-md-2 col-6">
+                  <h6 class="text-uppercase mb-4 fw-bold">Privacy & Terms</h6>
+                  <ul class="list-unstyled d-grid gap-2">
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">FAQ</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Terms and conditions</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Refund Policy</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Cancellation Policy</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Shipping Policy</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="profile.html">Support / Help</a></li>
+                  </ul>
+               </div>
+               <div class="col-md-2 col-6">
+                  <h6 class="text-uppercase mb-4 fw-bold">My Profile</h6>
+                  <ul class="list-unstyled d-grid gap-2">
+                     <li><a class="text-decoration-none text-white-50" href="search.html">Search Products</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="listing.html">Track Order</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="listing-detail.html">Feedback</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="product-detail.html">My account</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="cart.html">Cart / Checkout</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="success-order.html">Success Order</a></li>
+                  </ul>
+               </div>
+               <div class="col-md-2 col-6">
+                  <h6 class="text-uppercase mb-4 fw-bold">get in touch</h6>
+                  <ul class="list-unstyled d-grid gap-2">
+                     <li><a class="text-decoration-none text-white-50" href="#">Contact us</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Email</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Facebook</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Instagram</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Youtube</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="#">Google Business</a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <hr>
+         <div class="col-12 text-white">
+            <p class="text-center">Copyright © 2025 | Ocean Online Mart</p>
+         </div>
+      </footer>
+     <!-- location Modal -->
+      <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+               <div class="modal-header px-4">
+                  <h5 class="h6 modal-title fw-bold">Add Your Location</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body p-4">
+                  <form>
+                     <div class="input-group border p-1 overflow-hidden osahan-search-icon shadow-sm rounded mb-3">
+                        <span class="input-group-text bg-white border-0"><i class="icofont-search"></i></span>
+                        <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Search for area, location name">
+                     </div>
+                  </form>
+                  <div class="mb-4">
+                     <a href="#" data-bs-dismiss="modal" aria-label="Close" class="text-success d-flex gap-2 text-decoration-none fw-bold">
+                        <i class="bi bi-compass text-success"></i>
+                        <div>Use Current Location</div>
+                     </a>
+                  </div>
+                  <div class="text-muted text-uppercase small">Search Results</div>
+                  <div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore</p>
+                           <p class="text-muted small m-0">Karnataka, India</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore internaltional airport</p>
+                           <p class="text-muted small m-0">Karmpegowda.in't Airport, Hunachur, karnataka, India</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Railway Station back gate</p>
+                           <p class="text-muted small m-0">M.G. Railway Colony, Majestic, Bangaluru, Karnataka.</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore Cant</p>
+                           <p class="text-muted small m-0">Cantonent Railway Station Road, Contonment Railway.</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore Contonement Railway Station</p>
+                           <p class="text-muted small m-0">Contonement Railway Quarters, Shivaji nagar.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+         <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
+         <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
+         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
+         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
+      </div>
+      <!-- Bootstrap core JavaScript -->
+      <script src="assets/vendor/jquery/jquery.min.js"></script>
+      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="assets/js/custom.js" ></script>
+      <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<!-- Toast Notification -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- JS -->
+<script>
+  const masalas = [
+    {
+      title: "Spicy Fish Masala",
+      desc: "Perfect blend for seafood curries.",
+      img: "assets/img/fish12.jpg"
+    },
+    {
+      title: "Traditional Curry Mix",
+      desc: "Authentic South Indian flavor.",
+      img: "assets/img/fish12.jpg"
+    },
+    {
+      title: "Hot Pepper Masala",
+      desc: "Adds a punch to your fish fry.",
+      img: "assets/img/fish12.jpg"
+    },
+    {
+      title: "Classic Fish Fry Mix",
+      desc: "Crispy & flavorful coating.",
+      img: "assets/img/fish12.jpg"
+    }
+  ];
+
+  let index = 0;
+  const container = document.getElementById("toastContainer");
+
+  function showNextMasala() {
+    container.innerHTML = ""; // clear previous
+
+    const item = masalas[index];
+
+    const card = document.createElement("div");
+    card.className = "toast-card";
+    card.innerHTML = `
+      <img src="${item.img}" class="toast-img" alt="${item.title}">
+      <div class="toast-content">
+        <div class="toast-title">${item.title}</div>
+        <div class="toast-desc">${item.desc}</div>
+      </div>
+    `;
+
+    container.appendChild(card);
+
+    setTimeout(() => card.classList.add("show"), 50);
+    setTimeout(() => card.classList.remove("show"), 2500);
+
+    index = (index + 1) % masalas.length;
+  }
+
+  // Start loop
+  showNextMasala();
+  setInterval(showNextMasala, 3000);
+
+
+
+   function scrollNext() {
+    const container = document.getElementById('related-scroll');
+    container.scrollBy({ left: 250, behavior: 'smooth' }); 
+   }
+</script>
+
+</body>
+</html>
