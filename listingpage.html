@@ -16,137 +16,10 @@
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-      <style>.product-card {
-  transition: transform 0.3s ease;
-  border-radius: 16px;
-  height: 100%;
-  position: relative;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-.product-img {
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-}
-
-.product-img img {
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.4s ease;
-}
-
-.product-img .img-hover {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.product-img:hover .img-hover {
-  opacity: 1;
-}
-
-.product-img:hover .img-main {
-  opacity: 0;
-}
-
-.discount-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #dc3545;
-  color: white;
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-
-  /* catagory css */
-.category-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.scroll-container {
-  scroll-behavior: smooth;
-  white-space: nowrap;
-}
-
-.no-scrollbar {
-  scrollbar-width: none; /* Firefox */
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
-}
-
-.scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
- .scroll-btn.left {
-  left: 12px;
-} 
-
-.scroll-btn.right {
-  right: 12px;
-}
-
-.category-tab {
-  border: none;
-  background: transparent;
-  text-align: center;
-  flex-shrink: 0;
-  padding: 0.4rem 0.7rem;
-  border-radius: 8px;
-  transition: all 0.3s;
-  font-size: 0.85rem;
-  color: #333;
-}
-
-.category-tab img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 5px;
-}
-
-.category-tab:hover {
-  background-color: #e9f7ef;
-}
-
-.category-tab.active {
-  background-color: #02aabd !important; /* Bootstrap's bg-success */
-  color: #fff !important;
-}
-
-.category-tab.active span {
-  color: #fff;
-}
-
+      <style>
+      
+      
+    
 
 
 </style>
@@ -210,16 +83,71 @@
          </div>
       </nav>
       <!-- app link -->
-      <section class="bg-success">
-         <div class="container">
-            <div class="row py-3">
-               <div class="d-flex gap-3 align-items-center">
-                  <img src="assets/img/logo/logo-app.png" class="img-fluid d-none d-md-block h-40">
-                  <div class="text-white fs-6">Download the app and get <b class="text-warning-light rounded-pill">25% OFF</b> on your first order!</div>
-                  <a href="#app-section" class="text-nowrap ms-auto text-decoration-none d-flex align-items-center text-success border-0 btn btn-light rounded-pill">Download <span class="ms-1 d-none d-md-block">an App Now&nbsp;</span><span><i class="bi bi-chevron-right text-success"></i></span></a>
-               </div>
-            </div>
-         </div>
+  
+    
+
+
+
+         <!-- Category Tabs Section -->
+<!-- Category Tabs Section -->
+<section class="category-section py-4 position-relative ">
+  <div class="container-fluid px-0  ">
+    
+
+    <div class="container position-relative category-tab-wrapper">
+      <!-- Left Arrow (initially hidden) -->
+      <button class="scroll-btn left d-none" id="scrollLeft" onclick="scrollCategory('left')">&#8249;</button>
+
+      <!-- Scrollable Tabs -->
+      <div id="categoryTabs" class="d-flex gap-4 justify-content-start align-items-start scroll-container no-scrollbar px-2">
+        <button class="category-tab active" onclick="filterCategory(this, 'all')">
+          <img src="assets/img/5.png" alt="All">
+          <span>All</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/6.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/7.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/8.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/1.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/2.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/3.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/4.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+          <img src="assets/img/6.png" alt="Snacks">
+          <span>Snacks</span>
+        </button>
+         <div id="activeLine" class="category-underline"></div>
+        <!-- more buttons -->
+      </div>
+
+      <!-- Right Arrow -->
+      <button class="scroll-btn right" id="scrollRight" onclick="scrollCategory('right')">&#8250;</button>
+    </div>
+  </div>
+</section>
+
+
+
       </section>
       
 
@@ -230,86 +158,50 @@
     <div class="row">
     
       <!-- Category Switcher Section -->
-<div class="category-wrapper bg-light py-3 px-2 rounded shadow-sm mb-4 position-relative">
-  <!-- Left Arrow -->
-  <!-- <button class="scroll-btn left" onclick="scrollCategory('left')">&#8249;</button> -->
+<!-- Category Section -->
 
-  <!-- Category Tabs -->
-  <div class="container-fluid"><button class="scroll-btn left" onclick="scrollCategory('left')">&#8249;</button>
-    <div id="categoryTabs" class="d-flex gap-3 justify-content-start align-items-center pb-1 scroll-container no-scrollbar category-wrapper position-relative">
-      
-      
-      <button class="category-tab active" onclick="filterCategory(this, 'all')">
-        <img src="assets/img/5.png" alt="All" />
-        <span>All</span>
-      </button>
-      <button class="category-tab" onclick="filterCategory(this, 'curry')">
-        <img src="assets/img/6.png" alt="Curry Cuts" />
-        <span>Curry Cuts</span>
-      </button>
-      <button class="category-tab" onclick="filterCategory(this, 'boneless')">
-        <img src="assets/img/7.png" alt="Boneless & Mince" />
-        <span>Boneless & Mince</span>
-      </button>
-      <button class="category-tab" onclick="filterCategory(this, 'special')">
-        <img src="assets/img/8.png" alt="Speciality Cuts" />
-        <span>Speciality Cuts</span>
-      </button>
-      <button class="category-tab" onclick="filterCategory(this, 'offals')">
-        <img src="assets/img/fish12.jpg" alt="Offals" />
-        <span>Offals</span>
-      </button>
-      <button class="category-tab" onclick="filterCategory(this, 'combos')">
-        <img src="assets/img/fish11.jpg" alt="Combos" />
-        <span>Combos</span>
-      </button>
-      <button class="category-tab" onclick="filterCategory(this, 'premium')">
-        <img src="assets/img/fish.jpg" alt="Premium Cuts" />
-        <span>Premium Cuts</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Right Arrow -->
-  <button class="scroll-btn right" onclick="scrollCategory('right')">&#8250;</button>
-</div>
   <!-- Sidebar Filters -->
-      <div class="col-lg-3 mb-4">
-        <div class="bg-white p-3 rounded shadow-sm">
-          <h6 class="fw-bold mb-3">Filter by Category</h6>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="fish">
-            <label class="form-check-label" for="fish">Fish</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="prawns">
-            <label class="form-check-label" for="prawns">Prawns</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="crab">
-            <label class="form-check-label" for="crab">Crab</label>
-          </div>
+      <!-- Filter Toggle Button (Visible Only on Mobile) -->
+<div class="d-block d-lg-none text-end mb-3">
+  <button class="btn btn-outline-success" onclick="toggleFilter()">Filter</button>
+</div>
 
-          <hr>
-          <h6 class="fw-bold mb-3">Filter by Cut Type</h6>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="whole">
-            <label class="form-check-label" for="whole">Whole</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="boneless">
-            <label class="form-check-label" for="boneless">Boneless</label>
-          </div>
+<!-- Actual Filter Box -->
+<div id="filterSidebar" class="col-lg-3 mb-4 d-none d-lg-block">
+  <div class="bg-white p-3 rounded shadow-sm">
+    <h6 class="fw-bold mb-3">Filter by Category</h6>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="fish">
+      <label class="form-check-label" for="fish">Fish</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="prawns">
+      <label class="form-check-label" for="prawns">Prawns</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="crab">
+      <label class="form-check-label" for="crab">Crab</label>
+    </div>
 
-          <hr>
-          <h6 class="fw-bold mb-3">Price Range</h6>
-          <input type="range" class="form-range" min="100" max="1000"><p>
-            <span class="text-muted">Price: $100 - $1000</span>
-          </p>
-          <button class="btn-outline-success text-white btn-success my-3">Filter</button>
-          <p class="small">Adjust to filter</p>
-        </div>
-      </div> 
+    <hr>
+    <h6 class="fw-bold mb-3">Filter by Cut Type</h6>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="whole">
+      <label class="form-check-label" for="whole">Whole</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="boneless">
+      <label class="form-check-label" for="boneless">Boneless</label>
+    </div>
+
+    <hr>
+    <h6 class="fw-bold mb-3">Price Range</h6>
+    <input type="range" class="form-range" min="100" max="1000">
+    <p><span class="text-muted">Price: ₹100 - ₹1000</span></p>
+    <button class="btn btn-success w-100">Apply Filter</button>
+  </div>
+</div>
+
 
       <!-- Products Grid -->
       <div class="col-lg-9">
@@ -346,7 +238,7 @@
 
           <div class="d-flex justify-content-between align-items-center mt-2">
             <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="#" class="btn btn-outline-success btn-sm">Add to Cart</a>
+            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
           </div>
         </div>
       </div>
@@ -912,29 +804,56 @@
   });
 
  
-  function scrollCategory(direction) {
-    const container = document.getElementById('categoryTabs');
-    const scrollAmount = 200;
-    container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
-  }
-
-  function filterCategory(element, category) {
-    // Remove 'active' from all
-    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-    
-    // Add active to clicked tab
-    element.classList.add('active');
-
-    // You can now load products for the selected category
-    console.log("Category switched to:", category);
-  }
-
 function scrollCategory(direction) {
-  const container = document.getElementById('categoryTabs');
-  const scrollAmount = 200;
-   container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
-}
+    const container = document.getElementById('categoryTabs');
+    const scrollLeftBtn = document.getElementById('scrollLeft');
+    const scrollRightBtn = document.getElementById('scrollRight');
+    const scrollAmount = 200;
 
+    // Scroll logic
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth'
+    });
+
+    // Wait for scroll to finish
+    setTimeout(() => {
+      // Show/hide left arrow
+      if (container.scrollLeft > 10) {
+        scrollLeftBtn.classList.remove('d-none');
+      } else {
+        scrollLeftBtn.classList.add('d-none');
+      }
+
+      // Optional: Hide right arrow at max scroll
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      if (container.scrollLeft >= maxScroll - 10) {
+        scrollRightBtn.classList.add('d-none');
+      } else {
+        scrollRightBtn.classList.remove('d-none');
+      }
+    }, 300);
+  }
+
+
+  function toggleFilter() {
+    const filter = document.getElementById("filterSidebar");
+    filter.classList.toggle("d-none");
+  }
+
+function filterCategory(element, category) {
+  document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+  element.classList.add('active');
+
+  const underline = document.getElementById("activeLine");
+  const rect = element.getBoundingClientRect();
+  const containerRect = document.getElementById("categoryTabs").getBoundingClientRect();
+  underline.style.left = (rect.left - containerRect.left + rect.width / 2 - 20) + "px"; // center it under image
+}
+window.addEventListener('DOMContentLoaded', () => {
+    const activeTab = document.querySelector('.category-tab.active');
+    if (activeTab) filterCategory(activeTab, 'all');
+  });
 </script>
    
 </body>
