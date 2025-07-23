@@ -73,6 +73,47 @@ section.container.text-center a.btn {
   min-width: 180px;
 }
 
+
+
+/* offer section */
+.marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-marquee 25s linear infinite;
+  gap: 1.5rem;
+}
+
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-card {
+  min-width: 280px;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.marquee-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 </style>
 
 </style>
@@ -166,6 +207,9 @@ section.container.text-center a.btn {
   </div>
 </section>
 
+
+
+
 <!-- after the order tracking -->
  <section class="container text-center my-5">
   <h3 class="fw-bold mb-3">What would you like to do next?</h3>
@@ -177,24 +221,35 @@ section.container.text-center a.btn {
 
 
 
- <section class="bg-white">
-         <div class="container">
-            <div class="row g-4">
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider1.png" class="img-fluid rounded-3"></a>
-               </div>
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider2.png" class="img-fluid rounded-3"></a>
-               </div>
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider3.png" class="img-fluid rounded-3"></a>
-               </div>
-               <div class="col-md-3 col-6">
-                  <a href="listing.html"><img src="assets/img/slider4.png" class="img-fluid rounded-3"></a>
-               </div>
-            </div>
-         </div>
-      </section>
+<div class="marquee-wrapper">
+      <div class="marquee-track" id="marquee-track">
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
+        </div>
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
+        </div>
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
+        </div>
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
+        </div>
+        <!-- Duplicate to enable infinite scroll effect -->
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
+        </div>
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
+        </div>
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
+        </div>
+        <div class="marquee-card">
+          <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
+        </div>
+      </div>
+    </div>
        <section id="app-section" class="bg-white py-5 mobile-app-section">
          <div class="container">
             <div class="bg-light rounded px-4 pt-4 px-md-4 pt-md-4 px-lg-5 pt-lg-5 pb-0">

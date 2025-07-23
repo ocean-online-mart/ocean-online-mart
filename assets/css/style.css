@@ -787,7 +787,7 @@ hr {
 }
 
 .category-tab img {
-  width: 100%;
+  width: 100px;
   height: 88px;
   border-radius: 50%;
   object-fit: cover;
@@ -795,7 +795,7 @@ hr {
   margin-bottom: 5px;
   transition: transform 0.3s ease;
   cursor: pointer;
-  
+  background-color: white;
   box-shadow: 5px 7px 12px 0px rgba(0, 0, 0, 0.2); 
   
 }
@@ -840,16 +840,17 @@ hr {
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  
 }
 
 .scroll-btn.left {
-  left: 5px;
-    top: 35%;
+  left: -5px;
+    top: 29%;
 }
 
 .scroll-btn.right {
   right: -4px;
-  top: 35%;
+ top: 29%;
 }
 
 .category-tab-wrapper {
@@ -880,3 +881,6 @@ hr {
     display: none !important;
   }
 }
+
+
+
