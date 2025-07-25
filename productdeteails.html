@@ -306,6 +306,7 @@
   height: 32px;
   font-size: 18px;
   font-weight: bold;
+  padding: 0px;
 }
 @media (max-width: 576px) {
   .quantity-control button {
@@ -317,6 +318,25 @@
     font-size: 16px;
   }
 }
+.cart-icon { position: relative; }
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .product-card { margin-bottom: 20px; }
+        .offcanvas { width: 400px !important; }
+        .payment-section, .otp-section, .address-section { display: none; }
+        .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .quantity-control { display: flex; align-items: center; gap: 5px; }
+        .quantity-control button { width: 30px; height: 30px; }
+        .quantity-control input { width: 50px; text-align: center; }
+        .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
   </style>
 </head>
 
@@ -368,12 +388,13 @@
                   <a href="search.html" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  <a href="cart.html" class="btn btn-light position-relative rounded-pill rounded-icon">
-                  <i class="bi bi-cart3"></i>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5
-                  <span class="visually-hidden">Cart</span>
-                  </span>
-                  </a>
+                  <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon"
+                  id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                     <i class="bi bi-cart3"></i>
+                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                     <span class="" id="cartCount">0</span>                      
+                     </span>
+                  </button>
                   <!-- <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Purchase Now</a> -->
                </div>
             </div>
@@ -391,235 +412,212 @@
             </div>
          </div>
       </section>
-
-
-
    <section class="py-5 bg-light">
-  <div class="container">
-    <div class="row g-4 align-items-start flex-column flex-lg-row">
-      <!-- Image -->
-      <div class="col-12 col-lg-6">
-  <div class="position-relative mx-auto text-center">
-    <!-- Main Product Image with Zoom Effect -->
-    <div class="main-img-wrapper overflow-hidden rounded shadow">
-      <img id="mainImage" src="assets/img/fish.jpg" class="main-img" alt="Main Image">
-    </div>
-
-    <!-- Thumbnails -->
-    <div class="d-flex justify-content-center gap-2 mt-3">
-      <img src="assets/img/fish.jpg" class="thumb-img" onclick="changeImage(this)">
-      <img src="assets/img/fish12.jpg" class="thumb-img" onclick="changeImage(this)">
-      <img src="assets/img/fish11.jpg" class="thumb-img" onclick="changeImage(this)">
-    </div>
-  </div>
-</div>
-
-      <!-- Text Content -->
-      <div class="col-12 col-lg-6">
-        <h2 class="fw-bold text-dark mb-2">White Kelangaan</h2>
-        <p class="text-muted mb-3">Fresh from the ocean. Packed with flavor and nutrition, ideal for curry or fry.</p>
-
-      <div class="d-flex align-items-center gap-3 mb-3">
- 
-<div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3 mb-3">
-  <div class="quantity-control d-flex align-items-center">
-    <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(-0.5)">−</button>
-    <span id="quantityValue" class="px-3">0.5</span>
-    <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(0.5)">+</button>
-    <span class="ms-2 text-muted" style="font-size: medium; font-weight:900;">kg</span>
-  </div>
-</div>
-</div>
- <div>
- 
-    <!-- <small class="text-muted fs-6">₹ <span id="perKgPrice">850</span> per kg</small> -->
-  </div>
-
-        <div class="d-flex flex-wrap gap-2"></span> <h4 class=" fw-bold mb-0 p-2" id="totalPrice"> ₹425</h4>
-         
-          <a href="#" ><button class="btn btn-outline-success flex-fill flex-md-grow-0 px-4" style="margin-top: 5px;">Add to Cart</button></a>
-        </div>
-        <div class="text-dark" style="font-size: medium; font-weight:bolder ;">
-<p class="text-dark" style="margin-top:16px;">whole Cleaned</p>
-  <h5 class="text-danger">Out of Stock</h5>
-<p class="text-dark" style="margin-top:16px;">Cleaned (No Head, Rest With Shell, No Tall)</p>
-  <h5 class="text-danger">Out of Stock</h5>
-<p class="text-dark" style="margin-top:16px;">Cleaned (No Head,No Shell, Tall)</p>
-  <h5 class="text-danger">Out of Stock</h5>
-
-
-
-        </div>
-        <div class="mt-3 small text-muted">Delivered within 1 hour • Quality guaranteed • Freshly packed</div>
+      <div class="container">
+         <div class="row g-4 align-items-start flex-column flex-lg-row">
+            <div class="col-12 col-lg-6">
+               <div class="position-relative mx-auto text-center">
+                  <div class="main-img-wrapper overflow-hidden rounded shadow">
+                     <img id="mainImage" src="assets/img/fish.jpg" class="main-img" alt="Main Image">
+                  </div>                 
+                  <div class="d-flex justify-content-center gap-2 mt-3">
+                     <img src="assets/img/fish.jpg" class="thumb-img" onclick="changeImage(this)">
+                     <img src="assets/img/fish12.jpg" class="thumb-img" onclick="changeImage(this)">
+                     <img src="assets/img/fish11.jpg" class="thumb-img" onclick="changeImage(this)">
+                  </div>
+               </div>
+            </div>
+               <div class="col-12 col-lg-6">
+                  <h2 class="fw-bold text-dark mb-2 card-title">White Kelangaan</h2>
+                  <p class="text-muted mb-3">Fresh from the ocean. Packed with flavor and nutrition, ideal for curry or fry.</p>
+                  <div class="d-flex align-items-center gap-3 mb-3">
+                     <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3 mb-3">
+                        <div class="quantity-control">
+                            <button class="btn btn-outline-secondary btn-sm product-decrement" data-id="1">-</button>
+                            <input type="number" class="form-control product-quantity" data-id="1" value="1" min="1">
+                            <button class="btn btn-outline-secondary btn-sm product-increment" data-id="1">+</button>
+                        </div>
+                        <!-- <div class="quantity-control d-flex align-items-center">
+                           <button class="btn btn-outline-secondary btn-sm product-quantity" onclick="updateQuantity(-0.5)">−</button>
+                           <span id="quantityValue" class="px-3 card-text">0.5</span>
+                           <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(0.5)">+</button>
+                        </div> -->
+                     </div>
+                  </div>
+               <div>
+            <div class="d-flex flex-wrap gap-2"></span> 
+              
+                  <p class="card-text">
+                    <h4 class="product-total" data-id="1">₹ 15.00</h4>
+                  </p>
+               <button class="btn btn-outline-success flex-fill flex-md-grow-0 px-4 add-to-cart" data-id="1" data-name="White Kelangaan" data-price="425" style="margin-top: 5px;" 
+               id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Add to Cart</button>
+            </div>
+            <div class="text-dark" style="font-size: medium; font-weight:bolder ;">
+               <p class="text-dark" style="margin-top:16px;">whole Cleaned</p>
+               <h5 class="text-danger">Out of Stock</h5>
+               <p class="text-dark" style="margin-top:16px;">Cleaned (No Head, Rest With Shell, No Tall)</p>
+               <h5 class="text-danger">Out of Stock</h5>
+               <p class="text-dark" style="margin-top:16px;">Cleaned (No Head,No Shell, Tall)</p>
+               <h5 class="text-danger">Out of Stock</h5>
+            </div>
+            <div class="mt-3 small text-muted">Delivered within 1 hour • Quality guaranteed • Freshly packed</div>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
-</section>
+      </div>
+   </section>
 
 <!-- Related Products Section -->
- <section class="py-lg-5 py-0 position-relative">
-  <div class="container position-relative">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="fw-bold mb-0">Related Products</h4>
-  
-    </div>
+      <section class="py-lg-5 py-0 position-relative">
+          <div class="container position-relative">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="fw-bold mb-0">Related Products</h4>
+          
+            </div>
 
-    <!-- Arrows -->
-    <button id="scrollLeft" class="scroll-btn left d-none" onclick="scrollRelated('left')">&#8249;</button>
-    <button id="scrollRight" class="scroll-btn right" onclick="scrollRelated('right')">&#8250;</button>
+            <!-- Arrows -->
+            <button id="scrollLeft" class="scroll-btn left d-none" onclick="scrollRelated('left')">&#8249;</button>
+            <button id="scrollRight" class="scroll-btn right" onclick="scrollRelated('right')">&#8250;</button>
 
-    <!-- Scrollable Cards -->
-    <div id="related-scroll" class="d-flex overflow-auto gap-3 scroll-smooth pb-2">
-     
-      <!-- Card 1 -->
-      <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
- 
-  <!-- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512" class="product"><path d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z"></path></svg> -->
-<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
+            <!-- Scrollable Cards -->
+            <div id="related-scroll" class="d-flex overflow-auto gap-3 scroll-smooth pb-2">
+            
+              <!-- Card 1 -->
+              <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                  <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                
+                  <p class="small text-muted mb-2">250g </p>
+                  <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                    style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                  <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                      <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                      ADD TO CART
+                    
+                      <!-- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512" class="product"><path d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z"></path></svg> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                        <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                      </svg>
+                   </button>
+                </div>
+              </div>
+              <!-- Card 2 -->
+                <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                      <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
+                      <div class="card-body p-2">
+                        <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                      
+                        <p class="small text-muted mb-2">250g </p>
+                        <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                          style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                        <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                          <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                          ADD TO CART
+                          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                            <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                          </svg>
+                        </button>
+                      </div>
+                </div>
 
+              <!-- Card 3 -->
+                <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                <img src="assets/img/fish12.jpg" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                  <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                
+                  <p class="small text-muted mb-2">250g </p>
+                  <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                    style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                      <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                        ADD TO CART
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                          <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                        </svg>
+                      </button>
+                </div>
+              </div>
+              <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                  <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                
+                  <p class="small text-muted mb-2">250g </p>
+                  <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                    style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                      <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                        ADD TO CART
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                          <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                        </svg>
+                      </button>
+                  </div>
+              </div>
 
-        </div>
-      </div>
+              <!-- card 5 -->
+                <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                  <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                
+                  <p class="small text-muted mb-2">250g </p>
+                  <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                    style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                      <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                      <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                      ADD TO CART
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                        <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-9 6 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                      </svg>
+                   </button>
+                </div>
+              </div>
 
-      <!-- Card 2 -->
-        <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
+              <!-- card 6 -->
+                <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                  <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                
+                  <p class="small text-muted mb-2">250g </p>
+                  <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                    style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                      <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                        ADD TO CART
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                          <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                        </svg>
+                     </button>
+                </div>
+              </div>
 
-      <!-- Card 3 -->
-        <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish12.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-              <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
+              <!-- card 7 -->
+                <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
+                <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                  <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
+                
+                  <p class="small text-muted mb-2">250g </p>
+                  <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
+                    style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
+                      <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                        ADD TO CART
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+                          <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+                        </svg>
+                    </button>
+                </div>
+              </div> 
 
-      <!-- Add more cards as needed -->
-<!-- card 4 -->
-   <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- card 5 -->
-        <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- card 6 -->
-         <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- card 7 -->
-         <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div> 
-
-    </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
+            </div>
+            </div>
+      </section>
       <!-- Footer -->
       
       <footer class="bg-footer py-1 pt-4 d-none d-md-block">
@@ -687,6 +685,75 @@
             <p class="text-center">Copyright © 2025 | Ocean Online Mart</p>
          </div>
       </footer>
+      <!-- off canva modal -->
+       <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Your Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems"></div>
+            <div class="mt-3" id="cartSummary">
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>$<span id="cartSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>$<span id="deliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>$<span id="cartTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section mt-3">
+                <h5>Enter Phone Number</h5>
+                <input type="tel" class="form-control mb-2" id="phoneNumber" placeholder="Enter phone number">
+                <button class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
+            </div>
+
+            <!-- OTP Section -->
+            <div class="otp-section mt-3">
+                <h5>Enter OTP</h5>
+                <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
+                <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
+            </div>
+
+            <!-- Address & Payment Section -->
+            <div class="address-section mt-3">
+                <h5>Delivery Address</h5>
+                <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
+                <h5>Payment Mode</h5>
+                <select class="form-select mb-2" id="paymentMode">
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="card">Credit/Debit Card</option>
+                    <option value="upi">UPI</option>
+                </select>
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>$<span id="finalSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>$<span id="finalDeliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>$<span id="finalTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
+            </div>
+        </div>
+      </div>
+
      <!-- location Modal -->
       <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered">
@@ -823,9 +890,6 @@
   setInterval(showNextMasala, 3000);
 
 
-  // Related products scroll
-
-
   function scrollRelated(direction) {
     const scrollBox = document.getElementById('related-scroll');
     const leftArrow = document.getElementById('scrollLeft');
@@ -868,21 +932,258 @@
   });
 
 // incress value
-   let quantity = 0.5;
-  const basePricePerKg = 850;
+  //  let quantity = 0.5;
+  // const basePricePerKg = 850;
 
-  function updateQuantity(change) {
-    quantity = Math.max(0.5, quantity + change); // Don't go below 0.5
+  // function updateQuantity(change) {
+  //   const quantityElement = document.getElementById("quantityValue");
+  //   const priceElement = document.getElementById("totalPrice");
+  //   quantity = Math.max(0.5, quantity + change); // Don't go below 0.5
 
-    const price = quantity * basePricePerKg;
+  //   const price = quantity * basePricePerKg;
 
-    // Update UI
-    document.getElementById("quantityValue").textContent = quantity.toFixed(1);
-    document.getElementById("totalPrice").textContent = `₹${price.toFixed(0)}`;
-  }
+  //   // Update UI
+  //   quantityElement.textContent = quantity.toFixed(1);
+  //   priceElement.textContent = `₹${price.toFixed(0)}`;
 
-  // Optional: set base price per kg (if you want it dynamic)
-  // document.getElementById("perKgPrice").textContent = basePricePerKg;
+  //     quantityElement.setAttribute("data-id", quantity.toFixed(1));
+  //   priceElement.setAttribute("data-id", totalPrice.toFixed(0));
+  // }
+
+    
+        // Cart array to store items
+        let cart = [];
+        const DELIVERY_CHARGE = 5.00;
+
+
+          function updateProductTotal(id) {
+            const quantityInput = document.querySelector(`.product-quantity[data-id="${id}"]`);
+            const totalSpan = document.querySelector(`.product-total[data-id="${id}"]`);
+            const price = parseFloat(document.querySelector(`.add-to-cart[data-id="${id}"]`).dataset.price);
+            const quantity = parseFloat(quantityInput.value);
+            if (totalSpan && !isNaN(quantity) && !isNaN(price)) {
+                totalSpan.textContent = `₹`+(price * quantity).toFixed(2);
+            }
+        }
+        // Update cart display
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartCount = document.getElementById('cartCount');
+            const cartSummary = document.getElementById('cartSummary');
+            const paymentSection = document.querySelector('.payment-section');
+            const otpSection = document.querySelector('.otp-section');
+            const addressSection = document.querySelector('.address-section');
+            const finalSubtotal = document.getElementById('finalSubtotal');
+            const finalTotal = document.getElementById('finalTotal');
+            const priceElement = document.getElementById("totalPrice");
+            
+            cartItems.innerHTML = '';
+            let subtotal = 0;
+            let totalQuantity = 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty</p>';
+                cartSummary.style.display = 'none';
+                paymentSection.style.display = 'none';
+                otpSection.style.display = 'none';
+                addressSection.style.display = 'none';
+                document.getElementById('proceedToPayment').style.display = 'block';
+            } else {
+                cartSummary.style.display = 'block';
+                cart.forEach(item => {
+                   const quantity = parseFloat(item.quantity);  
+                    subtotal += item.price * item.quantity;
+                   totalQuantity += quantity;
+                    cartItems.innerHTML += `
+                        <div class="cart-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6>${item.name}</h6>
+                                <p>$${item.price} x ${item.quantity}</p>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="btn btn-outline-secondary btn-sm cart-decrement" data-id="${item.id}">-</button>
+                                <input type="number" class="form-control cart-quantity" data-id="${item.id}" value="${item.quantity}" min="1">
+                                <button class="btn btn-outline-secondary btn-sm cart-increment" data-id="${item.id}">+</button>
+                            </div>
+                            <button class="btn btn-sm btn-danger remove-item" data-id="${item.id}">Remove</button>
+                        </div>
+                    `;
+                });
+            }
+
+            cartSubtotal.textContent = subtotal.toFixed(2);
+            cartTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
+            finalSubtotal.textContent = subtotal.toFixed(2);
+            finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            // Add event listeners for cart quantity controls
+            document.querySelectorAll('.cart-increment').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+                    const item = cart.find(item => item.id === id);
+                    if (item) {
+                        item.quantity ++;
+                       
+                        updateCart();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.cart-decrement').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+                    const item = cart.find(item => item.id === id);
+                    if (item && item.quantity > 1) {
+                        item.quantity --;
+                      
+                        updateCart();
+                        
+                    }
+                });
+            });
+
+            document.querySelectorAll('.cart-quantity').forEach(input => {
+                input.addEventListener('change', () => {
+                    const id = input.dataset.id;
+                    const value = parseInt(input.value);
+                    const item = cart.find(item => item.id === id);
+                    if (item && value >= 1) {
+                        item.quantity = value;
+                        updateCart();
+                    } else if (item) {
+                        input.value = item.quantity;
+                    }
+                });
+            });
+
+            // Add event listeners for remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+                    cart = cart.filter(item => item.id !== id);
+                    updateCart();
+                });
+            });
+        }
+
+        // Prevent offcanvas opening when cart is empty
+        document.getElementById('cartButton').addEventListener('click', (e) => {
+            if (cart.length === 0) {
+                e.preventDefault();
+                alert('Your cart is empty!');
+                return false;
+            }
+        });
+
+        // Add to cart with quantity
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.dataset.id;
+                const name = button.dataset.name;
+                const price = parseFloat(button.dataset.price);
+                const quantity = parseInt(document.querySelector(`.product-quantity[data-id="${id}"]`).value);
+              // console.log(quantity);
+              
+                const existingItem = cart.find(item => item.id === id);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({ id, name, price, quantity });
+                }
+                updateCart();
+                // Reset quantity input
+                document.querySelector(`.product-quantity[data-id="${id}"]`).value = 1;
+                 updateProductTotal(id);
+            });
+        });
+
+        // Product quantity controls
+        document.querySelectorAll('.product-increment').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.dataset.id;
+                const input = document.querySelector(`.product-quantity[data-id="${id}"]`);
+                input.value = parseInt(input.value) + 1;
+                 updateProductTotal(id);
+            });
+        });
+
+        document.querySelectorAll('.product-decrement').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.dataset.id;
+                const input = document.querySelector(`.product-quantity[data-id="${id}"]`);
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                     updateProductTotal(id);
+                }
+            });
+        });
+
+        document.querySelectorAll('.product-quantity').forEach(input => {
+            input.addEventListener('change', () => {
+                if (parseInt(input.value) < 1) {
+                    input.value = 1;
+                     updateProductTotal(id);
+                }
+            });
+        });
+
+        // Proceed to payment
+        document.getElementById('proceedToPayment').addEventListener('click', () => {
+            if (cart.length === 0) {
+                // alert('Cart is empty!');
+                return;
+            }
+            document.querySelector('.payment-section').style.display = 'block';
+            document.getElementById('proceedToPayment').style.display = 'none';
+        });
+
+        // Send OTP
+        document.getElementById('sendOtp').addEventListener('click', () => {
+            const phone = document.getElementById('phoneNumber').value;
+            if (phone.length < 10) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+            document.querySelector('.payment-section').style.display = 'none';
+            document.querySelector('.otp-section').style.display = 'block';
+            // Simulate OTP sending
+            alert('OTP sent to ' + phone);
+        });
+
+        // Verify OTP
+        document.getElementById('verifyOtp').addEventListener('click', () => {
+            const otp = document.getElementById('otpInput').value;
+            if (otp.length !== 4) {
+                alert('Please enter a valid 4-digit OTP');
+                return;
+            }
+            document.querySelector('.otp-section').style.display = 'none';
+            document.querySelector('.address-section').style.display = 'block';
+        });
+
+        // Complete Order
+        document.getElementById('completeOrder').addEventListener('click', () => {
+            const address = document.getElementById('address').value;
+            const paymentMode = document.getElementById('paymentMode').value;
+            
+            if (!address) {
+                alert('Please enter delivery address');
+                return;
+            }
+
+            alert(`Order placed successfully!\nAddress: ${address}\nPayment Mode: ${paymentMode}`);
+            cart = [];
+            updateCart();
+            document.querySelector('.address-section').style.display = 'none';
+            document.getElementById('proceedToPayment').style.display = 'block';
+            document.getElementById('cartOffcanvas').classList.remove('show');
+        });
+
+        // Initial cart update
+        updateCart();
 
 </script>
 
