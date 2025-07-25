@@ -16,7 +16,6 @@
       <link href="assets/css/style.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
       <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
-      
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.js"></script>
   <style>
@@ -109,24 +108,24 @@
   overflow: hidden;
 }
 
-  .product-image-wrapper img {
-  max-height: 200px;
-  width: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-}
+      .product-image-wrapper img {
+      max-height: 200px;
+      width: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      }
 
-.product-image-box img {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-  transition: opacity 0.4s ease;
-}
+      .product-image-box img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      transition: opacity 0.4s ease;
+      }
 
-.product-image-box .hover-img {
-  opacity: 0;
-  z-index: 2;
-}
+      .product-image-box .hover-img {
+      opacity: 0;
+      z-index: 2;
+      }
 
 .main-image-box:hover .hover-img {
   opacity: 1;
@@ -218,6 +217,23 @@
 }
 /* scorll area */
 
+      .btn {
+         font-size: 14px;
+         padding: 10px;
+      }
+      .related-pro-arr{
+         padding: 6px;
+      }
+     
+      
+      .related-pro-arr{
+         height: 34px;
+         width: 34px;
+         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px;
+         border-radius: 50%;
+         cursor: pointer;
+      }
+  
  .scroll-smooth::-webkit-scrollbar {
     display: none; /* hide scrollbar */
   }
@@ -228,46 +244,7 @@
     scrollbar-width: none;     /* Firefox */
   }
  /* related product size */
-  
-    
-
-
-    .scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #02aabd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-.scroll-btn.left {
-  left: -30px;
-  top:40%
-}
-.scroll-btn.right {
-  right: -30px;
-  top: 40%;
-}
-
-.off{
-   color: #07bc0c;
-}
-
-
-
-/* toast */
-
+   
     body {
       font-family: Arial, sans-serif;
       padding-bottom: 100px; /* space for toast */
