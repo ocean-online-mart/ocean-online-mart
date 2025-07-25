@@ -20,6 +20,88 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.js"></script>
   <style>
+/* From Uiverse.io by vinodjangid07 */ 
+ /* add to cart */
+      .cartBtn {
+  width: 152px;
+  height: 40px;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: white;
+  font-weight: 500;
+  position: relative;
+  background-color: rgba(12, 99, 170, 0.822);
+  box-shadow: 0 20px 30px -7px rgba(27, 27, 27, 0.219);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+  padding-bottom: 5px;
+  margin-left: 50px;
+  margin-bottom: 5px;
+
+}
+
+.cart {
+  z-index: 2;
+}
+
+.cartBtn:active {
+  transform: scale(0.96);
+}
+
+
+
+.product {
+  position: absolute;
+  width: 12px;
+  border-radius: 3px;
+  content: "";
+  left: 23px;
+  bottom: 23px;
+  opacity: 0;
+  z-index: 1;
+  fill: rgb(211, 211, 211);
+}
+
+.cartBtn:hover .product {
+  animation: slide-in-top 1.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) rotate(-240deg);
+    opacity: 1;
+  }
+}
+
+.cartBtn:hover .cart {
+  animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* end */
+
+
 .product-image-box {
   height: 350px;
   width: 500px;
@@ -46,19 +128,75 @@
   z-index: 2;
 }
 
-.product-image-box:hover .hover-img {
+.main-image-box:hover .hover-img {
   opacity: 1;
 }
 
-.product-image-box:hover .main-img {
+.main-image-box:hover .main-img {
   opacity: 0;
 }
 
+.main-img {
+  max-height: 400px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  
+}
+
+.thumb-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.thumb-img:hover,
+.thumb-img.active {
+  border-color: #02aabd;
+  transform: scale(1.05);
+}
+
+.main-img-wrapper {
+  height: 400px;
+  max-width: 90%;
+  overflow: hidden;
+  position: relative;
+  margin-left: 15px;
+}
+
+.main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.main-img-wrapper:hover .main-img {
+  transform: scale(1.1); /* Zoom on hover */
+}
+
+.thumb-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.thumb-img:hover,
+.thumb-img.active {
+  border-color: #02aabd;
+  transform: scale(1.05);
+}
+
+
 @media (max-width: 576px) {
-  .product-image-box {
-    height: 250px;
-    width: auto;
-  }
+  
   .toast-container{
    display: none;
   }
@@ -144,7 +282,6 @@
     }
 
     .toast-card {
-     
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 12px;
@@ -169,7 +306,6 @@
       object-fit: cover;
       border-radius: 8px;
       margin-right: 12px;
-      
     }
 
     .toast-content {
@@ -186,6 +322,24 @@
       font-size: 12px;
       color: #555;
     }
+
+
+    .quantity-control button {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+}
+@media (max-width: 576px) {
+  .quantity-control button {
+    font-size: 16px;
+    padding: 2px 8px;
+  }
+
+  #quantityValue {
+    font-size: 16px;
+  }
+}
   </style>
 </head>
 
@@ -268,37 +422,57 @@
     <div class="row g-4 align-items-start flex-column flex-lg-row">
       <!-- Image -->
       <div class="col-12 col-lg-6">
-        <div class="position-relative product-image-box rounded overflow-hidden shadow-sm mx-auto">
-          <img src="assets/img/fish.jpg" class="w-100 main-img" alt="Main Image">
-          <img src="assets/img/fish12.jpg" class="w-100 hover-img position-absolute top-0 start-0" alt="Hover Image">
-        </div>
-      </div>
+  <div class="position-relative mx-auto text-center">
+    <!-- Main Product Image with Zoom Effect -->
+    <div class="main-img-wrapper overflow-hidden rounded shadow">
+      <img id="mainImage" src="assets/img/fish.jpg" class="main-img" alt="Main Image">
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="d-flex justify-content-center gap-2 mt-3">
+      <img src="assets/img/fish.jpg" class="thumb-img" onclick="changeImage(this)">
+      <img src="assets/img/fish12.jpg" class="thumb-img" onclick="changeImage(this)">
+      <img src="assets/img/fish11.jpg" class="thumb-img" onclick="changeImage(this)">
+    </div>
+  </div>
+</div>
 
       <!-- Text Content -->
       <div class="col-12 col-lg-6">
         <h2 class="fw-bold text-dark mb-2">White Kelangaan</h2>
         <p class="text-muted mb-3">Fresh from the ocean. Packed with flavor and nutrition, ideal for curry or fry.</p>
 
-        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-          <h4 class="text-danger fw-bold mb-0">₹ 425</h4>
-          <del class="text-muted fs-6">₹ 530</del>
-          <span class="badge bg-success ms-2">20% OFF</span>
-        </div>
+      <div class="d-flex align-items-center gap-3 mb-3">
+ 
+<div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3 mb-3">
+  <div class="quantity-control d-flex align-items-center">
+    <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(-0.5)">−</button>
+    <span id="quantityValue" class="px-3">0.5</span>
+    <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(0.5)">+</button>
+    <span class="ms-2 text-muted" style="font-size: medium; font-weight:900;">kg</span>
+  </div>
+</div>
+</div>
+ <div>
+ 
+    <!-- <small class="text-muted fs-6">₹ <span id="perKgPrice">850</span> per kg</small> -->
+  </div>
 
-        <div class="mb-3">
-          <label for="quantity" class="form-label small">Quantity</label>
-          <input type="number" id="quantity" class="form-control w-100 w-md-50" value="1" min="1">
+        <div class="d-flex flex-wrap gap-2"></span> <h4 class=" fw-bold mb-0 p-2" id="totalPrice"> ₹425</h4>
+         
+          <a href="#" ><button class="btn btn-outline-success flex-fill flex-md-grow-0 px-4" style="margin-top: 5px;">Add to Cart</button></a>
         </div>
+        <div class="text-dark" style="font-size: medium; font-weight:bolder ;">
+<p class="text-dark" style="margin-top:16px;">whole Cleaned</p>
+  <h5 class="text-danger">Out of Stock</h5>
+<p class="text-dark" style="margin-top:16px;">Cleaned (No Head, Rest With Shell, No Tall)</p>
+  <h5 class="text-danger">Out of Stock</h5>
+<p class="text-dark" style="margin-top:16px;">Cleaned (No Head,No Shell, Tall)</p>
+  <h5 class="text-danger">Out of Stock</h5>
 
-        <div class="mb-2">
-          <h6 class="mb-0">Weight: <b>250g</b></h6>
+
+
         </div>
-
-        <div class="d-flex flex-wrap gap-2">
-          <a href="payment.html" class="btn btn-success flex-fill flex-md-grow-0 px-4">Buy Now</a>
-          <a href="#" class="btn btn-outline-success flex-fill flex-md-grow-0 px-4">Add to Cart</a>
-        </div>
-
         <div class="mt-3 small text-muted">Delivered within 1 hour • Quality guaranteed • Freshly packed</div>
       </div>
     </div>
@@ -329,7 +503,17 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+          <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+ 
+  <!-- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512" class="product"><path d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z"></path></svg> -->
+<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
+
+
         </div>
       </div>
 
@@ -342,7 +526,13 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+          <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
         </div>
       </div>
 
@@ -355,7 +545,13 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+              <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
         </div>
       </div>
 
@@ -369,7 +565,13 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+               <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
         </div>
       </div>
 
@@ -382,7 +584,13 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+               <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
         </div>
       </div>
 
@@ -395,7 +603,13 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+               <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+ <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
         </div>
       </div>
 
@@ -408,7 +622,13 @@
           <p class="small text-muted mb-2">250g </p>
           <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
             style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <a href="#" class="btn btn-outline-success btn-sm w-100">Add to Cart</a>
+               <button class="cartBtn">
+  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+  ADD TO CART
+ <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
+    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
+  </svg>
+</button>
         </div>
       </div> 
 
@@ -424,57 +644,7 @@
 
 
       <!-- Footer -->
-      <section class="footer py-5">
-         <div class="container">
-            <div class="row">
-               <h5 class="mb-4 fw-bold text-dark">Areas we deliver to</h5>
-               <div class="col-lg-3 col-md-6 col-6">
-                  <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Pondicherry</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Cuddalore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Chennai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Coimbatore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Ariyalur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Dharmapuri </a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Dindigul</a></li>
-                  </ul>
-               </div>
-               <div class="col-lg-3 col-md-6 col-6">
-                  <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Erode</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Kanchipuram</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Viluppuram</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Karur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Krishnagiri</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Madurai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruvannamalai</a></li>
-                  </ul>
-               </div>
-               <div class="col-lg-3 col-md-6 col-6">
-                  <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Namakkal</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Perambalur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Pudukkottai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Vellore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Salem</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Sivagangai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thanjavur</a></li>
-                  </ul>
-               </div>
-               <div class="col-lg-3 col-md-6 col-6">
-                  <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Nilgiris</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Theni</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thiruvallur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thoothukudi</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruchirappalli</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirunelveli</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirupur</a></li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-      </section>
+      
       <footer class="bg-footer py-1 pt-4 d-none d-md-block">
          <div class="container">
             <div class="row mb-5">
@@ -696,6 +866,46 @@
     }
   }
 
+
+
+//   image switching
+   function changeImage(el) {
+    const main = document.getElementById('mainImage');
+
+    // Smooth fade effect
+    main.style.opacity = 0;
+
+    setTimeout(() => {
+      main.src = el.src;
+      main.style.opacity = 1;
+    }, 200);
+
+    // Update active class
+    document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Auto-activate first thumbnail on load
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.thumb-img').classList.add('active');
+  });
+
+// incress value
+   let quantity = 0.5;
+  const basePricePerKg = 850;
+
+  function updateQuantity(change) {
+    quantity = Math.max(0.5, quantity + change); // Don't go below 0.5
+
+    const price = quantity * basePricePerKg;
+
+    // Update UI
+    document.getElementById("quantityValue").textContent = quantity.toFixed(1);
+    document.getElementById("totalPrice").textContent = `₹${price.toFixed(0)}`;
+  }
+
+  // Optional: set base price per kg (if you want it dynamic)
+  // document.getElementById("perKgPrice").textContent = basePricePerKg;
 
 </script>
 
