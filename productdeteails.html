@@ -395,7 +395,6 @@
                      <span class="" id="cartCount">0</span>                      
                      </span>
                   </button>
-                  <!-- <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Purchase Now</a> -->
                </div>
             </div>
          </div>
@@ -473,16 +472,12 @@
           <div class="container position-relative">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="fw-bold mb-0">Related Products</h4>
-          
             </div>
-
             <!-- Arrows -->
             <button id="scrollLeft" class="scroll-btn left d-none" onclick="scrollRelated('left')">&#8249;</button>
             <button id="scrollRight" class="scroll-btn right" onclick="scrollRelated('right')">&#8250;</button>
-
             <!-- Scrollable Cards -->
             <div id="related-scroll" class="d-flex overflow-auto gap-3 scroll-smooth pb-2">
-            
               <!-- Card 1 -->
               <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
                 <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
@@ -490,9 +485,11 @@
                   <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
                 
                   <p class="small text-muted mb-2">250g </p>
+                   <input hidden type="number" class="form-control product-quantity" data-id="1" value="1" min="1">
                   <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
                     style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-                  <button class="cartBtn" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                  <button class="cartBtn add-to-cart" data-id="2" data-name="product 2" data-price="425" 
+                  id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                       <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
                       ADD TO CART
                     
@@ -954,8 +951,6 @@
         // Cart array to store items
         let cart = [];
         const DELIVERY_CHARGE = 5.00;
-
-
           function updateProductTotal(id) {
             const quantityInput = document.querySelector(`.product-quantity[data-id="${id}"]`);
             const totalSpan = document.querySelector(`.product-total[data-id="${id}"]`);
@@ -1146,7 +1141,7 @@
             if (phone.length < 10) {
                 alert('Please enter a valid phone number');
                 return;
-            }
+            } 
             document.querySelector('.payment-section').style.display = 'none';
             document.querySelector('.otp-section').style.display = 'block';
             // Simulate OTP sending
@@ -1161,7 +1156,8 @@
                 return;
             }
             document.querySelector('.otp-section').style.display = 'none';
-            document.querySelector('.address-section').style.display = 'block';
+            // document.querySelector('.address-section').style.display = 'block';
+             window.location.href = 'http://127.0.0.1:5500/checkout.html';
         });
 
         // Complete Order
@@ -1181,8 +1177,6 @@
             document.getElementById('proceedToPayment').style.display = 'block';
             document.getElementById('cartOffcanvas').classList.remove('show');
         });
-
-        // Initial cart update
         updateCart();
 
 </script>
