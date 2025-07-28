@@ -15,6 +15,67 @@
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
        <style>
+
+         /* body {
+  cursor: url('assets/img/clown\ fish\ II\ left\ select.cur'), auto;
+} */
+/* #fish-cursor {
+  position: fixed;
+  width: 60px;
+  height: auto;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+} */
+/* 
+@keyframes swim {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(-1); }
+}
+
+#fish-cursor {
+  animation: swim 7s infinite ease-in-out;
+} */
+
+
+
+/* navbar effect */
+
+.nav01 {
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav01::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(11, 202, 228, 0.8);
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.nav01:hover::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple78 1s ease-out infinite;
+  opacity: 1;
+}
+
+@keyframes ripple78 {
+  0% { width: 0; height: 0; opacity: 1; }
+  100% { width: 200px; height: 200px; opacity: 0; }
+}
+
          .cart-drawer {
   position: fixed;
   top: 0;
@@ -79,9 +140,21 @@
   }
 }
 
+
+#fish-cursor {
+  position: fixed;
+  width: 40px; /* Adjust size */
+  height: auto;
+  pointer-events: none; /* So it doesn't block clicks */
+  z-index: 9999;
+  transition: transform 0.05s linear;
+}
+
  </style> 
    </head>
    <body class="bg-light">
+     
+
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
          <div class="container">
@@ -107,22 +180,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav ms-auto me-3 top-link">
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="listingpage.html">
+                     <a class="nav-link nav01" href="listingpage.html">
                      Fish & Seafoods
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="#">
+                     <a class="nav-link nav01" href="#">
                      Value Added
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="searchpage.html">
+                     <a class="nav-link nav01" href="searchpage.html">
                      Boats & Engines
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="#">
+                     <a class="nav-link nav01" href="#">
                      Fishing accessories
                      </a>
                   </li>
@@ -722,11 +795,14 @@
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
 
+<!-- <img id="fish-cursor" src="assets/img/clown fish II left select.cur" alt="Fish Cursor" /> -->
+
+
 
 
 
       <script>
-    1
+    
     
     
     // right slide cart
@@ -816,9 +892,16 @@ const cartItems = [
     }
   }
 
-
   
-      </script>
+//  const fish = document.getElementById('fish-cursor');
+
+//   document.addEventListener('mousemove', (e) => {
+//     fish.style.left = e.pageX +-48+ 'px';
+//     fish.style.top = e.pageY + 10+'px';
+
+//     // Swim effect
+//     fish.style.transform = `translate(-50%, -50%) rotate(${e.pageX % 20 - 10}deg)`;
+//   });</script>
    
 </body>
 
