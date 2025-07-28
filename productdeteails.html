@@ -333,9 +333,31 @@
         .offcanvas { width: 400px !important; }
         .payment-section, .otp-section, .address-section { display: none; }
         .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .quantity-control { display: flex; align-items: center; gap: 5px; }
-        .quantity-control button { width: 30px; height: 30px; }
-        .quantity-control input { width: 50px; text-align: center; }
+        .cart-quantity {min-width:0px}
+        .quantity-control { display: flex;   align-items: center; gap: 5px; }
+        .quantity-control button { 
+          width: 30px; 
+          height: 30px;
+         }
+        .quantity-control input { 
+          width: 50px; 
+          text-align: center;
+           border: none;
+          color: #43484D; 
+        }
+        
+        button[class*=canbtn] {
+          width: 30px;
+          height: 30px;
+          background-color: #E1E8EE;
+          border-radius: 6px;
+          border: none;
+          cursor: pointer;
+        }
+        button:focus,
+        input:focus{
+          outline: 0;
+        }
         .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
   </style>
 </head>
@@ -389,7 +411,7 @@
                   <i class="icofont-search"></i>
                   </a>
                   <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon"
-                  id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                  id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" >
                      <i class="bi bi-cart3"></i>
                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                      <span class="" id="cartCount">0</span>                      
@@ -447,7 +469,7 @@
             <div class="d-flex flex-wrap gap-2"></span> 
               
                   <p class="card-text">
-                    <h4 class="product-total" data-id="1">₹ 15.00</h4>
+                    <h4 class="product-total pt-3" data-id="1">₹ 15.00</h4>
                   </p>
                <button class="btn btn-outline-success flex-fill flex-md-grow-0 px-4 add-to-cart" data-id="1" data-name="White Kelangaan" data-price="425" style="margin-top: 5px;" 
                id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Add to Cart</button>
@@ -485,7 +507,7 @@
                   <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
                 
                   <p class="small text-muted mb-2">250g </p>
-                   <input hidden type="number" class="form-control product-quantity" data-id="1" value="1" min="1">
+                   <input hidden type="number" class="form-control product-quantity" data-id="2" value="1" min="1">
                   <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
                     style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
                   <button class="cartBtn add-to-cart" data-id="2" data-name="product 2" data-price="425" 
@@ -979,7 +1001,22 @@
             let totalQuantity = 0;
 
             if (cart.length === 0) {
-                cartItems.innerHTML = '<p>Your cart is empty</p>';
+                cartItems.innerHTML = 
+                // '<p>Your cart is empty</p>';
+                `<div class="container-fluid  mt-100">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-body cart">
+                          <div class="col-sm-12 empty-cart-cls text-center">
+                            <img src="assets/img/cart-asset/empty-cart.gif"  class="img-fluid mb-4 mr-3">
+                            <h4><strong>Your cart awaits your orders</strong></h4>
+                            <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
+                          </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+				        </div>`;
                 cartSummary.style.display = 'none';
                 paymentSection.style.display = 'none';
                 otpSection.style.display = 'none';
@@ -997,12 +1034,14 @@
                                 <h6>${item.name}</h6>
                                 <p>$${item.price} x ${item.quantity}</p>
                             </div>
-                            <div class="quantity-control">
-                                <button class="btn btn-outline-secondary btn-sm cart-decrement" data-id="${item.id}">-</button>
-                                <input type="number" class="form-control cart-quantity" data-id="${item.id}" value="${item.quantity}" min="1">
-                                <button class="btn btn-outline-secondary btn-sm cart-increment" data-id="${item.id}">+</button>
+                            <div class="quantity-control flex-column align-items-end">
+                                <button class="btn btn-sm remove-item p-2 border border-0" data-id="${item.id}"><i class="bi bi-trash3-fill"></i></button>
+                                <div class="d-flex align-items-center mt-1">
+                                  <button class="btn btn-outline-secondary btn-sm cart-decrement canbtn" data-id="${item.id}">-</button>
+                                  <input type="number" class="form-control cart-quantity" data-id="${item.id}" value="${item.quantity}" min="1">
+                                  <button class="btn btn-outline-secondary btn-sm cart-increment canbtn" data-id="${item.id}">+</button>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-danger remove-item" data-id="${item.id}">Remove</button>
                         </div>
                     `;
                 });
@@ -1065,13 +1104,13 @@
         }
 
         // Prevent offcanvas opening when cart is empty
-        document.getElementById('cartButton').addEventListener('click', (e) => {
-            if (cart.length === 0) {
-                e.preventDefault();
-                alert('Your cart is empty!');
-                return false;
-            }
-        });
+        // document.getElementById('cartButton').addEventListener('click', (e) => {
+        //     if (cart.length === 0) {
+        //         e.preventDefault();
+        //         alert('Your cart is empty!');
+        //         return false;
+        //     }
+        // });
 
         // Add to cart with quantity
         document.querySelectorAll('.add-to-cart').forEach(button => {

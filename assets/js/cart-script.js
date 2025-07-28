@@ -232,7 +232,7 @@
         //             method: 'POST',
         //             headers: {
         //                 'Content-Type': 'application/json',
-        //             },
+        //             },0
         //             body: JSON.stringify({ otp: otp })
         //         });
 
