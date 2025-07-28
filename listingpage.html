@@ -16,6 +16,113 @@
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+      <style>.nav01 {
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav01::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(11, 202, 228, 0.8);
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.nav01:hover::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple78 1s ease-out infinite;
+  opacity: 1;
+}
+
+@keyframes ripple78 {
+  0% { width: 0; height: 0; opacity: 1; }
+  100% { width: 200px; height: 200px; opacity: 0; }
+}
+
+         .cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  z-index: 1050;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-drawer.open {
+  right: 0;
+}
+
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+
+/* offer section */
+.marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-marquee 25s linear infinite;
+  gap: 1.5rem;
+}
+
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-card {
+  min-width: 280px;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.marquee-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+#fish-cursor {
+  position: fixed;
+  width: 40px; /* Adjust size */
+  height: auto;
+  pointer-events: none; /* So it doesn't block clicks */
+  z-index: 9999;
+  transition: transform 0.05s linear;
+}</style>
    </head>
    <style>
       .cart-icon { position: relative; }
@@ -40,12 +147,15 @@
    </style>
    <body class="bg-light">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
+       <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
          <div class="container">
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
-               <img src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
-               <img src="assets/img/logo/logo-mobile.png" alt="#" class="d-block d-md-none d-lg-none img-fluid">
+               <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
+             
+   
             </a>
+             
+            
             <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
@@ -61,22 +171,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav ms-auto me-3 top-link">
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="listingpage.html">
+                     <a class="nav-link nav01" href="listingpage.html">
                      Fish & Seafoods
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="#">
+                     <a class="nav-link nav01" href="#">
                      Value Added
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="searchpage.html">
+                     <a class="nav-link nav01" href="searchpage.html">
                      Boats & Engines
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link" href="searchpage.html">
+                     <a class="nav-link nav01" href="#">
                      Fishing accessories
                      </a>
                   </li>
