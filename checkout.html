@@ -15,6 +15,27 @@
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
    </head>
+   <style>
+      .cart-icon { position: relative; }
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .product-card { margin-bottom: 20px; }
+        .offcanvas { width: 400px !important; }
+        .payment-section, .otp-section, .address-section { display: none; }
+        .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .quantity-control { display: flex; align-items: center; gap: 5px; }
+        .quantity-control button { width: 30px; height: 30px; }
+        .quantity-control input { width: 50px; text-align: center; }
+        .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
+   </style>
    <body class="bg-light">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
@@ -62,13 +83,13 @@
                   <a href="searchpage.html" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  <a href="cartpage.html" class="btn btn-light position-relative rounded-pill rounded-icon">
-                  <i class="bi bi-cart3"></i>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5
-                  <span class="visually-hidden">Cart</span>
-                  </span>
-                  </a>
-                  <!-- <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Purchase Now</a> -->
+                 <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon"
+                  id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                     <i class="bi bi-cart3"></i>
+                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                     <span class="" id="cartCount">0</span>                      
+                     </span>
+                  </button>
                </div>
             </div>
          </div>
@@ -131,6 +152,10 @@
                   Save this address for future orders
                 </label>
               </div>
+               <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">Your command / Note</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
             </form>
           </div>
         </div>
@@ -159,13 +184,13 @@
           </div>
         </div>
         
-        <div class="mb-4">
+        <!-- <div class="mb-4">
           <label class="form-label small mb-2">Apply Promo Code</label>
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Enter code">
             <button class="btn btn-success">Apply</button>
           </div>
-        </div>
+        </div> -->
       </div>
       
       <!-- Right side: Order summary -->
@@ -261,6 +286,73 @@
          </div>
       </section>
       <!-- Footer -->
+       <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Your Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems"></div>
+            <div class="mt-3" id="cartSummary">
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>$<span id="cartSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>$<span id="deliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>$<span id="cartTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section mt-3">
+                <h5>Enter Phone Number</h5>
+                <input type="tel" class="form-control mb-2" id="phoneNumber" placeholder="Enter phone number">
+                <button class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
+            </div>
+
+            <!-- OTP Section -->
+            <div class="otp-section mt-3">
+                <h5>Enter OTP</h5>
+                <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
+                <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
+            </div>
+
+            <!-- Address & Payment Section -->
+            <div class="address-section mt-3">
+                <h5>Delivery Address</h5>
+                <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
+                <h5>Payment Mode</h5>
+                <select class="form-select mb-2" id="paymentMode">
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="card">Credit/Debit Card</option>
+                    <option value="upi">UPI</option>
+                </select>
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>$<span id="finalSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>$<span id="finalDeliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>$<span id="finalTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
+            </div>
+        </div>
+      </div>
       <section class="footer py-5">
          <div class="container">
             <div class="row">

@@ -124,6 +124,27 @@
   transition: transform 0.05s linear;
 }</style>
    </head>
+   <style>
+      .cart-icon { position: relative; }
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .product-card { margin-bottom: 20px; }
+        .offcanvas { width: 400px !important; }
+        .payment-section, .otp-section, .address-section { display: none; }
+        .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .quantity-control { display: flex; align-items: center; gap: 5px; }
+        .quantity-control button { width: 30px; height: 30px; }
+        .quantity-control input { width: 50px; text-align: center; }
+        .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
+   </style>
    <body class="bg-light">
       <!-- Navbar -->
        <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
@@ -174,372 +195,368 @@
                   <a href="searchpage.html" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  
-                 <a href="#" onclick="toggleCart(true)" class="btn btn-light position-relative rounded-pill rounded-icon">
-  <i class="bi bi-cart3"></i>
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
-</a>
-
-                  </a>
-                  <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" href="purchase.html" role="button">Purchase Now</a>
+                  <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon"
+                  id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                     <i class="bi bi-cart3"></i>
+                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                     <span class="" id="cartCount">0</span>                      
+                     </span>
+                  </button>
+             
                </div>
             </div>
          </div>
       </nav>
-      <!-- app link -->
   
-    
-
-
-
-         <!-- Category Tabs Section -->
 <!-- Category Tabs Section -->
-<section class="category-section py-3 position-relative ">
-  <div class="container-fluid px-0  ">
-    
+         <section class="category-section py-3 position-relative ">
+         <div class="container-fluid px-0  ">
+            
 
-    <div class="container position-relative category-tab-wrapper">
-      <!-- Left Arrow (initially hidden) -->
-      <button class="scroll-btn left d-none" id="scrollLeft" onclick="scrollCategory('left')">&#8249;</button>
+            <div class="container position-relative category-tab-wrapper">
+               <!-- Left Arrow (initially hidden) -->
+               <button class="scroll-btn left d-none" id="scrollLeft" onclick="scrollCategory('left')">&#8249;</button>
 
-      <!-- Scrollable Tabs -->
-      <div id="categoryTabs" class="d-flex gap-4 justify-content-start align-items-start scroll-container no-scrollbar px-2">
-        <button class="category-tab active" onclick="filterCategory(this, 'all')">
-          <img src="assets/img/5.png" alt="All">
-          <span>All</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/6.png" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/7.png" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/8.png" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/1.png" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/2.png" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/3.png" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/fish.jpg" alt="Snacks">
-          <span>Snacks</span>
-        </button>
-        <button class="category-tab" onclick="filterCategory(this, 'snacks')">
-          <img src="assets/img/6.png" alt="Snacks">
-          <span>Snacks</span>
-        
+               <!-- Scrollable Tabs -->
+               <div id="categoryTabs" class="d-flex gap-4 justify-content-start align-items-start scroll-container no-scrollbar px-2">
+               <button class="category-tab active" onclick="filterCategory(this, 'all')">
+                  <img src="assets/img/5.png" alt="All">
+                  <span>All</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/6.png" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/7.png" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/8.png" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/1.png" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/2.png" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/3.png" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/fish.jpg" alt="Snacks">
+                  <span>Snacks</span>
+               </button>
+               <button class="category-tab" onclick="filterCategory(this, 'snacks')">
+                  <img src="assets/img/6.png" alt="Snacks">
+                  <span>Snacks</span>
+               
 
-      <!-- Right Arrow -->
-      <button class="scroll-btn right" id="scrollRight" onclick="scrollCategory('right')">&#8250;</button>
-    </div>
-  </div>
-</section>
+               <!-- Right Arrow -->
+               <button class="scroll-btn right" id="scrollRight" onclick="scrollCategory('right')">&#8250;</button>
+            </div>
+         </div>
+         </section>
 
 
 
-      </section>
-      
-
-      <!-- listing -->
 <!-- Listing Page Section (Product Grid + Filters) -->
-<section class="py-4 bg-light">
-  <div class="container">
-    <div class="row">
-    
-      <!-- Category Switcher Section -->
-<!-- Category Section -->
+         <section class="py-4 bg-light">
+            <div class="container">
+               <div class="row">
+            <div class="d-block d-lg-none text-end mb-2 filter">
+            <button class="btn btn-outline-success" onclick="toggleFilter()">Filter</button>
+            </div>
 
-  <!-- Sidebar Filters -->
-      <!-- Filter Toggle Button (Visible Only on Mobile) -->
-<div class="d-block d-lg-none text-end mb-2 filter">
-  <button class="btn btn-outline-success" onclick="toggleFilter()">Filter</button>
-</div>
+         <!-- Actual Filter Box -->
+               <div id="filterSidebar" class="col-lg-3 mb-4 d-none d-lg-block">
+               <div class="bg-white p-3 rounded shadow-sm">
+                  <h6 class="fw-bold mb-3">Filter by Category</h6>
+                  <div class="form-check">
+                     <input class="form-check-input" type="checkbox" id="fish">
+                     <label class="form-check-label" for="fish">Fish</label>
+                  </div>
+                  <div class="form-check">
+                     <input class="form-check-input" type="checkbox" id="prawns">
+                     <label class="form-check-label" for="prawns">Prawns</label>
+                  </div>
+                  <div class="form-check">
+                     <input class="form-check-input" type="checkbox" id="crab">
+                     <label class="form-check-label" for="crab">Crab</label>
+                  </div>
 
-<!-- Actual Filter Box -->
-<div id="filterSidebar" class="col-lg-3 mb-4 d-none d-lg-block">
-  <div class="bg-white p-3 rounded shadow-sm">
-    <h6 class="fw-bold mb-3">Filter by Category</h6>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="fish">
-      <label class="form-check-label" for="fish">Fish</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="prawns">
-      <label class="form-check-label" for="prawns">Prawns</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="crab">
-      <label class="form-check-label" for="crab">Crab</label>
-    </div>
+                  <hr>
+                  <h6 class="fw-bold mb-3">Filter by Cut Type</h6>
+                  <div class="form-check">
+                     <input class="form-check-input" type="checkbox" id="whole">
+                     <label class="form-check-label" for="whole">Whole</label>
+                  </div>
+                  <div class="form-check">
+                     <input class="form-check-input" type="checkbox" id="boneless">
+                     <label class="form-check-label" for="boneless">Boneless</label>
+                  </div>
 
-    <hr>
-    <h6 class="fw-bold mb-3">Filter by Cut Type</h6>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="whole">
-      <label class="form-check-label" for="whole">Whole</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="boneless">
-      <label class="form-check-label" for="boneless">Boneless</label>
-    </div>
+                  <hr>
+                  <h6 class="fw-bold mb-3">Price Range</h6>
+                  <input type="range" class="form-range" min="100" max="1000">
+                  <p><span class="text-muted">Price: ₹100 - ₹1000</span></p>
+                  <button class="btn btn-success w-100">Apply Filter</button>
+               </div>
+               </div>
 
-    <hr>
-    <h6 class="fw-bold mb-3">Price Range</h6>
-    <input type="range" class="form-range" min="100" max="1000">
-    <p><span class="text-muted">Price: ₹100 - ₹1000</span></p>
-    <button class="btn btn-success w-100">Apply Filter</button>
-  </div>
-</div>
+               <!-- Products Grid -->
+               <div class="col-lg-9">
+               <!-- Sorting Bar -->
+               <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold mb-0">Seafood Products</h5>
+                  <select class="form-select w-auto">
+                     <option selected>Sort by</option>
+                     <option value="1">Price: Low to High</option>
+                     <option value="2">Price: High to Low</option>
+                     <option value="3">Popularity</option>
+                  </select>
+               </div>
 
+               <!-- Product Cards Grid -->
+         <div class="container my-3" data-aos="fade-up">
+         <div class="row g-4" data-aos="fade-up">
 
-      <!-- Products Grid -->
-      <div class="col-lg-9">
-        <!-- Sorting Bar -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold mb-0">Seafood Products</h5>
-          <select class="form-select w-auto">
-            <option selected>Sort by</option>
-            <option value="1">Price: Low to High</option>
-            <option value="2">Price: High to Low</option>
-            <option value="3">Popularity</option>
-          </select>
-        </div>
+            <!-- Loop this block 9 times with different data -->
+               <div class="col-md-4 col-sm-6 te" data-aos="fade-up">
+                  <a href="productdeteails.html" class="text-decoration-none text-dark" > 
+                     <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+                     <div class="product-img position-relative">
+                        <span class="discount-badge">20% OFF</span>
+                        <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                        <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+                     </div>
+                        <div class="p-3">
+                           <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                           <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-        <!-- Product Cards Grid -->
-<div class="container my-3" data-aos="fade-up">
-  <div class="row g-4" data-aos="fade-up">
+                           <div class="mb-2">
+                              <h6 class="mb-0">Weight: <b>250g</b></h6>
+                                 <input hidden type="number" class="form-control product-quantity" data-id="1" value="1" min="1">
+                           </div>
 
-    <!-- Loop this block 9 times with different data -->
-   <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" > 
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                           <div class="d-flex justify-content-between align-items-center mt-2">
+                           <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                           </a>
+                              <button type="button" data-id="1" data-name="White Kelangaan-1" data-price="425" class="btn btn-outline-success btn-sm add-to-cart"
+                                 id="cartButton" data-bs-toggle="offcanvas" 
+                                  data-bs-target="#cartOffcanvas">Add to Cart</button>
+                        </div>
+                     </div>
+                     </div>
+                  
+               </div>
+            <!-- Repeat above block 8 more times -->
+                  <div class="col-md-4 col-sm-6 te" data-aos="fade-up">
+                     <a href="productdeteails.html" class="text-decoration-none text-dark" >
+                        <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+                        <div class="product-img position-relative">
+                           <span class="discount-badge">20% OFF</span>
+                           <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                           <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+                        </div>
+                        <div class="p-3">
+                           <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                           <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+                           <div class="mb-2">
+                              <h6 class="mb-0">Weight: <b>250g</b></h6>
+                                <input hidden type="number" class="form-control product-quantity" data-id="2" value="1" min="1">
+                           </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-    <!-- Repeat above block 8 more times -->
-         <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                           <div class="d-flex justify-content-between align-items-center mt-2">
+                              <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                        </a>
+                     <button type="button" data-id="2" data-name="White Kelangaan-2" data-price="200" class="btn btn-outline-success btn-sm add-to-cart"
+                      id="cartButton" data-bs-toggle="offcanvas" 
+                           data-bs-target="#cartOffcanvas">Add to Cart</button>
+                  </div>
+               </div>
+               </div>
+            </div>
+         <!-- product 3 -->
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">20% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-<!-- product 3 -->
-   <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     </a>
+                     <button type="button" class="btn btn-outline-success btn-sm" id="cartButton" data-bs-toggle="offcanvas" 
+                           data-bs-target="#cartOffcanvas">Add to Cart</button>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+         <!-- product 4    -->
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">20% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-<!-- product 4    -->
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-    <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+            <!-- product 5 -->
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">20% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-    <!-- product 5 -->
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-    <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+            <!-- product 6 -->
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">20% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-    <!-- product 6 -->
-    <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+            <!-- product 7 -->
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">20% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-    <!-- product 7 -->
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-    <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">20% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+            <!-- product 8 -->
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">30% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-    <!-- product 8 -->
-   <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">30% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+            <!-- product 9 -->
+            <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
+               <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+               <div class="product-img position-relative">
+                  <span class="discount-badge">50% OFF</span>
+                  <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
+                  <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
+               </div>
+               <div class="p-3">
+                  <h6 class="fw-bold mb-1">White Kelangaan</h6>
+                  <p class="small text-muted">Fresh sea fish delivered to you</p>
 
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
+                  <div class="mb-2">
+                     <h6 class="mb-0">Weight: <b>250g</b></h6>
+                  </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-    <!-- product 9 -->
-    <div class="col-md-4 col-sm-6 te" data-aos="fade-up"><a href="productdeteails.html" class="text-decoration-none text-dark" >
-      <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-        <div class="product-img position-relative">
-          <span class="discount-badge">50% OFF</span>
-          <img src="assets/img/fish11.jpg" class="w-100 img-main" alt="Product Image" />
-          <img src="assets/img/fish12.jpg" class="w-100 img-hover" alt="Hover Image" />
-        </div>
-        <div class="p-3">
-          <h6 class="fw-bold mb-1">White Kelangaan</h6>
-          <p class="small text-muted">Fresh sea fish delivered to you</p>
-
-          <div class="mb-2">
-            <h6 class="mb-0">Weight: <b>250g</b></h6>
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
-            <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-    </div></a>
-<!--     end -->
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                     <span class="fw-bold text-danger">₹ 425 <del class="text-muted ms-1 fs-6">₹ 530</del></span>
+                     <a href="profile.html" class="btn btn-outline-success btn-sm">Add to Cart</a>
+                  </div>
+               </div>
+               </div>
+            </div></a>
+         <!--     end -->
 
 
-        </div>
-        
-      </div>
-    </div>
-  </div>
-</section>
+               </div>
+               
+               </div>
+            </div>
+         </div>
+         </section>
 
 
 
@@ -612,160 +629,75 @@
             <p class="text-center">Copyright © 2025 | Ocean Online Mart</p>
          </div>
       </footer>
-      <!-- Sign in Modal -->
-      <!-- 1st -->
-      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-         <div class="modal-dialog modal-lg modal-dialog-centered login-popup-main">
-            <div class="modal-content border-0 shadow overflow-hidden rounded">
-               <div class="modal-body p-0">
-                  <div class="login-popup">
-                     <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
-                     <div class="row g-0">
 
-                        <!-- left side of sign -->
-                       <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
-   <div class="m-auto text-center">
-      <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
-      <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
-      <p class="small">Fast delivery, fresh products, best prices!</p>
-   </div>
-</div>
-<!-- end -->
-                        <div class="col-md-8 col-lg-8 py-lg-5">
-                           <div class="login p-5">
-                              <div class="mb-4 pb-2">
-                                 <h5 class="mb-2 fw-bold">Hey! what’s your number?</h5>
-                                 <p class="text-muted mb-0"> Enter your WhatsApp number to receive OTP</p>
-                              </div>
-                              <form>
-                                 <div class="input-group bg-white border rounded mb-3 p-2">
-                                    <span class="input-group-text bg-white border-0"><i class="bi bi-phone pe-2"></i> +91 </span>
-                                    <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Enter phone number">
-                                 </div>
-                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label small text-muted border-end pe-1" for="exampleCheck1">I accept the Terms of use & Privacy Policy</label>
-                                    <a href="#" class="text-decoration-none text-success small">View T&C <i class="bi bi-chevron-right"></i></a>
-                                 </div>
-                              </form>
-                              <button class="btn btn-success btn-lg py-3 px-4 text-uppercase w-100 mt-4" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Get OTP <i class="bi bi-arrow-right ms-2"></i></button>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+
+      <!-- off canva modal -->
+       <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Your Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems"></div>
+            <div class="mt-3" id="cartSummary">
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>$<span id="cartSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>$<span id="deliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>$<span id="cartTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
             </div>
-         </div>
-      </div>
-      <!-- 2nd -->
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-         <div class="modal-dialog modal-lg modal-dialog-centered login-popup-main">
-            <div class="modal-content border-0 shadow overflow-hidden rounded">
-               <div class="modal-body p-0">
-                  <div class="login-popup">
-                     <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
-                     <div class="row g-0">
-                         <!-- left side of sign -->
-                       <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
-   <div class="m-auto text-center">
-      <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
-      <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
-      <p class="small">Fast delivery, fresh products, best prices!</p>
-   </div>
-</div>
-<!-- end -->
-                        <div class="col-md-8 col-lg-8 py-lg-5">
-                           <div class="login p-5">
-                              <div class="mb-4 pb-2">
-                                 <h5 class="mb-2 fw-bold">Confirm your number</h5>
-                                 <p class="text-muted mb-0">An OTP has been sent via WhatsApp 123456-78909
-                                    <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" class="text-success text-decoration-none" href="#"><i class="bi bi-pencil-square"></i> Edit</a>
-                                 </p>
-                              </div>
-                              <form>
-                                 <div class="d-flex gap-3 text-center">
-                                    <div class="input-group bg-white border rounded mb-3 p-2">
-                                       <input type="text" value="1" class="form-control bg-white border-0 text-center">
-                                    </div>
-                                    <div class="input-group bg-white border rounded mb-3 p-2">
-                                       <input type="text" value="3" class="form-control bg-white border-0 text-center">
-                                    </div>
-                                    <div class="input-group bg-white border rounded mb-3 p-2">
-                                       <input type="text" value="1" class="form-control bg-white border-0 text-center">
-                                    </div>
-                                    <div class="input-group bg-white border rounded mb-3 p-2">
-                                       <input type="text" value="3" class="form-control bg-white border-0 text-center">
-                                    </div>
-                                 </div>
-                                 <div class="form-check ps-0">
-                                    <label class="small text-muted">Resend OTP in 0:55</label>
-                                 </div>
-                              </form>
-                              <button class="btn btn-success btn-lg py-3 px-4 text-uppercase w-100 mt-4" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Get OTP <i class="bi bi-arrow-right ms-2"></i></button>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section mt-3">
+                <h5>Enter Phone Number</h5>
+                <input type="tel" class="form-control mb-2" id="phoneNumber" placeholder="Enter phone number">
+                <button class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
             </div>
-         </div>
-      </div>
-      <!-- 3rd -->
-      <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-               <div class="modal-header p-4 border-0">
-                  <h5 class="h6 modal-title fw-bold" id="exampleModalToggleLabel3"></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <div class="text-center mb-5 pb-2">
-                     <div class="mb-3"><img src="assets/img/login2.png" class="col-6 mx-auto" alt="" ></div>
-                     <h5 class="mb-2">Have a Referral or Invite Code?</h5>
-                     <p class="text-muted">Use code GET50 to earn 50 Eatsie Cash</p>
-                  </div>
-                  <form>
-                     <label class="form-label">Enter your referral/invite code</label>
-                     <div class="input-group mb-2 border rounded-3 p-1">
-                        <span class="input-group-text border-0 bg-white"><i class="bi bi bi-ticket-perforated  text-secondary"></i></span>
-                        <input type="text" class="form-control border-0 bg-white ps-1" placeholder="Enter the code" aria-label="Username" aria-describedby="basic-addon1">
-                     </div>
-                  </form>
-               </div>
-               <div class="modal-footer px-4 pb-4 pt-0 border-0">
-                  <button class="btn btn-success btn-lg py-3 px-4 text-uppercase  w-100 m-0" data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">Claim Eatsie Cash</button>
-               </div>
+
+            <!-- OTP Section -->
+            <div class="otp-section mt-3">
+                <h5>Enter OTP</h5>
+                <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
+                <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
             </div>
-         </div>
-      </div>
-      <!-- 4rth -->
-      <div class="modal fade" id="exampleModalToggle4" aria-hidden="true" aria-labelledby="exampleModalToggleLabel4" tabindex="-1">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-               <div class="modal-header p-4 border-0">
-                  <h5 class="h6 modal-title fw-bold" id="exampleModalToggleLabel4"></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <div class="row justify-content-center">
-                     <div class="col-10 text-center">
-                        <div class="mb-5"><img src="assets/img/login3.png" alt="" class="col-6 mx-auto"></div>
-                        <div class="my-3">
-                           <h5 class="fw-bold">You got &#8377;50.0 Eatsie Cash!</h5>
-                           <p class="text-muted h6">use this Eatsie Cash to save on your next orders</p>
-                        </div>
-                        <div class="my-4">
-                           <p class="small text-muted mb-0">Your Eatsie Cash will expire in</p>
-                           <div class="h5 text-success">6d:23h</div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="modal-footer px-4 pb-4 pt-0 border-0">
-                  <a href="index-2.html" class="btn btn-success btn-lg py-3 px-4 text-uppercase w-100 m-0">Tap to order</a>
-               </div>
+
+            <!-- Address & Payment Section -->
+            <div class="address-section mt-3">
+                <h5>Delivery Address</h5>
+                <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
+                <h5>Payment Mode</h5>
+                <select class="form-select mb-2" id="paymentMode">
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="card">Credit/Debit Card</option>
+                    <option value="upi">UPI</option>
+                </select>
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>$<span id="finalSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>$<span id="finalDeliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>$<span id="finalTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
             </div>
-         </div>
+        </div>
       </div>
       <!-- location Modal -->
       <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
@@ -830,6 +762,7 @@
             </div>
          </div>
       </div>
+
       <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
          <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
          <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
@@ -842,6 +775,7 @@
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
       <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+      <script src="assets/js/cart-script.js"></script>
 <script>
   AOS.init({
     duration: 800,     // Animation duration (ms)
@@ -902,6 +836,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const activeTab = document.querySelector('.category-tab.active');
     if (activeTab) filterCategory(activeTab, 'all');
   });
+
+
+   
 </script>
    
 </body>

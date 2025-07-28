@@ -82,4 +82,8 @@ function renderProducts(list) {
 }
 
 
-// deteils page
+// add to offcanva script
+
+
+      
+                

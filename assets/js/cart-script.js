@@ -1,151 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Cart</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .cart-icon { position: relative; }
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-        .product-card { margin-bottom: 20px; }
-        .offcanvas { width: 400px !important; }
-        .payment-section, .otp-section, .address-section { display: none; }
-        .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .quantity-control { display: flex; align-items: center; gap: 5px; }
-        .quantity-control button { width: 30px; height: 30px; }
-        .quantity-control input { width: 50px; text-align: center; }
-        .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
-    </style>
-</head>
-<body>
-    <!-- Main Content -->
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>Products</h1>
-            <button class="btn btn-outline-primary cart-icon" id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                <i class="bi bi-cart">Cart</i>
-                <span class="cart-count" id="cartCount">0</span>
-            </button>
-        </div>
-
-        <!-- Product List -->
-        <div class="row" id="productList">
-            <div class="col-md-4">
-                <div class="card product-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$29.99</p>
-                        <div class="quantity-control">
-                            <button class="btn btn-outline-secondary btn-sm product-decrement" data-id="1">-</button>
-                            <input type="number" class="form-control product-quantity" data-id="1" value="1" min="1">
-                            <button class="btn btn-outline-secondary btn-sm product-increment" data-id="1">+</button>
-                        </div>
-                        <button class="btn btn-primary mt-2 add-to-cart" data-id="1" data-name="Product 1" data-price="29.99">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card product-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 2</h5>
-                        <p class="card-text">$49.99</p>
-                        <div class="quantity-control">
-                            <button class="btn btn-outline-secondary btn-sm product-decrement" data-id="2">-</button>
-                            <input type="number" class="form-control product-quantity" data-id="2" value="1" min="1">
-                            <button class="btn btn-outline-secondary btn-sm product-increment" data-id="2">+</button>
-                        </div>
-                        <button class="btn btn-primary mt-2 add-to-cart" data-id="2" data-name="Product 2" data-price="49.99">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Offcanvas Cart -->
-    <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Your Cart</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div id="cartItems"></div>
-            <div class="mt-3" id="cartSummary">
-                <div class="order-summary">
-                    <div class="d-flex justify-content-between">
-                        <span>Subtotal</span>
-                        <span>$<span id="cartSubtotal">0.00</span></span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Delivery Charge</span>
-                        <span>$<span id="deliveryCharge">5.00</span></span>
-                    </div>
-                    <div class="d-flex justify-content-between fw-bold">
-                        <span>Total</span>
-                        <span>$<span id="cartTotal">0.00</span></span>
-                    </div>
-                </div>
-                <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
-            </div>
-
-            <!-- Payment Section -->
-            <div class="payment-section mt-3">
-                <h5>Enter Phone Number</h5>
-                <input type="tel" class="form-control mb-2" id="phoneNumber" placeholder="Enter phone number">
-                <button class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
-            </div>
-
-            <!-- OTP Section -->
-            <div class="otp-section mt-3">
-                <h5>Enter OTP</h5>
-                <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
-                <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
-            </div>
-
-            <!-- Address & Payment Section -->
-            <div class="address-section mt-3">
-                <h5>Delivery Address</h5>
-                <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
-                <h5>Payment Mode</h5>
-                <select class="form-select mb-2" id="paymentMode">
-                    <option value="cod">Cash on Delivery</option>
-                    <option value="card">Credit/Debit Card</option>
-                    <option value="upi">UPI</option>
-                </select>
-                <div class="order-summary">
-                    <div class="d-flex justify-content-between">
-                        <span>Subtotal</span>
-                        <span>$<span id="finalSubtotal">0.00</span></span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Delivery Charge</span>
-                        <span>$<span id="finalDeliveryCharge">5.00</span></span>
-                    </div>
-                    <div class="d-flex justify-content-between fw-bold">
-                        <span>Total</span>
-                        <span>$<span id="finalTotal">0.00</span></span>
-                    </div>
-                </div>
-                <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Cart array to store items
-        let cart = [];
+   let cart = [];
         const DELIVERY_CHARGE = 5.00;
 
+
+          function updateProductTotal(id) {
+            const quantityInput = document.querySelector(`.product-quantity[data-id="${id}"]`);
+            const totalSpan = document.querySelector(`.product-total[data-id="${id}"]`);
+            const price = parseFloat(document.querySelector(`.add-to-cart[data-id="${id}"]`).dataset.price);
+            const quantity = parseFloat(quantityInput.value);
+            if (totalSpan && !isNaN(quantity) && !isNaN(price)) {
+                totalSpan.textContent = `₹`+(price * quantity).toFixed(2);
+            }
+        }
         // Update cart display
         function updateCart() {
             const cartItems = document.getElementById('cartItems');
@@ -158,9 +23,11 @@
             const addressSection = document.querySelector('.address-section');
             const finalSubtotal = document.getElementById('finalSubtotal');
             const finalTotal = document.getElementById('finalTotal');
+            const priceElement = document.getElementById("totalPrice");
             
             cartItems.innerHTML = '';
             let subtotal = 0;
+            let totalQuantity = 0;
 
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p>Your cart is empty</p>';
@@ -171,8 +38,12 @@
                 document.getElementById('proceedToPayment').style.display = 'block';
             } else {
                 cartSummary.style.display = 'block';
+                
+                
                 cart.forEach(item => {
+                   const quantity = parseFloat(item.quantity);  
                     subtotal += item.price * item.quantity;
+                   totalQuantity += quantity;
                     cartItems.innerHTML += `
                         <div class="cart-item d-flex justify-content-between align-items-center">
                             <div>
@@ -202,7 +73,8 @@
                     const id = button.dataset.id;
                     const item = cart.find(item => item.id === id);
                     if (item) {
-                        item.quantity += 1;
+                        item.quantity ++;
+                       
                         updateCart();
                     }
                 });
@@ -213,8 +85,10 @@
                     const id = button.dataset.id;
                     const item = cart.find(item => item.id === id);
                     if (item && item.quantity > 1) {
-                        item.quantity -= 1;
+                        item.quantity --;
+                      
                         updateCart();
+                        
                     }
                 });
             });
@@ -259,7 +133,7 @@
                 const name = button.dataset.name;
                 const price = parseFloat(button.dataset.price);
                 const quantity = parseInt(document.querySelector(`.product-quantity[data-id="${id}"]`).value);
-
+               
                 const existingItem = cart.find(item => item.id === id);
                 if (existingItem) {
                     existingItem.quantity += quantity;
@@ -269,6 +143,7 @@
                 updateCart();
                 // Reset quantity input
                 document.querySelector(`.product-quantity[data-id="${id}"]`).value = 1;
+                 updateProductTotal(id);
             });
         });
 
@@ -278,6 +153,7 @@
                 const id = button.dataset.id;
                 const input = document.querySelector(`.product-quantity[data-id="${id}"]`);
                 input.value = parseInt(input.value) + 1;
+                 updateProductTotal(id);
             });
         });
 
@@ -287,6 +163,7 @@
                 const input = document.querySelector(`.product-quantity[data-id="${id}"]`);
                 if (parseInt(input.value) > 1) {
                     input.value = parseInt(input.value) - 1;
+                     updateProductTotal(id);
                 }
             });
         });
@@ -295,6 +172,7 @@
             input.addEventListener('change', () => {
                 if (parseInt(input.value) < 1) {
                     input.value = 1;
+                     updateProductTotal(id);
                 }
             });
         });
@@ -315,7 +193,7 @@
             if (phone.length < 10) {
                 alert('Please enter a valid phone number');
                 return;
-            }
+            } 
             document.querySelector('.payment-section').style.display = 'none';
             document.querySelector('.otp-section').style.display = 'block';
             // Simulate OTP sending
@@ -331,7 +209,52 @@
             }
             document.querySelector('.otp-section').style.display = 'none';
             document.querySelector('.address-section').style.display = 'block';
+            console.log(cart);
+            
+            // window.location.href = 'http://127.0.0.1:5500/checkout.html';
+             
         });
+
+        // document.getElementById('verifyOtp').addEventListener('click', async () => {
+        //     const otp = document.getElementById('otpInput').value;
+        //     if (otp.length !== 4) {
+        //         alert('Please enter a valid 4-digit OTP');
+        //         return;
+        //     }
+
+        //     try {
+        //         // Show a loading state (optional, for better UX)
+        //         document.getElementById('verifyOtp').disabled = true;
+        //         document.getElementById('verifyOtp').textContent = 'Verifying...';
+
+        //         // Make API call to validate OTP
+        //         const response = await fetch('https://your-api-endpoint.com/verify-otp', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //             body: JSON.stringify({ otp: otp })
+        //         });
+
+        //         const data = await response.json();
+
+        //         if (response.ok && data.success) {
+        //             // OTP is valid, redirect to the next page
+        //             window.location.href = 'https://example.com/next-page'; // Replace with your target URL
+        //         } else {
+        //             // OTP validation failed
+        //             alert(data.message || 'Invalid OTP. Please try again.');
+        //         }
+        //     } catch (error) {
+        //         // Handle network or other errors
+        //         alert('Something went wrong. Please try again later.');
+        //         console.error('Error:', error);
+        //     } finally {. 
+        //         // Reset button state
+        //         document.getElementById('verifyOtp').disabled = false;
+        //         document.getElementById('verifyOtp').textContent = 'Verify OTP';
+        //     }
+        // });
 
         // Complete Order
         document.getElementById('completeOrder').addEventListener('click', () => {
@@ -350,9 +273,4 @@
             document.getElementById('proceedToPayment').style.display = 'block';
             document.getElementById('cartOffcanvas').classList.remove('show');
         });
-
-        // Initial cart update
         updateCart();
-    </script>
-</body>
-</html>
