@@ -20,8 +20,9 @@ Version: 0.1
 
 /* Body */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&amp;display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 body {
-	font-family: 'IBM Plex Sans Arabic', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	font-size: 13px;
 }
 :root {
@@ -778,7 +779,12 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+     width: 90px;                /* Fixed width to ensure equal spacing */
+  min-width: 90px;
+  max-width: 90px;
+  text-align: center;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 
@@ -801,13 +807,19 @@ hr {
 }
 
 .category-tab span {
-  font-size: 14px;
-  font-weight: 1000;
-  color: #f8efef;	
-  margin-top: 15px;
-  	
- 
-	 
+  font-size: 13px;
+  font-weight: 600;
+  color: #F8EFEF;
+  margin-top: 8px;
+  text-align: center;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;      /* :point_left: Allows up to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.1;
+  height: 2.4em;              /* :point_left: Adjust height to fit 2 lines */
 }
 
 
