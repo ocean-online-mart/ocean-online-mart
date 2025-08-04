@@ -7,7 +7,48 @@ const userContactNumber = JSON.parse(localStorage.getItem('user_number')) || '';
 const DELIVERY_CHARGE = 25.00; // As per your HTML
 const DISCOUNT = 20.00; // As per your HTML
 
-// console.log(cart);
+const form = document.getElementById('checkoutForm');
+const proceedButton = document.getElementById('proceedToPayment');
+
+const inputs = {
+    fullName: document.getElementById('fullName'),
+    phoneNumber: document.getElementById('phoneNumber'),
+    address: document.getElementById('address'),
+    city: document.getElementById('city'),
+    state: document.getElementById('state'),
+    pinCode: document.getElementById('pinCode'),
+    payment: document.querySelectorAll('input[name="payment"]')
+};
+
+const errorMessages = {
+    fullName: document.getElementById('fullNameError'),
+    phoneNumber: document.getElementById('phoneNumberError'),
+    address: document.getElementById('addressError'),
+    city: document.getElementById('cityError'),
+    state: document.getElementById('stateError'),
+    pinCode: document.getElementById('pinCodeError'),
+    payment: document.getElementById('paymentError')
+};
+
+const touched = {
+    fullName: false,
+    phoneNumber: false,
+    address: false,
+    city: false,
+    state: false,
+    pinCode: false,
+    payment: false
+};
+
+ const validators = {
+    fullName: /^[a-zA-Z\s-]{2,}$/,
+    phoneNumber: /^\d{10}$/,
+    address: /^.{5,}$/,
+    city: /^[a-zA-Z\s]{2,}$/,
+    state: /^[a-zA-Z\s]{2,}$/,
+    pinCode: /^\d{6}$/,
+    payment: () => document.querySelector('input[name="payment"]:checked') !== null
+};
 
 // Display order summary
 function displayOrderSummary() {
@@ -62,123 +103,189 @@ function displayOrderSummary() {
     totalSpan.textContent = `₹${(subtotal + DELIVERY_CHARGE - DISCOUNT).toFixed(2)}`;
 }
 
-document.getElementById('proceedToPayment')?.addEventListener('click', async (e) => {
+function validateField(fieldName, value, showError = touched[fieldName]) {
+    let isValid = false;
+    if (fieldName === 'payment') {
+        isValid = validators[fieldName]();
+    } else {
+        isValid = validators[fieldName].test(value.trim());
+    }
+    const input = fieldName === 'payment' ? inputs[fieldName][0].parentElement : inputs[fieldName];
+    const error = errorMessages[fieldName];
+    if (!isValid && showError) {
+        input.classList.add('is-invalid');
+        error.style.display = 'block';
+    } else {
+        input.classList.remove('is-invalid');
+        error.style.display = 'none';
+    }
+    return isValid;
+}
+
+ function validateForm() {
+    const isValid = Object.keys(inputs).every(fieldName => {
+        if (fieldName === 'payment') {
+            return validateField('payment', null, false);
+        }
+        return validateField(fieldName, inputs[fieldName].value, false);
+    });
+            
+}
+// const storedPhone = localStorage.getItem('user_number');
+    if (userContactNumber) {
+        // console.log(storedPhone);
+        
+        inputs.phoneNumber.value = userContactNumber;
+        touched.phoneNumber = true; 
+        validateField('phoneNumber', userContactNumber);
+}
+
+
+['fullName', 'phoneNumber', 'address', 'city', 'state', 'pinCode'].forEach(fieldName => {
+    inputs[fieldName].addEventListener('input', () => {
+        touched[fieldName] = true; 
+        validateField(fieldName, inputs[fieldName].value);
+        if (fieldName === 'phoneNumber') {
+            localStorage.setItem('phoneNumber', inputs[fieldName].value.trim());
+        }
+        validateForm();
+    });
+});
+
+inputs.payment.forEach(radio => {
+    radio.addEventListener('change', () => {
+        touched.payment = true; 
+        validateField('payment');
+        validateForm();
+    });
+});
+
+inputs.payment.forEach(radio => {
+    radio.addEventListener('change', () => {
+        touched.payment = true; 
+        validateField('payment');
+        validateForm();
+    });
+});
+validateForm();
+
+proceedButton.addEventListener('click', async (e) => {     
     e.preventDefault();
-    const form = document.getElementById('checkoutForm');
-    if (!form.checkValidity()) {
+            
+    Object.keys(touched).forEach(field => touched[field] = true);
+    const isValid = Object.keys(inputs).every(fieldName => {
+        if (fieldName === 'payment') return validateField('payment', null, true);
+        return validateField(fieldName, inputs[fieldName].value, true);
+    });
+    
+    if (!form.checkValidity() || !isValid) {
+        form.classList.add('was-validated');
         form.reportValidity();
         return;
     }
-        const shippingDetails = {
-            fullName: document.getElementById('fullName').value.trim(),
-            phoneNumber: phoneInput,
-            address: document.getElementById('address').value.trim(),
-            city: document.getElementById('city').value.trim(),
-            state: document.getElementById('state').value.trim(),
-            pinCode: document.getElementById('pinCode').value.trim(),
-            notes: document.getElementById('notes').value.trim(),
-            saveAddress: document.getElementById('saveAddress').checked
-        };    
-        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-        const orderData = {
-            cart,
-            shippingDetails,
-            paymentMethod,
-            subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-            shipping: DELIVERY_CHARGE,
-            discount: DISCOUNT,
-            total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + DELIVERY_CHARGE - DISCOUNT
-        };
+       
+    const shippingDetails = {
+        fullName: inputs.fullName.value.trim(),
+        phoneNumber: inputs.phoneNumber.value.trim(),
+        address: inputs.address.value.trim(),
+        city: inputs.city.value.trim(),
+        state: inputs.state.value.trim(),
+        pinCode: inputs.pinCode.value.trim(),
+        notes: document.getElementById('notes').value.trim(),
+        saveAddress: document.getElementById('saveAddress').checked
+    };
 
-    try {
-        if (paymentMethod === 'cod') {
-            // Submit order for COD
-            const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/create_order.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                localStorage.removeItem('cart');
-                localStorage.removeItem('deliveryCharge');
-                window.location.href = 'thankyou.html';
-            } else {
-                alert('Error processing order: ' + result.message);
-            }
-        } else {
-            // Razorpay payment (UPI or Card)
-            const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/create_order.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
-            });
-            const result = await response.json();
-            if (result.status !== 'success' || !result.order_id) {
-                alert('Error creating order: ' + result.message);
-                return;
-            }
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+    const orderData = {
+        cart,
+        shippingDetails,
+        paymentMethod,
+        subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        shipping: DELIVERY_CHARGE,
+        discount: DISCOUNT,
+        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + DELIVERY_CHARGE - DISCOUNT
+    };
 
-            const options = {
-                key: 'rzp_test_TXTvjbW0djSCaJ', // Replace with your Razorpay Key ID
-                amount: orderData.total * 100, // Amount in paise
-                currency: 'INR',
-                name: 'Ocean Online Mart',
-                description: 'Order Payment',
-                image: 'assets/img/logo.png', // Replace with your logo
-                order_id: result.order_id, // Razorpay order ID from server
-                handler: async function (response) {
-                    // Verify payment on server
-                    const verifyResponse = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/verify_payment.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_signature: response.razorpay_signature,
-                            orderData
-                        })
-                    });
-                    const verifyResult = await verifyResponse.json();
-                    if (verifyResult.status === 'success') {
-                        localStorage.removeItem('cart');
-                        localStorage.removeItem('deliveryCharge');
-                        window.location.href = 'thankyou.html';
-                    } else {
-                        alert('Payment verification failed: ' + verifyResult.message);
-                    }
-                },
-                prefill: {
-                    name: shippingDetails.fullName,
-                    contact: shippingDetails.phoneNumber,
-                    email: 'customer@example.com' // You may want to add an email field to the form
-                },
-                theme: {
-                    color: '#28a745' // Match your brand color (Bootstrap success green)
+        try {
+            // console.log(orderData);
+            
+            if (paymentMethod === 'cod') {    
+                const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+                const result = await response.json();
+                if (result.status) {
+                    localStorage.removeItem('cart');
+                    localStorage.removeItem('deliveryCharge');
+                    window.location.href = 'success-order.html';
+                } else {
+                    alert('Error processing order: ' + result.message);
                 }
-            };
+            } else {
+                const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+                const result = await response.json();
+                if (result.status !== 'success' || !result.order_id) {
+                    alert('Error creating order: ' + result.message);
+                    return;
+                }
 
-            const rzp = new Razorpay(options);
-            rzp.open();
-            rzp.on('payment.failed', function (response) {
-                alert('Payment failed: ' + response.error.description);
-            });
+                const options = {
+                    key: 'rzp_test_TXTvjbW0djSCaJ',
+                    amount: orderData.total * 100,
+                    currency: 'INR',
+                    name: 'Ocean Online Mart',
+                    description: 'Order Payment',
+                    image: 'assets/img/logo.png',
+                    order_id: result.order_id,
+                    handler: async function (response) {
+                        const verifyResponse = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/verify_payment.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                                orderData
+                            })
+                        });
+                        const verifyResult = await verifyResponse.json();
+                        if (verifyResult.status === 'success') {
+                            localStorage.removeItem('cart');
+                            localStorage.removeItem('deliveryCharge');
+                            window.location.href = 'success-order.html';
+                        } else {
+                            alert('Payment verification failed: ' + verifyResult.message);
+                        }
+                    },
+                    prefill: {
+                        name: shippingDetails.fullName,
+                        contact: shippingDetails.phoneNumber,
+                        email: 'customer@example.com'
+                    },
+                    theme: {
+                        color: '#28a745'
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+                rzp.on('payment.failed', function (response) {
+                    alert('Payment failed: ' + response.error.description);
+                });
+            }
+        } catch (error) {
+            console.error('Error processing order:', error);
+            alert('An error occurred while processing your order: ' + error.message);
         }
-    } catch (error) {
-        console.error('Error processing order:', error);
-        alert('An error occurred while processing your order. Please try again.');
-    }
 });
 
 // Initialize order summary on page load
 window.addEventListener('DOMContentLoaded', () => {
     displayOrderSummary();
-     const phoneInput = document.getElementById('phoneNumber');
-        if (userContactNumber) {
-            phoneInput.value = userContactNumber;
-        }
-        phoneInput.addEventListener('input', function() {
-
-            localStorage.setItem('phoneNumber', phoneInput.value);
-        });
 });

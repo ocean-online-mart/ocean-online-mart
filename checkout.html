@@ -36,6 +36,39 @@
         .quantity-control button { width: 30px; height: 30px; }
         .quantity-control input { width: 50px; text-align: center; }
         .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
+                .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .is-invalid ~ .error-message {
+            display: block;
+        }
+        .my-control{
+            display: block;
+            width: 100%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--bs-body-color);
+            background-color: var(--bs-body-bg);
+            background-clip: padding-box;
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: var(--bs-border-radius);
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        .my-control:focus{
+            color: var(--bs-body-color);
+            background-color: var(--bs-body-bg);
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+        }
    </style>
    <body class="bg-light">
       <!-- Navbar -->
@@ -117,33 +150,49 @@
                     <div class="card shadow-sm mb-4">
                         <div class="card-body">
                             <h5 class="fw-bold mb-3">Shipping Details</h5>
-                            <form id="checkoutForm">
+                            <form id="checkoutForm" class="needs-validation" novalidate>
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label small">Full Name</label>
                                         <input type="text" class="form-control" id="fullName" placeholder="John Doe" required>
+                                          <div class="error-message" id="fullNameError">
+                                             Please enter a valid name (at least 2 characters, letters, spaces, or hyphens only).
+                                          </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label small">Phone Number</label>
-                                        <input type="text" class="form-control" id="phoneNumber" placeholder="+91 9876543210" required>
+                                        <input type="text" class="form-control" id="phoneNumber" placeholder="+91 0000000000" required>
+                                         <div class="error-message" id="phoneNumberError">
+                                             Please enter a valid phone number (e.g., +919876543210).
+                                          </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">Address</label>
                                     <input type="text" class="form-control" id="address" placeholder="123, Street name, City" required>
+                                    <div class="error-message" id="addressError">
+                                       Please enter a valid address (at least 5 characters).
+                                    </div>
                                 </div>
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label small">City</label>
                                         <input type="text" class="form-control" id="city" placeholder="Chennai" required>
+                                         <div class="error-message" id="cityError">
+                                             Please enter a valid city (at least 2 characters, letters or spaces only).
+                                          </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label small">State</label>
                                         <input type="text" class="form-control" id="state" placeholder="Tamil Nadu" required>
+                                          <div class="error-message" id="stateError">
+                                             Please enter a valid state (at least 2 characters, letters or spaces only).
+                                          </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label small">Pin Code</label>
-                                        <input type="text" class="form-control" id="pinCode" placeholder="600001" required>
+                                        <input type="text" class="form-control" id="pinCode" placeholder="000000" required>
+                                          <div class="error-message" id="pinCodeError">Please enter a valid 6-digit pin code.</div>
                                     </div>
                                 </div>
                                 <div class="form-check mb-3">
@@ -154,7 +203,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="notes" class="form-label">Your Notes</label>
-                                    <textarea class="form-control" id="notes" rows="3"></textarea>
+                                    <textarea class="my-control" id="notes" rows="3"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -180,6 +229,7 @@
                                     Credit / Debit Card
                                 </label>
                             </div>
+                             <div class="error-message" id="paymentError">Please select a payment method.</div>
                         </div>
                     </div>
                 </div>
@@ -207,7 +257,7 @@
                                 <span>Total</span>
                                 <span id="finalTotal"></span>
                             </div>
-                            <button type="submit" class="btn btn-success w-100 paymnet-submit" id="proceedToPayment">Proceed to Payment</button>
+                            <button type="button" class="btn btn-success w-100 paymnet-submit" id="proceedToPayment">Proceed to Payment</button>
                         </div>
                     </div>
                 </div>
@@ -303,7 +353,7 @@
             </div>
 
             <!-- Address & Payment Section -->
-            <div class="address-section mt-3">
+            <!-- <div class="address-section mt-3">
                 <h5>Delivery Address</h5>
                 <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
                 <h5>Payment Mode</h5>
@@ -327,7 +377,7 @@
                     </div>
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
-            </div>
+            </div> -->
         </div>
       </div>
       <section class="footer py-5">
