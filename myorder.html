@@ -222,11 +222,7 @@
          <div class="container">
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
                <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
-             
-   
             </a>
-             
-            
             <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
@@ -268,9 +264,9 @@
                   </a>
                   
                  <a href="#" onclick="toggleCart(true)" class="btn btn-light position-relative rounded-pill rounded-icon">
-  <i class="bi bi-cart3"></i>
-  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
-</a>
+                    <i class="bi bi-cart3"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
+                  </a>
 
                   </a>
                   <a class="btn btn-success rounded-pill px-3 text-uppercase ms-2" href="purchase.html" role="button">Purchase Now</a>
@@ -290,287 +286,113 @@
             </div>
          </div>
       </section>
-      <section class="my-orders py-5" style="background-color: #f8f9fa;">
-  <div class="container">
-    <h2 class="mb-4 text-center fw-bold">My Orders</h2>
+    <section class="my-orders py-5" style="background-color: #f8f9fa;">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">My Orders</h2>
+          <div id="order-list">
 
-    <!-- Single Order Card -->
-    <div class="card mb-4 border-0 shadow-sm rounded-4">
-      <div class="card-body p-3">
-        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
-          <!-- Image -->
-          <div class="flex-shrink-0" style="width: 80px;">
-            <img src="assets/img/fish12.jpg" class="img-fluid rounded-3 border" alt="Fresh Prawns">
           </div>
-
-          <!-- Order Info -->
-          <div class="flex-grow-1">
-            <div class="d-flex justify-content-between flex-column flex-md-row">
-              <div>
-                <h6 class="fw-semibold mb-1">Order #123456</h6>
-                <small class="text-muted">Placed on: July 10, 2025</small>
+        <!-- <div class="card mb-4 border-0 shadow-sm rounded-4" id="order-list">
+          <div class="card-body p-3">
+            <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
+              <div class="flex-shrink-0" style="width: 80px;">
+                <img src="assets/img/fish12.jpg" class="img-fluid rounded-3 border" alt="Fresh Prawns">
               </div>
-              <div class="text-md-end mt-2 mt-md-0">
-                <span class="badge text-bg-success px-3 py-1 rounded-pill">Shipped</span>
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between flex-column flex-md-row">
+                  <div>
+                    <h6 class="fw-semibold mb-1">Order #123456</h6>
+                    <small class="text-muted">Placed on: July 10, 2025</small>
+                  </div>
+                  <div class="text-md-end mt-2 mt-md-0">
+                    <span class="badge text-bg-success px-3 py-1 rounded-pill">Shipped</span>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <div>Fresh Prawns (1x)</div>
+                  <div class="fw-bold text-success mt-1">₹499</div>
+                </div>
               </div>
-            </div>
-            <div class="mt-2">
-              <div>Fresh Prawns (1x)</div>
-              <div class="fw-bold text-success mt-1">₹499</div>
-            </div>
-          </div>
 
-          <!-- Action Buttons -->
-          <div class="text-end mt-3 mt-md-0">
-            <a href="productdeteails.html" class="btn btn-sm btn-outline-primary me-2">View Details</a>
-            <a href="ordertracking.html" class="btn btn-sm btn-outline-secondary">Track Order</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Clone for another order (reuse the same block as needed) -->
-    <div class="card mb-4 border-0 shadow-sm rounded-4">
-      <div class="card-body p-3">
-        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
-          <div class="flex-shrink-0" style="width: 80px;">
-            <img src="assets/img/fish11.jpg" class="img-fluid rounded-3 border" alt="Fresh Prawns">
-          </div>
-          <div class="flex-grow-1">
-            <div class="d-flex justify-content-between flex-column flex-md-row">
-              <div>
-                <h6 class="fw-semibold mb-1">Order #123457</h6>
-                <small class="text-muted">Placed on: July 12, 2025</small>
-              </div>
-              <div class="text-md-end mt-2 mt-md-0">
-                <span class="badge text-bg-warning px-3 py-1 rounded-pill">Out for Delivery</span>
+             
+              <div class="text-end mt-3 mt-md-0">
+                <a href="productdeteails.html" class="btn btn-sm btn-outline-primary me-2">View Details</a>
+                <a href="ordertracking.html" class="btn btn-sm btn-outline-secondary">Track Order</a>
               </div>
             </div>
-            <div class="mt-2">
-              <div>Chicken Curry Cut (2x)</div>
-              <div class="fw-bold text-success mt-1">₹749</div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+     <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Submit Your Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reviewForm">
+                        <div class="mb-3">
+                            <label for="reviewMessage" class="form-label">Your Review</label>
+                            <textarea class="form-control" id="reviewMessage" rows="4" required placeholder="Share your thoughts about your seafood order..."></textarea>
+                        </div>
+                        <input type="hidden" id="orderId" name="order_id">
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
             </div>
-          </div>
-          <div class="text-end mt-3 mt-md-0">
-            <a href="productdeteails.html" class="btn btn-sm btn-outline-primary me-2">View Details</a>
-            <a href="ordertracking.html" class="btn btn-sm btn-outline-secondary">Track Order</a>
-          </div>
         </div>
-      </div>
     </div>
-
-  </div>
-</section>
-
-<!-- Related Products Section -->
- <section class="py-lg-5 py-0 position-relative">
-  <div class="container position-relative">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="fw-bold mb-0">Related Products</h4>
-  
-    </div>
-
-    <!-- Arrows -->
-    <button id="scrollLeft" class="scroll-btn left d-none" onclick="scrollRelated('left')">&#8249;</button>
-    <button id="scrollRight" class="scroll-btn right" onclick="scrollRelated('right')">&#8250;</button>
-
-    <!-- Scrollable Cards -->
-    <div id="related-scroll" class="d-flex overflow-auto gap-3 scroll-smooth pb-2">
-     
-      <!-- Card 1 -->
-      <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
- 
-  <!-- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512" class="product"><path d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z"></path></svg> -->
-<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-
-
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-        <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-          <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-        <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish12.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-              <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- Add more cards as needed -->
-<!-- card 4 -->
-   <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- card 5 -->
-        <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
-  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- card 6 -->
-         <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div>
-
-      <!-- card 7 -->
-         <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;">
-        <img src="assets/img/fish11.jpg" class="card-img-top" alt="...">
-        <div class="card-body p-2">
-          <h6 class="fw-bold mb-1" style="font-weight: bolder;">White Kelangaan</h6>
-        
-          <p class="small text-muted mb-2">250g </p>
-          <p style="font-weight: bolder; font-size: medium;"> <b>₹425 </b><del class="text-muted"
-            style="padding-right: 15px;">₹480</del><span class="off text-end">17% off</span></p> 
-               <button class="cartBtn">
-  <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-  ADD TO CART
- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" class="product">
-    <path d="M327.6 96c-49.2 0-94.2 17.3-131.1 45.7C156.7 112.2 128 96 96 96c-53 0-96 42.1-96 94.1 0 34.2 17.8 64.2 44.8 81.6C17.8 288.9 0 318.9 0 353.1 0 405.9 43 448 96 448c32 0 60.7-16.2 100.5-45.7C233.4 398.7 278.4 416 327.6 416c137.5 0 248.4-86 248.4-160S465.1 96 327.6 96zM96 400c-26.5 0-48-21.5-48-47.9 0-24.5 17.5-44.9 40.3-47.5l24.1-2.8-20.1-14.5c-16.6-12-26.3-31-26.3-51.2 0-26.4 21.5-47.9 48-47.9 13.7 0 26.3 6 35.1 15.7-23.5 26.5-40.4 58.4-48.3 93.1-7.9 34.7-6 69.4 4.3 102.6C113.2 396.7 104.8 400 96 400zm232-96c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"/>
-  </svg>
-</button>
-        </div>
-      </div> 
-
-    </div>
-    </div>
-  </div>
-</section>
-
-
+      
 <!-- explaination -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <h4 class="fw-bold mb-4 text-center text-success">Why Choose Us</h4>
-    <div class="row g-4 text-center">
-      <div class="col-md-3">
-        <div class="p-3">
-          <i class="bi bi-patch-check-fill text-success fs-2 mb-2"></i>
-          <h6 class="fw-semibold">Quality Assured</h6>
-          <p class="small text-muted">Fresh catch & premium products.</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="p-3">
-          <i class="bi bi-truck text-success fs-2 mb-2"></i>
-          <h6 class="fw-semibold">Fast Delivery</h6>
-          <p class="small text-muted">Quick & safe doorstep delivery.</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="p-3">
-          <i class="bi bi-shield-lock-fill text-success fs-2 mb-2"></i>
-          <h6 class="fw-semibold">Secure Payment</h6>
-          <p class="small text-muted">Multiple secure payment options.</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="p-3">
-          <i class="bi bi-emoji-smile-fill text-success fs-2 mb-2"></i>
-          <h6 class="fw-semibold">10,000+ Happy Buyers</h6>
-          <p class="small text-muted">Trusted by customers nationwide.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="py-5 text-center bg-success text-white">
-  <div class="container">
-    <h4 class="fw-bold mb-3">Stay Updated!</h4>
-    <p class="mb-4">Subscribe to get exclusive offers & fresh product alerts.</p>
-    <form class="d-flex justify-content-center">
-      <input type="email" class="form-control w-25 rounded-start-pill" placeholder="Enter your email">
-      <button type="submit" class="btn btn-light rounded-end-pill px-3">Subscribe</button>
-    </form>
-  </div>
-</section>
-
-
+        <section class="py-5 bg-light">
+          <div class="container">
+            <h4 class="fw-bold mb-4 text-center text-success">Why Choose Us</h4>
+            <div class="row g-4 text-center">
+              <div class="col-md-3">
+                <div class="p-3">
+                  <i class="bi bi-patch-check-fill text-success fs-2 mb-2"></i>
+                  <h6 class="fw-semibold">Quality Assured</h6>
+                  <p class="small text-muted">Fresh catch & premium products.</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="p-3">
+                  <i class="bi bi-truck text-success fs-2 mb-2"></i>
+                  <h6 class="fw-semibold">Fast Delivery</h6>
+                  <p class="small text-muted">Quick & safe doorstep delivery.</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="p-3">
+                  <i class="bi bi-shield-lock-fill text-success fs-2 mb-2"></i>
+                  <h6 class="fw-semibold">Secure Payment</h6>
+                  <p class="small text-muted">Multiple secure payment options.</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="p-3">
+                  <i class="bi bi-emoji-smile-fill text-success fs-2 mb-2"></i>
+                  <h6 class="fw-semibold">10,000+ Happy Buyers</h6>
+                  <p class="small text-muted">Trusted by customers nationwide.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="py-5 text-center bg-success text-white">
+          <div class="container">
+            <h4 class="fw-bold mb-3">Stay Updated!</h4>
+            <p class="mb-4">Subscribe to get exclusive offers & fresh product alerts.</p>
+            <form class="d-flex justify-content-center">
+              <input type="email" class="form-control w-25 rounded-start-pill" placeholder="Enter your email">
+              <button type="submit" class="btn btn-light rounded-end-pill px-3">Subscribe</button>
+            </form>
+          </div>
+        </section>
       <!-- Footer -->
-  
       <footer class="bg-footer py-1 pt-4 d-none d-md-block">
          <div class="container">
             <div class="row mb-5">
@@ -648,12 +470,12 @@
 
                         <!-- left side of sign -->
                        <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
-   <div class="m-auto text-center">
-      <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
-      <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
-      <p class="small">Fast delivery, fresh products, best prices!</p>
-   </div>
-</div>
+                        <div class="m-auto text-center">
+                            <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
+                            <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
+                            <p class="small">Fast delivery, fresh products, best prices!</p>
+                        </div>
+                      </div>
 <!-- end -->
                         <div class="col-md-8 col-lg-8 py-lg-5">
                            <div class="login p-5">
@@ -691,160 +513,233 @@
                      <div class="row g-0">
                          <!-- left side of sign -->
                        <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
-   <div class="m-auto text-center">
-      <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
-      <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
-      <p class="small">Fast delivery, fresh products, best prices!</p>
-   </div>
-</div>
-<!-- end -->
-      <!-- 3rd -->
-      <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-               <div class="modal-header p-4 border-0">
-                  <h5 class="h6 modal-title fw-bold" id="exampleModalToggleLabel3"></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <div class="text-center mb-5 pb-2">
-                     <div class="mb-3"><img src="assets/img/login2.png" class="col-6 mx-auto" alt="" ></div>
-                     <h5 class="mb-2">Have a Referral or Invite Code?</h5>
-                     <p class="text-muted">Use code GET50 to earn 50 Eatsie Cash</p>
-                  </div>
-                  <form>
-                     <label class="form-label">Enter your referral/invite code</label>
-                     <div class="input-group mb-2 border rounded-3 p-1">
-                        <span class="input-group-text border-0 bg-white"><i class="bi bi bi-ticket-perforated  text-secondary"></i></span>
-                        <input type="text" class="form-control border-0 bg-white ps-1" placeholder="Enter the code" aria-label="Username" aria-describedby="basic-addon1">
-                     </div>
-                  </form>
-               </div>
-               <div class="modal-footer px-4 pb-4 pt-0 border-0">
-                  <button class="btn btn-success btn-lg py-3 px-4 text-uppercase  w-100 m-0" data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">Claim Eatsie Cash</button>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- 4rth -->
-      <div class="modal fade" id="exampleModalToggle4" aria-hidden="true" aria-labelledby="exampleModalToggleLabel4" tabindex="-1">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-               <div class="modal-header p-4 border-0">
-                  <h5 class="h6 modal-title fw-bold" id="exampleModalToggleLabel4"></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <div class="row justify-content-center">
-                     <div class="col-10 text-center">
-                        <div class="mb-5"><img src="assets/img/login3.png" alt="" class="col-6 mx-auto"></div>
-                        <div class="my-3">
-                           <h5 class="fw-bold">You got &#8377;50.0 Eatsie Cash!</h5>
-                           <p class="text-muted h6">use this Eatsie Cash to save on your next orders</p>
+                        <div class="m-auto text-center">
+                            <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
+                            <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
+                            <p class="small">Fast delivery, fresh products, best prices!</p>
                         </div>
-                        <div class="my-4">
-                           <p class="small text-muted mb-0">Your Eatsie Cash will expire in</p>
-                           <div class="h5 text-success">6d:23h</div>
                         </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="modal-footer px-4 pb-4 pt-0 border-0">
-                  <a href="index-2.html" class="btn btn-success btn-lg py-3 px-4 text-uppercase w-100 m-0">Tap to order</a>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- location Modal -->
-      <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-               <div class="modal-header px-4">
-                  <h5 class="h6 modal-title fw-bold">Add Your Location</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <form>
-                     <div class="input-group border p-1 overflow-hidden osahan-search-icon shadow-sm rounded mb-3">
-                        <span class="input-group-text bg-white border-0"><i class="icofont-search"></i></span>
-                        <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Search for area, location name">
-                     </div>
-                  </form>
-                  <div class="mb-4">
-                     <a href="#" data-bs-dismiss="modal" aria-label="Close" class="text-success d-flex gap-2 text-decoration-none fw-bold">
-                        <i class="bi bi-compass text-success"></i>
-                        <div>Use Current Location</div>
-                     </a>
-                  </div>
-                  <div class="text-muted text-uppercase small">Search Results</div>
-                  <div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore</p>
-                           <p class="text-muted small m-0">Karnataka, India</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore internaltional airport</p>
-                           <p class="text-muted small m-0">Karmpegowda.in't Airport, Hunachur, karnataka, India</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Railway Station back gate</p>
-                           <p class="text-muted small m-0">M.G. Railway Colony, Majestic, Bangaluru, Karnataka.</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore Cant</p>
-                           <p class="text-muted small m-0">Cantonent Railway Station Road, Contonment Railway.</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore Contonement Railway Station</p>
-                           <p class="text-muted small m-0">Contonement Railway Quarters, Shivaji nagar.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-         <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
-         <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
-      </div>
-      <!-- Bootstrap core JavaScript -->
-      <script src="assets/vendor/jquery/jquery.min.js"></script>
-      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- Custom scripts for all pages-->
-      <script src="assets/js/custom.js" ></script>
-      <script> function scrollRelated(direction) {
-    const scrollBox = document.getElementById('related-scroll');
-    const leftArrow = document.getElementById('scrollLeft');
-    const rightArrow = document.getElementById('scrollRight');
-    const scrollAmount = 250;
 
-    if (direction === 'right') {
-      scrollBox.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      leftArrow.classList.remove('d-none');
-    } else {
-      scrollBox.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-      if (scrollBox.scrollLeft - scrollAmount <= 0) {
-        leftArrow.classList.add('d-none');
+      <!-- location Modal -->
+                        <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content border-0 shadow">
+                                <div class="modal-header px-4">
+                                    <h5 class="h6 modal-title fw-bold">Add Your Location</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <form>
+                                      <div class="input-group border p-1 overflow-hidden osahan-search-icon shadow-sm rounded mb-3">
+                                          <span class="input-group-text bg-white border-0"><i class="icofont-search"></i></span>
+                                          <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Search for area, location name">
+                                      </div>
+                                    </form>
+                                    <div class="mb-4">
+                                      <a href="#" data-bs-dismiss="modal" aria-label="Close" class="text-success d-flex gap-2 text-decoration-none fw-bold">
+                                          <i class="bi bi-compass text-success"></i>
+                                          <div>Use Current Location</div>
+                                      </a>
+                                    </div>
+                                    <div class="text-muted text-uppercase small">Search Results</div>
+                                    <div>
+                                      <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                                          <i class="icofont-search h6"></i>
+                                          <div>
+                                            <p class="mb-1 fw-bold">Bangalore</p>
+                                            <p class="text-muted small m-0">Karnataka, India</p>
+                                          </div>
+                                      </div>
+                                      <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                                          <i class="icofont-search h6"></i>
+                                          <div>
+                                            <p class="mb-1 fw-bold">Bangalore internaltional airport</p>
+                                            <p class="text-muted small m-0">Karmpegowda.in't Airport, Hunachur, karnataka, India</p>
+                                          </div>
+                                      </div>
+                                      <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                                          <i class="icofont-search h6"></i>
+                                          <div>
+                                            <p class="mb-1 fw-bold">Railway Station back gate</p>
+                                            <p class="text-muted small m-0">M.G. Railway Colony, Majestic, Bangaluru, Karnataka.</p>
+                                          </div>
+                                      </div>
+                                      <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                                          <i class="icofont-search h6"></i>
+                                          <div>
+                                            <p class="mb-1 fw-bold">Bangalore Cant</p>
+                                            <p class="text-muted small m-0">Cantonent Railway Station Road, Contonment Railway.</p>
+                                          </div>
+                                      </div>
+                                      <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 py-3">
+                                          <i class="icofont-search h6"></i>
+                                          <div>
+                                            <p class="mb-1 fw-bold">Bangalore Contonement Railway Station</p>
+                                            <p class="text-muted small m-0">Contonement Railway Quarters, Shivaji nagar.</p>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+                          <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
+                          <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
+                          <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
+                          <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
+                        </div>
+    <!-- Bootstrap core JavaScript -->
+        <script src="assets/vendor/jquery/jquery.min.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="assets/js/custom.js" ></script>
+        <script> 
+          function scrollRelated(direction) {
+              const scrollBox = document.getElementById('related-scroll');
+              const leftArrow = document.getElementById('scrollLeft');
+              const rightArrow = document.getElementById('scrollRight');
+              const scrollAmount = 250;
+
+              if (direction === 'right') {
+                scrollBox.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                leftArrow.classList.remove('d-none');
+              } else {
+                scrollBox.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                if (scrollBox.scrollLeft - scrollAmount <= 0) {
+                  leftArrow.classList.add('d-none');
+                }
+              } 
+          }
+      
+      async function fetchOrders(phone) {
+          const container = document.getElementById('order-list');
+          if (!phone || phone.trim() === '') {
+            alert('Please enter a valid phone number');
+            return;
+          }
+          try {
+            const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/get_user_orders.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(
+                { 
+                  identifier: phone.trim(),
+                  post_type: "fetch all" 
+                }
+              ) 
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json(); 
+            // console.log(data);
+            
+            if (!data.status) {
+              throw new Error(data.message || 'API returned an error');
+            }
+
+            if (!data.orders || data.orders.length === 0) {
+              // alert('No orders found for this phone number');
+              console.log("No orders found for this phone number");
+              
+              return;
+            }
+                        localStorage.setItem('userOrders', JSON.stringify(data.orders));
+                        // console.log('Orders stored in localStorage:', data.orders);
+                        container.innerHTML = '';
+
+                        data.orders.forEach(order => {
+                            // console.log(order);
+                            let productId;
+
+                            const statusClasses = {
+                              shipped: 'text-bg-success',
+                              confirmed: 'text-bg-warning',
+                              delivered: 'text-bg-primary',
+                              cancelled: 'text-bg-danger'
+                            };
+                            const statusClass = statusClasses[order.order_status.toLowerCase()] || 'text-bg-secondary';
+
+                            const formattedDate = new Date(order.order_date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            });
+                            const itemsHtml = order.items.map(item => {
+                              const productImage = item.product_img || 'assets/img/fish12.jpg';
+                              // console.log(item.product_id);
+                              productId = item.product_id || ''; 
+                              
+                            return `
+                              <div class="d-flex align-items-center gap-2 mb-2">
+                                <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${productImage}" class="rounded-3 border" style="width: 50px; height: 50px; object-fit: cover;" alt="${item.product_name}">
+                                <div>
+                                  <div>${item.product_name} (${item.qty} x ${item.price})</div>
+                                
+                                </div>
+                              </div>
+                            `;
+                          }).join('');  
+
+                          const btnHtml = (order.order_status === 'delivered') 
+                              ? `<button class="btn btn-sm btn-outline-success me-2 disabled">Order ${order.order_status}</button>`
+                              : `
+                                  <a href="ordertracking.html?order_status=${btoa(order.order_status)}" class="btn btn-sm btn-outline-secondary me-2">Track Order</a>
+                                  ${order.items.map(item => `
+                                      <a href="productdeteails.html?subcategory_id=${btoa(item.product_id)}" class="btn btn-sm btn-outline-primary me-2">View product</a>
+                                  `).join('')}
+                              `;
+
+                              container.innerHTML += `
+                              <div class="card mb-4 border-0 shadow-sm rounded-4">
+                                <div class="card-body p-3 border-bottom">
+                                  <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
+                                    <div class="flex-grow-1">
+                                      <div class="d-flex justify-content-between flex-column flex-md-row">
+                                        <div>
+                                          <h6 class="fw-semibold mb-1">Order #${order.formatted_order_id}</h6>
+                                           <small class="text-muted">Placed on: ${formattedDate}</small>
+                                        </div>
+                                        <div class="text-md-end mt-2 mt-md-0">
+                                            <span class="badge ${statusClass} px-3 py-1 rounded-pill">${order.order_status}</span>
+                                          </div>
+                                      </div>
+                                      <div class="mt-2">
+                                        ${itemsHtml}
+                                        <div>
+                                          <span class="fw-bold mt-2 text-success">
+                                            Total: ₹${parseFloat(order.total).toFixed(2)}</span>
+                                          <small>(Inculding delivery charge.)</small>
+                                        </div>
+                                      </div>
+                                    </div>
+                                   
+                                    <div class="text-end mt-3 mt-md-0">
+                                        ${btnHtml}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>  
+                              `;
+                              });
+         
+                  } catch (error) {
+                    console.error('Error fetching orders:', error.message);
+                    // alert(`Failed to fetch orders: ${error.message}`);
+                  }
       }
-    }
-  }
+      // Initialize on DOM load
+      document.addEventListener('DOMContentLoaded', () => {
+        const phone = localStorage.getItem('user_phone');
+        if (phone) {
+          console.log('Fetching orders for phone:', phone);
+          fetchOrders(phone);
+        } else {
+          console.log('phone number missing');
+        }
+      });
 </script>
    
 </body>

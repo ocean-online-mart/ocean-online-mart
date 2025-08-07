@@ -6,8 +6,6 @@ const params = new URLSearchParams(window.location.search);
 const encodedId = params.get('subcategory_id');
 const subcategoryId = encodedId ? atob(encodedId) : null;
 let categoryId = ''; // Will be set after fetching product details
-
-// Update product total price based on quantity
 function updateProductTotal(id) {
     const quantityInput = document.querySelector(`.product-quantity[data-id="${id}"]`);
     const totalSpan = document.querySelector(`.product-total[data-id="${id}"]`);
@@ -18,6 +16,8 @@ function updateProductTotal(id) {
     const quantity = parseFloat(quantityInput.value);
     if (!isNaN(quantity) && !isNaN(price)) {
         totalSpan.textContent = `₹${(price * quantity).toFixed(2)}`;
+    }else{
+           totalSpan.textContent = 0;
     }
 }
 
@@ -32,6 +32,7 @@ function fetchAndRenderProductDetails() {
             </div>`;
         return;
     }
+    
     fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/get_product_details.php?subcategory_id=${subcategoryId}`)
         .then(res => res.json())
         .then(response => {
@@ -223,6 +224,7 @@ function updateCart() {
     const addressSection = document.querySelector('.address-section');
     const finalSubtotal = document.getElementById('finalSubtotal');
     const finalTotal = document.getElementById('finalTotal');
+    const cartTotalCount = '';
     
     cartItems.innerHTML = '';
     let subtotal = 0;
@@ -278,7 +280,8 @@ function updateCart() {
     finalSubtotal.textContent = subtotal.toFixed(2);
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
     cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
+    cartTotalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      localStorage.setItem('cartCount',cartTotalCount);
     // Add event listeners for cart quantity controls
     document.querySelectorAll('.cart-increment').forEach(button => {
         button.removeEventListener('click', handleCartIncrement);
@@ -389,17 +392,16 @@ function getDiscount(original, offer) {
 
 // Fetch and render related products
 function fetchAndRenderRelatedProdct() {
-    if (!categoryId || !subcategoryId) {
+    if (!categoryId) {
         console.error('Category ID or Subcategory ID not available');
         return;
     }
-    
-    fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/get_related_products.php?subcategory_id=${subcategoryId}&category_id=${categoryId}`)
+    fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/get_related_products.php?&category_id=${categoryId}`)
         .then(res => res.json())
         .then(response => {
             const container = document.getElementById('related-scroll');
             if (response.status === 'success' && response.data) {
-                container.innerHTML = ''; // Clear previous content
+                container.innerHTML = '';
                 response.data.forEach(product => {
                     const discount = getDiscount(product.actual_price, product.offer_price);
                     const productCard = `

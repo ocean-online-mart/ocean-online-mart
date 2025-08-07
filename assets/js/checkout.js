@@ -216,7 +216,10 @@ proceedButton.addEventListener('click', async (e) => {
                     body: JSON.stringify(orderData)
                 });
                 const result = await response.json();
+                // console.log(result);
+                
                 if (result.status) {
+                    localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
                     localStorage.removeItem('cart');
                     localStorage.removeItem('deliveryCharge');
                     window.location.href = 'success-order.html';
@@ -224,19 +227,23 @@ proceedButton.addEventListener('click', async (e) => {
                     alert('Error processing order: ' + result.message);
                 }
             } else {
+                // console.log(orderData);
+                
                 const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
                 });
                 const result = await response.json();
-                if (result.status !== 'success' || !result.order_id) {
+
+                
+                if (!result.status) {
                     alert('Error creating order: ' + result.message);
                     return;
                 }
 
                 const options = {
-                    key: 'rzp_test_TXTvjbW0djSCaJ',
+                    key: 'rzp_test_HxdZAvLisBCGfP',
                     amount: orderData.total * 100,
                     currency: 'INR',
                     name: 'Ocean Online Mart',
@@ -244,23 +251,30 @@ proceedButton.addEventListener('click', async (e) => {
                     image: 'assets/img/logo.png',
                     order_id: result.order_id,
                     handler: async function (response) {
-                        const verifyResponse = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/verify_payment.php', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_signature: response.razorpay_signature,
-                                orderData
-                            })
-                        });
-                        const verifyResult = await verifyResponse.json();
-                        if (verifyResult.status === 'success') {
-                            localStorage.removeItem('cart');
-                            localStorage.removeItem('deliveryCharge');
-                            window.location.href = 'success-order.html';
-                        } else {
-                            alert('Payment verification failed: ' + verifyResult.message);
+                        try {
+                            
+                            const verifyResponse = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/verify_payment.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    orderData
+                                })
+                            });
+                            const verifyResult = await verifyResponse.json();
+                            if (verifyResult.status) {
+                                localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
+                                localStorage.removeItem('cart');
+                                localStorage.removeItem('deliveryCharge');
+                                window.location.href = 'success-order.html';
+                            } else {
+                                alert('Payment verification failed: ' + verifyResult.message);
+                            }
+                        } catch (error) {
+                            console.error('Verification error:', error);
+                            alert('Error verifying payment: ' + error.message);
                         }
                     },
                     prefill: {
@@ -269,7 +283,20 @@ proceedButton.addEventListener('click', async (e) => {
                         email: 'customer@example.com'
                     },
                     theme: {
-                        color: '#28a745'
+                        color: '#3cb0e6ff'
+                    },
+                    method: {
+                        upi: {
+                            flow: 'intent' // Enable UPI Intent Flow
+                        }
+                    },
+                    config: {
+                        display: {
+                            prefer: ['upi'], // Prioritize UPI in checkout
+                            upi: {
+                                intent: true // Explicitly enable Intent Flow
+                            }
+                        }
                     }
                 };
 

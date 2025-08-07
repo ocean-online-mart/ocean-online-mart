@@ -48,9 +48,7 @@ const products = [
   { name: "Fresh Squid", price: "$11.99", image: "assets/img/6.png" },
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts(products);
-});
+
 
 document.getElementById('searchForm').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -80,6 +78,9 @@ function renderProducts(list) {
       </div>`;
   });
 }
+
+
+
 
 
 // add to offcanva script

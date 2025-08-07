@@ -901,4 +901,76 @@ hr {
   
 }
 
+/* cart css */
+    .cart-icon { position: relative; }
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .product-card { margin-bottom: 20px; }
+        .offcanvas { width: 400px !important; }
+        .payment-section, .otp-section, .address-section { display: none; }
+        .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .cart-quantity {min-width:0px}
+        .quantity-control { display: flex;   align-items: center; gap: 5px; }
+        .quantity-control button { 
+          width: 30px; 
+          height: 30px;
+         }
+        .quantity-control input { 
+          width: 50px; 
+          text-align: center;
+           border: none;
+          color: #43484D; 
+        }
+        
+        button[class*=canbtn] {
+          width: 30px;
+          height: 30px;
+          background-color: #E1E8EE;
+          border-radius: 6px;
+          border: none;
+          cursor: pointer;
+        }
+        button:focus,
+        input:focus{
+          outline: 0;
+        }
+        .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
+        .trash-icon{
+         font-size: 1rem;
+        }
+        .custom-close-btn {
+            position: absolute;
+            top: 10px;
+            left: -52px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #f5f1f1;
+            color: #000000;
+            font-size: 16px;
+            line-height: 1;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1056;
+         }
+         .custom-close-btn:hover {
+         background-color: #f8f8f8;
+         }
+
+@media (max-width: 576px){
+   .custom-close-btn{
+	position: static;
+   }
+}
 
