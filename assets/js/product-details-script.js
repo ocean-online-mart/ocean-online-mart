@@ -1,4 +1,4 @@
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const DELIVERY_CHARGE = 5.00;
 
 // Get subcategory_id from URL query parameter
@@ -204,12 +204,16 @@ function handleAddToCart(e) {
         updateProductTotal(id);
     }
 
+    //  const offcanvasElement = document.getElementById('cartOffcanvas');
+    //     const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+    //     offcanvas.show();
+
     // Open the offcanvas
-    const offcanvasElement = document.getElementById('cartOffcanvas');
-    if (offcanvasElement) {
-        const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-        offcanvas.show();
-    }
+    // const offcanvasElement = document.getElementById('cartOffcanvas');
+    // if (offcanvasElement) {
+    //     const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+    //     offcanvas.show();
+    // }
 }
 
 // Update cart display
@@ -221,7 +225,7 @@ function updateCart() {
     const cartSummary = document.getElementById('cartSummary');
     const paymentSection = document.querySelector('.payment-section');
     const otpSection = document.querySelector('.otp-section');
-    const addressSection = document.querySelector('.address-section');
+    // const addressSection = document.querySelector('.address-section');
     const finalSubtotal = document.getElementById('finalSubtotal');
     const finalTotal = document.getElementById('finalTotal');
     const cartTotalCount = '';
@@ -248,7 +252,7 @@ function updateCart() {
         cartSummary.style.display = 'none';
         paymentSection.style.display = 'none';
         otpSection.style.display = 'none';
-        addressSection.style.display = 'none';
+        // addressSection.style.display = 'none';
         document.getElementById('proceedToPayment').style.display = 'block';
     } else {
         cartSummary.style.display = 'block';
@@ -261,7 +265,7 @@ function updateCart() {
                     <div>
                          <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="Product" width="50" class="rounded me-2">
                         <h6>${item.name}</h6>
-                        <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        <p>₹${item.price.toFixed(2)} x ${item.quantity}</p>
                     </div>
                     <div class="quantity-control flex-column align-items-end">
                         <button class="btn btn-sm remove-item p-2 border border-0" data-id="${item.id}"><i class="bi bi-trash3-fill trash-icon"></i></button>
@@ -279,9 +283,9 @@ function updateCart() {
     cartTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
     finalSubtotal.textContent = subtotal.toFixed(2);
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartTotalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-      localStorage.setItem('cartCount',cartTotalCount);
+    // cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+   cartCount.textContent = cart.length;
+   localStorage.setItem('cart', JSON.stringify(cart));
     // Add event listeners for cart quantity controls
     document.querySelectorAll('.cart-increment').forEach(button => {
         button.removeEventListener('click', handleCartIncrement);
@@ -345,6 +349,25 @@ function handleRemoveItem(e) {
 document.getElementById('cartButton')?.addEventListener('click', (e) => {
     if (cart.length === 0) {
         e.preventDefault();
+         cartItems.innerHTML =
+            `<div class="container-fluid mt-100">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body cart">
+                            <div class="col-sm-12 empty-cart-cls text-center">
+                                <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
+                                <h4><strong>Your cart awaits your orders</strong></h4>
+                                <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        cartSummary.style.display = 'none';
+        paymentSection.style.display = 'none';
+        otpSection.style.display = 'none';
+        // addressSection.style.display = 'none';
+        document.getElementById('proceedToPayment').style.display = 'block';
         return false;
     }
 });
@@ -357,32 +380,75 @@ document.getElementById('proceedToPayment')?.addEventListener('click', () => {
 });
 
 // Send OTP
-document.getElementById('sendOtp')?.addEventListener('click', () => {
+document.getElementById('sendOtp')?.addEventListener('click', async() => {
     const phone = document.getElementById('phoneNumber').value;
-    if (phone.length < 10) {
-        alert('Please enter a valid phone number');
+    if (phone.length < 10 || isNaN(phone)) {
+        alert('Enter a valid 10-digit phone number');
         return;
     }
-    document.querySelector('.payment-section').style.display = 'none';
-    localStorage.setItem('user_number', JSON.stringify(phone));
-    document.querySelector('.otp-section').style.display = 'block';
-    alert('OTP sent to ' + phone);
+                      
+     try {    
+        const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/otp.php', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone })  // Only phone sent during OTP send
+        });
+
+        const data = await response.json();
+        console.log(data);
+        
+        if (data.status === "success") {
+            alert("OTP sent to WhatsApp number: " + phone);
+            localStorage.setItem('user_number', JSON.stringify(phone));
+            document.querySelector('.otp-section').style.display = 'block';
+            document.querySelector('.payment-section').style.display = 'none';
+        } else {
+            const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
+            alert("Error: " + msg);
+            console.error("Server responded with error:", data);
+        }
+    } catch (error) {
+        alert("Failed to send OTP. Server not reachable.");
+        console.error("Fetch error (sendOtp):", error);
+    }
 });
 
-// Verify OTP
-document.getElementById('verifyOtp')?.addEventListener('click', () => {
-    const otp = document.getElementById('otpInput').value;
-    if (otp.length !== 4) {
+
+document.getElementById('verifyOtp').addEventListener('click', async () => {
+    const otp = document.getElementById('otpInput').value.trim();
+    const phone = document.getElementById('phoneNumber').value.trim();
+
+    if (otp.length !== 4 || isNaN(otp)) {
         alert('Please enter a valid 4-digit OTP');
         return;
     }
-    document.querySelector('.otp-section').style.display = 'none';
-    // document.querySelector('.address-section').style.display = 'block';
-    localStorage.setItem('cart', JSON.stringify(cart));
-    localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
-    window.location.href = 'http://127.0.0.1:5500/checkout.html';
-    
+
+    try {       
+        const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/verify_otp.php', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone, otp })  // Both phone & OTP required for verification
+        });
+
+        const data = await response.json();
+        console.log(data);
+        
+        if (data.status === "success") {
+            alert("OTP Verified Successfully!");
+             localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
+            window.location.href = 'http://127.0.0.1:5500/checkout.html';
+        } else {
+            const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
+            alert("OTP Verification Failed: " + msg);
+            console.error("Server responded with error:", data);
+        }
+    } catch (error) {
+        alert("Failed to verify OTP. Server not reachable.");
+        console.error("Fetch error (verifyOtp):", error);
+    }
 });
+
 
 // Calculate discount
 function getDiscount(original, offer) {
@@ -453,4 +519,5 @@ function fetchAndRenderRelatedProdct() {
 // Initialize product details on page load
 window.addEventListener('DOMContentLoaded', () => {
     fetchAndRenderProductDetails();
+ 
 });

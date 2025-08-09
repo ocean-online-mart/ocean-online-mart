@@ -1,4 +1,4 @@
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const DELIVERY_CHARGE = 5.00;
 let cartTotalCount = '';
 // Function to fetch and render products based on category
@@ -37,12 +37,19 @@ function fetchAndRenderProducts(categoryId) {
                                     <div class="p-3">
                                         <h6 class="fw-bold mb-1">${product.subcategory_name}</h6>
                                         <div class="mb-2">
-                                            <h6 class="mb-0">Weight: <b>${product.weight || '250g'}</b></h6>
+                                            <h6 class="mb-0">Weight: <b>${product.weight || '500g'}</b></h6>
                                             <input hidden type="number" class="form-control product-quantity" data-id="${product.subcategory_id}" value="1" min="1">
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center mt-2">
                                             <span class="fw-bold text-danger">₹ ${product.offer_price} <del class="text-muted ms-1 fs-6">₹ ${product.actual_price}</del></span>
-                                            <button type="button" data-id="${product.subcategory_id}" data-name="${product.subcategory_name}" data-price="${product.offer_price}" class="btn btn-outline-success btn-sm add-to-cart">Add to Cart</button>
+                                            <button type="button" 
+                                                data-id="${product.subcategory_id}" 
+                                                data-name="${product.subcategory_name}" 
+                                                data-price="${product.offer_price}" 
+                                                data-img="${product.img1}"
+                                                class="btn btn-outline-success btn-sm add-to-cart">
+                                                Add to Cart
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +87,6 @@ function updateCart() {
     const cartSummary = document.getElementById('cartSummary');
     const paymentSection = document.querySelector('.payment-section');
     const otpSection = document.querySelector('.otp-section');
-    const addressSection = document.querySelector('.address-section');
     const finalSubtotal = document.getElementById('finalSubtotal');
     const finalTotal = document.getElementById('finalTotal');
     cartItems.innerHTML = '';
@@ -105,7 +111,6 @@ function updateCart() {
         cartSummary.style.display = 'none';
         paymentSection.style.display = 'none';
         otpSection.style.display = 'none';
-        addressSection.style.display = 'none';
         document.getElementById('proceedToPayment').style.display = 'block';
     } else {
         cartSummary.style.display = 'block';
@@ -116,8 +121,9 @@ function updateCart() {
             cartItems.innerHTML += `
                 <div class="cart-item d-flex justify-content-between align-items-center">
                     <div>
+                        <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="Product" width="50" class="rounded me-2">
                         <h6>${item.name}</h6>
-                        <p>$${item.price} x ${item.quantity}</p>
+                        <p>₹${item.price} x ${item.quantity}</p>
                     </div>
                     <div class="quantity-control flex-column align-items-end">
                         <button class="btn btn-sm remove-item p-2 border border-0" data-id="${item.id}"><i class="bi bi-trash3-fill trash-icon"></i></button>
@@ -135,10 +141,9 @@ function updateCart() {
     cartTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
     finalSubtotal.textContent = subtotal.toFixed(2);
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-     cartTotalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-      localStorage.setItem('cartCount',cartTotalCount);
-
+    // cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = cart.length;
+     localStorage.setItem('cart', JSON.stringify(cart));
     // Add event listeners for cart quantity controls
     document.querySelectorAll('.cart-increment').forEach(button => {
         button.addEventListener('click', () => {
@@ -207,7 +212,6 @@ document.getElementById('cartButton')?.addEventListener('click', (e) => {
         cartSummary.style.display = 'none';
         paymentSection.style.display = 'none';
         otpSection.style.display = 'none';
-        addressSection.style.display = 'none';
         document.getElementById('proceedToPayment').style.display = 'block';
         return false;
     }
@@ -271,9 +275,12 @@ document.getElementById('verifyOtp')?.addEventListener('click', () => {
         alert('Please enter a valid 4-digit OTP');
         return;
     }
+    // console.log(cart.quantity);
+    // localStorage.setItem('cartQty', JSON.stringify(cart.quantity))
     document.querySelector('.otp-section').style.display = 'none';
-    document.querySelector('.address-section').style.display = 'block';
-    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
+    window.location.href = 'http://127.0.0.1:5500/checkout.html';
 });
 
 // Fetch categories and render tabs
@@ -313,12 +320,12 @@ document.getElementById('product-list').addEventListener('click', (e) => {
         const name = button.dataset.name;
         const price = parseFloat(button.dataset.price);
         const quantity = parseInt(document.querySelector(`.product-quantity[data-id="${id}"]`).value);
-
+        const productImg = button.dataset.img;
         const existingItem = cart.find(item => item.id === id);
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            cart.push({ id, name, price, quantity });
+            cart.push({ id, name, price, quantity,productImg});
         }
         updateCart();
 

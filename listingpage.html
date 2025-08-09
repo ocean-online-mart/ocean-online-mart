@@ -352,15 +352,15 @@
                 <div class="order-summary">
                     <div class="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <span>$<span id="cartSubtotal">0.00</span></span>
+                        <span>₹<span id="cartSubtotal">0.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Delivery Charge</span>
-                        <span>$<span id="deliveryCharge">5.00</span></span>
+                        <span>₹<span id="deliveryCharge">5.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Total</span>
-                        <span>$<span id="cartTotal">0.00</span></span>
+                        <span>₹<span id="cartTotal">0.00</span></span>
                     </div>
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
@@ -382,26 +382,19 @@
 
             <!-- Address & Payment Section -->
             <div class="address-section mt-3">
-                <h5>Delivery Address</h5>
-                <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
-                <h5>Payment Mode</h5>
-                <select class="form-select mb-2" id="paymentMode">
-                    <option value="cod">Cash on Delivery</option>
-                    <option value="card">Credit/Debit Card</option>
-                    <option value="upi">UPI</option>
-                </select>
+                
                 <div class="order-summary">
                     <div class="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <span>$<span id="finalSubtotal">0.00</span></span>
+                        <span>₹<span id="finalSubtotal">0.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Delivery Charge</span>
-                        <span>$<span id="finalDeliveryCharge">5.00</span></span>
+                        <span>₹<span id="finalDeliveryCharge">5.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Total</span>
-                        <span>$<span id="finalTotal">0.00</span></span>
+                        <span>₹<span id="finalTotal">0.00</span></span>
                     </div>
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
@@ -485,69 +478,79 @@
       <script src="assets/js/custom.js" ></script>
       <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
       <!-- <script src="assets/js/cart-script.js"></script> -->
-       <script src="assets/js/demo.js"></script>
-<script>
-  AOS.init({
-    duration: 800,     
-    easing: 'ease-in-out', // Animation easing function
-    mirror: true,      // Reverse the animation when entering viewport
-    once: true         // Only animate once
-  });
-
-
-function updatePrice(val) {
-    document.getElementById('priceValue').textContent = val;
-}
-function applyPriceFilter() {
-  const maxPrice = document.getElementById('priceRange').value;
-  fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/filter_product.php?max_price=${maxPrice}`)
-    .then(res => res.json())
-    .then(data => {
-      const productList = document.getElementById('product-list');
-      productList.innerHTML = ''; 
-      // console.log(data);
-      const newDiv = document.createElement('p');
-      if (data.status) {
-        data.data.forEach(product => {
-          const productHTML = `
-            <div class="col-md-4 col-sm-6 te" data-aos="fade-up">
-              <a href="productdeteails.html" class="text-decoration-none text-dark">
-                <div class="product-card shadow-sm rounded overflow-hidden bg-white">
-                  <div class="product-img position-relative">
-                    <span class="discount-badge">20% OFF</span>
-                    <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="w-100 img-main" alt="Product Image" />
-                    <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img3}" class="w-100 img-hover" alt="Hover Image" />
-                  </div>
-                  <div class="p-3">
-                    <h6 class="fw-bold mb-1">${product.subcategory_name}</h6>
-                  
-                    <div class="mb-2">
-                      <h6 class="mb-0">Weight: <b>250g</b></h6>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                      <span class="fw-bold text-danger">₹ ${product.offer_price}</span>
-                      <button type="button" class="btn btn-outline-success btn-sm">Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          `;
-          productList.innerHTML += productHTML;
-        });
-      } else {
-         // newDiv.textContent = 'No products found in this range';
-         // newDiv.className = 'text-danger';
-         // productList.innerHTML += document.body.appendChild(newDiv);
+       <script src="assets/js/products-listing-script.js"></script>
+      <script>
+      AOS.init({
+         duration: 800,     
+         easing: 'ease-in-out', 
+         mirror: true,      // Reverse the animation when entering viewport
+         once: true         // Only animate once
+      });
+      function updatePrice(val) {
+         document.getElementById('priceValue').textContent = val;
       }
-    });
-}
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('priceRange').value = 100;
-//   updatePriceLabel();
-  applyPriceFilter(); 
-});
-</script>
+      function applyPriceFilter() {
+      const maxPrice = document.getElementById('priceRange').value;
+      fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/filter_product.php?max_price=${maxPrice}`)
+         .then(res => res.json())
+         .then(data => {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = ''; 
+            // console.log(data);
+            
+            if (products.length === 0) {
+                     const emptyFilter = `
+                        <div class="col-12 text-center py-5">    
+                            <h4>No products available in this category</h4>
+                            <p>Explore other categories to find your favorite seafood!</p>
+                        </div>`;
+                        productList.innerHTML += emptyFilter;
+                } else {
+                  data.data.forEach(product => {
+                     const productHTML = `
+                        <div class="col-md-4 col-sm-6 te" data-aos="fade-up">
+                        <a href="productdeteails.html" class="text-decoration-none text-dark">
+                           <div class="product-card shadow-sm rounded overflow-hidden bg-white">
+                              <a href="productdeteails.html?subcategory_id=${btoa(product.subcategory_id)}">
+                                 <div class="product-img position-relative">
+                                 <span class="discount-badge">20% OFF</span>
+                                 <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="w-100 img-main" alt="Product Image" />
+                                 <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img3}" class="w-100 img-hover" alt="Hover Image" />
+                                 </div>
+                              </a>
+                              <div class="p-3">
+                              <h6 class="fw-bold mb-1">${product.subcategory_name}</h6>
+                              <div class="mb-2">
+                                  <h6 class="mb-0">Weight: <b>${product.weight || '500g'}</b></h6>
+                                 <input hidden type="number" class="form-control product-quantity" data-id="${product.subcategory_id}" value="1" min="1">
+                              </div>
+                               <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="fw-bold text-danger">₹ ${product.offer_price} <del class="text-muted ms-1 fs-6">₹ ${product.actual_price}</del></span>
+                                       <button type="button" 
+                                          data-id="${product.subcategory_id}" 
+                                          data-name="${product.subcategory_name}" 
+                                          data-price="${product.offer_price}" 
+                                          data-img="${product.img1}"
+                                          class="btn btn-outline-success btn-sm add-to-cart">
+                                                Add to Cart
+                                       </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </a>
+                        </div>
+                     `;
+                     productList.innerHTML += productHTML;
+                  });
+               }  
+         });
+      }
+      window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('priceRange').value = 100;
+      //   updatePriceLabel();
+      applyPriceFilter(); 
+      });
+   </script>
    
 </body>
 

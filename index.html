@@ -625,10 +625,12 @@
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
-      <script src="assets/js/demo.js"></script>
+      <!-- <script src="assets/js/product-details-script.js"></script>
+      <script src="assets/js/products-listing-script.js"></script> -->
+
       <script>
          document.addEventListener('DOMContentLoaded', () => {
-             const cartCount = localStorage.getItem('cartCount');
+             const cartCount = localStorage.getItem('cart');
                if (cartCount =='') {
                   console.log('Fetching orders for phone:', phone);
                
