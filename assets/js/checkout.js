@@ -85,7 +85,7 @@ function displayOrderSummary() {
         cartItemsContainer.insertAdjacentHTML('afterbegin', `
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="d-flex align-items-center">
-                    <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="${item.name}" width="50" class="rounded me-2">
+                    <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="${item.name}" width="50" class="rounded me-2">
                     <div>
                         <div class="small fw-bold">${item.name}</div>
                         <div class="d-flex justify-content-between">
@@ -210,7 +210,7 @@ proceedButton.addEventListener('click', async (e) => {
             // console.log(orderData);
             
             if (paymentMethod === 'cod') {    
-                const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
+                const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
@@ -229,7 +229,7 @@ proceedButton.addEventListener('click', async (e) => {
             } else {
                 // console.log(orderData);
                 
-                const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
+                const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/create_order.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
@@ -253,7 +253,7 @@ proceedButton.addEventListener('click', async (e) => {
                     handler: async function (response) {
                         try {
                             
-                            const verifyResponse = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/verify_payment.php', {
+                            const verifyResponse = await fetch('http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/verify_payment.php', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
