@@ -1,6 +1,7 @@
 // Retrieve cart data from localStorage
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
 const userContactNumber = JSON.parse(localStorage.getItem('user_number')) || '';
+const cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
 // console.log(userContactNumber);
 // console.log(cart);
 
@@ -235,8 +236,6 @@ proceedButton.addEventListener('click', async (e) => {
                     body: JSON.stringify(orderData)
                 });
                 const result = await response.json();
-
-                
                 if (!result.status) {
                     alert('Error creating order: ' + result.message);
                     return;
@@ -248,7 +247,7 @@ proceedButton.addEventListener('click', async (e) => {
                     currency: 'INR',
                     name: 'Ocean Online Mart',
                     description: 'Order Payment',
-                    image: 'assets/img/logo.png',
+                    image: 'assets/img/logo/logo-1.png',
                     order_id: result.order_id,
                     handler: async function (response) {
                         try {
@@ -268,6 +267,7 @@ proceedButton.addEventListener('click', async (e) => {
                                 localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
                                 localStorage.removeItem('cart');
                                 localStorage.removeItem('deliveryCharge');
+                                localStorage.removeItem('updatedCount');
                                 window.location.href = 'success-order.html';
                             } else {
                                 alert('Payment verification failed: ' + verifyResult.message);
@@ -315,4 +315,10 @@ proceedButton.addEventListener('click', async (e) => {
 // Initialize order summary on page load
 window.addEventListener('DOMContentLoaded', () => {
     displayOrderSummary();
+    const cartCount = localStorage.getItem('updatedCount');
+               if (cartCount > 0 ) {
+                  document.getElementById('cartCount').innerHTML = cartCount; 
+               } else {
+                  console.log('cart is empty');
+               }
 });

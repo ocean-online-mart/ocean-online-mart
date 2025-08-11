@@ -1,6 +1,6 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const DELIVERY_CHARGE = 5.00;
-
+let cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
 // Get subcategory_id from URL query parameter
 const params = new URLSearchParams(window.location.search);
 const encodedId = params.get('subcategory_id');
@@ -228,7 +228,7 @@ function updateCart() {
     // const addressSection = document.querySelector('.address-section');
     const finalSubtotal = document.getElementById('finalSubtotal');
     const finalTotal = document.getElementById('finalTotal');
-    const cartTotalCount = '';
+   
     
     cartItems.innerHTML = '';
     let subtotal = 0;
@@ -283,9 +283,10 @@ function updateCart() {
     cartTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
     finalSubtotal.textContent = subtotal.toFixed(2);
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
-    // cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
    cartCount.textContent = cart.length;
+   cartTotalCount = cart.length;
    localStorage.setItem('cart', JSON.stringify(cart));
+   localStorage.setItem('updatedCount',cartTotalCount);
     // Add event listeners for cart quantity controls
     document.querySelectorAll('.cart-increment').forEach(button => {
         button.removeEventListener('click', handleCartIncrement);
@@ -347,29 +348,33 @@ function handleRemoveItem(e) {
 
 // Prevent offcanvas opening when cart is empty
 document.getElementById('cartButton')?.addEventListener('click', (e) => {
-    if (cart.length === 0) {
-        e.preventDefault();
-         cartItems.innerHTML =
-            `<div class="container-fluid mt-100">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-body cart">
-                            <div class="col-sm-12 empty-cart-cls text-center">
-                                <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
-                                <h4><strong>Your cart awaits your orders</strong></h4>
-                                <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        cartSummary.style.display = 'none';
-        paymentSection.style.display = 'none';
-        otpSection.style.display = 'none';
-        // addressSection.style.display = 'none';
-        document.getElementById('proceedToPayment').style.display = 'block';
-        return false;
-    }
+    // console.log(cart);
+         updateCart();
+    // if (cart.length === 0) {
+    //     e.preventDefault();
+    //      cartItems.innerHTML =
+    //         `<div class="container-fluid mt-100">
+    //             <div class="row">
+    //                 <div class="col-md-12">
+    //                     <div class="card-body cart">
+    //                         <div class="col-sm-12 empty-cart-cls text-center">
+    //                             <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
+    //                             <h4><strong>Your cart awaits your orders</strong></h4>
+    //                             <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>`;
+    //     cartSummary.style.display = 'none';
+    //     paymentSection.style.display = 'none';
+    //     otpSection.style.display = 'none';
+    //     // addressSection.style.display = 'none';
+    //     document.getElementById('proceedToPayment').style.display = 'block';
+    //     return false;
+    // }else{
+       
+    // }
 });
 
 // Proceed to payment
@@ -519,5 +524,10 @@ function fetchAndRenderRelatedProdct() {
 // Initialize product details on page load
 window.addEventListener('DOMContentLoaded', () => {
     fetchAndRenderProductDetails();
- 
+      const cartCounts = localStorage.getItem('updatedCount');
+        if (cartCounts > 0 ) {
+            document.getElementById('cartCount').innerHTML = cartCounts; 
+        } else {
+            console.log('cart is empty');
+        }
 });

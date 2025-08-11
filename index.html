@@ -15,33 +15,6 @@
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
        <style>
-
-         /* body {
-  cursor: url('assets/img/clown\ fish\ II\ left\ select.cur'), auto;
-} */
-/* #fish-cursor {
-  position: fixed;
-  width: 60px;
-  height: auto;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease;
-} */
-/* 
-@keyframes swim {
-  0%, 100% { transform: scaleX(1); }
-  50% { transform: scaleX(-1); }
-}
-
-#fish-cursor {
-  animation: swim 7s infinite ease-in-out;
-} */
-
-
-
-/* navbar effect */
-
 .nav01 {
   text-decoration: none;
   position: relative;
@@ -179,17 +152,17 @@
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link nav01" href="#">
+                     <a class="nav-link nav01" href="coming-soon.html">
                      Value Added
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link nav01" href="#">
+                     <a class="nav-link nav01" href="coming-soon.html">
                      Boats & Engines
                      </a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link nav01" href="#">
+                     <a class="nav-link nav01" href="coming-soon.html">
                      Fishing accessories
                      </a>
                   </li>
@@ -202,7 +175,7 @@
                      id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                      <i class="bi bi-cart3"></i>
                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                     <span class="" id="cartCount">0</span>                      
+                        <span class="" id="cartCount">0</span>                      
                      </span>
                   </button>
                </div>
@@ -459,15 +432,15 @@
                 <div class="order-summary">
                     <div class="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <span>$<span id="cartSubtotal">0.00</span></span>
+                        <span>₹<span id="cartSubtotal">0.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Delivery Charge</span>
-                        <span>$<span id="deliveryCharge">5.00</span></span>
+                        <span>₹<span id="deliveryCharge">5.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Total</span>
-                        <span>$<span id="cartTotal">0.00</span></span>
+                        <span>₹<span id="cartTotal">0.00</span></span>
                     </div>
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
@@ -489,26 +462,18 @@
 
             <!-- Address & Payment Section -->
             <div class="address-section mt-3">
-                <h5>Delivery Address</h5>
-                <textarea class="form-control mb-2" id="address" placeholder="Enter delivery address"></textarea>
-                <h5>Payment Mode</h5>
-                <select class="form-select mb-2" id="paymentMode">
-                    <option value="cod">Cash on Delivery</option>
-                    <option value="card">Credit/Debit Card</option>
-                    <option value="upi">UPI</option>
-                </select>
                 <div class="order-summary">
                     <div class="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <span>$<span id="finalSubtotal">0.00</span></span>
+                        <span>₹<span id="finalSubtotal">0.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Delivery Charge</span>
-                        <span>$<span id="finalDeliveryCharge">5.00</span></span>
+                        <span>₹<span id="finalDeliveryCharge">5.00</span></span>
                     </div>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Total</span>
-                        <span>$<span id="finalTotal">0.00</span></span>
+                        <span>₹<span id="finalTotal">0.00</span></span>
                     </div>
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="completeOrder">Complete Order</button>
@@ -625,15 +590,14 @@
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
-      <!-- <script src="assets/js/product-details-script.js"></script>
-      <script src="assets/js/products-listing-script.js"></script> -->
+      <script src="assets/js/product-details-script.js"></script>
+      <!-- <script src="assets/js/products-listing-script.js"></script> -->
 
       <script>
          document.addEventListener('DOMContentLoaded', () => {
-             const cartCount = localStorage.getItem('cart');
-               if (cartCount =='') {
-                  console.log('Fetching orders for phone:', phone);
-               
+             const cartCount = localStorage.getItem('updatedCount');
+               if (cartCount > 0 ) {
+                  document.getElementById('cartCount').innerHTML = cartCount; 
                } else {
                   console.log('cart is empty');
                }

@@ -1,0 +1,310 @@
+
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" type="image/png" href="assets/img/logo/logo-1.png">
+      <title>Ocean Online Mart</title>
+      <!-- Bootstrap core CSS -->
+      <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Icofont Icon-->
+      <link href="assets/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+      <!-- Bootstraps icon -->
+      <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
+      <link href="assets/css/style.css" rel="stylesheet">
+      <style>
+@keyframes ripple78 {
+  0% { width: 0; height: 0; opacity: 1; }
+  100% { width: 200px; height: 200px; opacity: 0; }
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+.coming-soon-section {
+  display: flex;
+  row-gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.coming-soon-section .coming-soon-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.coming-soon-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: #000;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.coming-soon-section header {
+  font-size: 60px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.coming-soon-section p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  max-width: 550px;
+}
+
+.email-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.email-content p {
+  font-size: 13px;
+  color: #fff;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  max-width: 360px;
+  width: 100%;
+  margin-top: 20px;
+  column-gap: 20px;
+}
+
+.input-box input,
+.input-box button {
+  height: 100%;
+  outline: none;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 400;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 0 15px;
+  color: #fff;
+}
+
+.input-box input::placeholder {
+  color: #fff;
+}
+
+.input-box button {
+  cursor: pointer;
+  background-color: #eee;
+  color: #0d6a81;
+  white-space: nowrap;
+  padding: 0 20px;
+  transition: all 0.3s ease;
+}
+
+.input-box button:hover {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 480px) {
+  .coming-soon-section header {
+    font-size: 40px;
+  }
+}
+
+.typing-dots::after {
+  content: '';
+  display: inline-block;
+  width: 1ch;
+  text-align: left;
+  animation: typingDots 2.9s steps(4) infinite;
+ 
+  white-space: nowrap;
+}
+
+@keyframes typingDots {
+  0% {
+    content: '';
+  }
+  25% {
+    content: '.';
+  }
+  50% {
+    content: '..';
+  }
+  75% {
+    content: '...';
+  }
+  100% {
+    content: '';
+  }
+}
+
+</style>
+
+</style>
+   </head>
+   <body class="bg-light">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
+         <div class="container">
+            <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
+               <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
+            </a>
+            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
+               <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
+               <span>
+                  <b>Delivery in 30 minutes!</b>
+                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+               </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav ms-auto me-3 top-link">
+                  <li class="nav-item dropdown">
+                     <a class="nav-link nav01" href="listingpage.html">
+                     Fish & Seafoods
+                     </a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link nav01" href="coming-soon.html">
+                     Value Added
+                     </a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link nav01" href="coming-soon.html">
+                     Boats & Engines
+                     </a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link nav01" href="coming-soon.html">
+                     Fishing accessories
+                     </a>
+                  </li>
+               </ul>
+               <div class="d-flex align-items-center gap-2">
+                  <a href="coming-soon.html" class="btn btn-light position-relative rounded-pill rounded-icon">
+                  <i class="icofont-search"></i>
+                  </a>
+               </div>
+            </div>
+         </div>
+      </nav>
+      <section class="coming-soon-section">
+            <img src="https://images.unsplash.com/photo-1625558298116-38f0173a522c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="" class="coming-soon-bg" />
+            
+            <header> Coming Soon<span class="typing-dots"></span></header>
+            
+            <p>
+               Our products will be uploaded soon. Stay tuned for amazing deals and fresh arrivals!
+            </p>
+
+            <div class="email-content">
+               <p>Subscribe now to get the latest updates!</p>
+               <div class="input-box">
+                  <input type="email" placeholder="Enter your email..." />
+                  <button>Notify Me</button>
+               </div>
+            </div>
+      </section>
+     
+      <!-- location Modal -->
+      <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+               <div class="modal-header px-4">
+                  <h5 class="h6 modal-title fw-bold">Add Your Location</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body p-4">
+                  <form>
+                     <div class="input-group border p-1 overflow-hidden osahan-search-icon shadow-sm rounded mb-3">
+                        <span class="input-group-text bg-white border-0"><i class="icofont-search"></i></span>
+                        <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Search for area, location name">
+                     </div>
+                  </form>
+                  <div class="mb-4">
+                     <a href="#" data-bs-dismiss="modal" aria-label="Close" class="text-success d-flex gap-2 text-decoration-none fw-bold">
+                        <i class="bi bi-compass text-success"></i>
+                        <div>Use Current Location</div>
+                     </a>
+                  </div>
+                  <div class="text-muted text-uppercase small">Search Results</div>
+                  <div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore</p>
+                           <p class="text-muted small m-0">Karnataka, India</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore internaltional airport</p>
+                           <p class="text-muted small m-0">Karmpegowda.in't Airport, Hunachur, karnataka, India</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Railway Station back gate</p>
+                           <p class="text-muted small m-0">M.G. Railway Colony, Majestic, Bangaluru, Karnataka.</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore Cant</p>
+                           <p class="text-muted small m-0">Cantonent Railway Station Road, Contonment Railway.</p>
+                        </div>
+                     </div>
+                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 py-3">
+                        <i class="icofont-search h6"></i>
+                        <div>
+                           <p class="mb-1 fw-bold">Bangalore Contonement Railway Station</p>
+                           <p class="text-muted small m-0">Contonement Railway Quarters, Shivaji nagar.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+         <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
+         <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
+         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
+         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
+      </div>
+      <!-- Bootstrap core JavaScript -->
+      <script src="assets/vendor/jquery/jquery.min.js"></script>
+      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="assets/js/custom.js" ></script> 
+</body>
+
+</html>       

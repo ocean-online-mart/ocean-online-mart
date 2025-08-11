@@ -1,6 +1,6 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const DELIVERY_CHARGE = 5.00;
-let cartTotalCount = '';
+let cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
 // Function to fetch and render products based on category
 function fetchAndRenderProducts(categoryId) {
     const container = document.getElementById('product-list');
@@ -143,6 +143,8 @@ function updateCart() {
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
     // cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = cart.length;
+    cartTotalCount = cart.length;
+    localStorage.setItem('updatedCount',cartTotalCount);
      localStorage.setItem('cart', JSON.stringify(cart));
     // Add event listeners for cart quantity controls
     document.querySelectorAll('.cart-increment').forEach(button => {
@@ -193,28 +195,29 @@ function updateCart() {
 
 // Prevent offcanvas opening when cart is empty
 document.getElementById('cartButton')?.addEventListener('click', (e) => {
-    if (cart.length === 0) {
-        e.preventDefault();
-         cartItems.innerHTML =
-            `<div class="container-fluid mt-100">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-body cart">
-                            <div class="col-sm-12 empty-cart-cls text-center">
-                                <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
-                                <h4><strong>Your cart awaits your orders</strong></h4>
-                                <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        cartSummary.style.display = 'none';
-        paymentSection.style.display = 'none';
-        otpSection.style.display = 'none';
-        document.getElementById('proceedToPayment').style.display = 'block';
-        return false;
-    }
+    updateCart();
+    // if (cart.length === 0) {
+    //     e.preventDefault();
+    //      cartItems.innerHTML =
+    //         `<div class="container-fluid mt-100">
+    //             <div class="row">
+    //                 <div class="col-md-12">
+    //                     <div class="card-body cart">
+    //                         <div class="col-sm-12 empty-cart-cls text-center">
+    //                             <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
+    //                             <h4><strong>Your cart awaits your orders</strong></h4>
+    //                             <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>`;
+    //     cartSummary.style.display = 'none';
+    //     paymentSection.style.display = 'none';
+    //     otpSection.style.display = 'none';
+    //     document.getElementById('proceedToPayment').style.display = 'block';
+    //     return false;
+    // }
 });
 
 // Product quantity controls
@@ -380,6 +383,13 @@ function toggleFilter() {
 window.addEventListener('DOMContentLoaded', () => {
     const activeTab = document.querySelector('.category-tab.active');
     if (activeTab) filterCategory(activeTab, 'all');
-  
+    //  const cartCount = localStorage.getItem('updatedCount');
+    //  console.log(cartCount);
+      const cartCount = localStorage.getItem('updatedCount');
+               if (cartCount > 0 ) {
+                  document.getElementById('cartCount').innerHTML = cartCount; 
+               } else {
+                  console.log('cart is empty');
+               }
 });
 
