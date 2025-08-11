@@ -33,7 +33,7 @@ function fetchAndRenderProductDetails() {
         return;
     }
     
-    fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/get_product_details.php?subcategory_id=${subcategoryId}`)
+    fetch(`http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_product_details.php?subcategory_id=${subcategoryId}`)
         .then(res => res.json())
         .then(response => {
             const container = document.getElementById('product-details');
@@ -54,13 +54,13 @@ function fetchAndRenderProductDetails() {
                     <div class="col-12 col-lg-6">
                         <div class="position-relative mx-auto text-center">
                             <div class="main-img-wrapper overflow-hidden rounded shadow">
-                                <img id="mainImage" src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" 
+                                <img id="mainImage" src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" 
                                 class="main-img" alt="${product.subcategory_name}">
                             </div>                 
                             <div class="d-flex justify-content-center gap-2 mt-3">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="thumb-img active" onclick="changeImage(this)">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img2}" class="thumb-img" onclick="changeImage(this)">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img3}" class="thumb-img" onclick="changeImage(this)">
+                                <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="thumb-img active" onclick="changeImage(this)">
+                                <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img2}" class="thumb-img" onclick="changeImage(this)">
+                                <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img3}" class="thumb-img" onclick="changeImage(this)">
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@ function updateCart() {
             cartItems.innerHTML += `
                 <div class="cart-item d-flex justify-content-between align-items-center">
                     <div>
-                         <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="Product" width="50" class="rounded me-2">
+                         <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="Product" width="50" class="rounded me-2">
                         <h6>${item.name}</h6>
                         <p>₹${item.price.toFixed(2)} x ${item.quantity}</p>
                     </div>
@@ -393,7 +393,7 @@ document.getElementById('sendOtp')?.addEventListener('click', async() => {
     }
                       
      try {    
-        const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/otp.php', {
+        const response = await fetch('http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/otp.php', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phone })  // Only phone sent during OTP send
@@ -427,14 +427,16 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
         alert('Please enter a valid 4-digit OTP');
         return;
     }
+    console.log(otp);
 
-    try {       
-        const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/verify_otp.php', {
+    if (otp) {
+        const response = await fetch('http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/verify_otp.php', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone, otp })  // Both phone & OTP required for verification
+            body: JSON.stringify({otp })  // Both phone & OTP required for verification
         });
-
+        console.log(response);
+        
         const data = await response.json();
         console.log(data);
         
@@ -448,9 +450,9 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
             alert("OTP Verification Failed: " + msg);
             console.error("Server responded with error:", data);
         }
-    } catch (error) {
+    } else {
         alert("Failed to verify OTP. Server not reachable.");
-        console.error("Fetch error (verifyOtp):", error);
+        console.error("Fetch error (verifyOtp):", error); 
     }
 });
 
@@ -467,7 +469,7 @@ function fetchAndRenderRelatedProdct() {
         console.error('Category ID or Subcategory ID not available');
         return;
     }
-    fetch(`http://localhost/Projects/panel.oceanonlinemart.com/ajax/get_related_products.php?&category_id=${categoryId}`)
+    fetch(`http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_related_products.php?&category_id=${categoryId}`)
         .then(res => res.json())
         .then(response => {
             const container = document.getElementById('related-scroll');
@@ -478,7 +480,7 @@ function fetchAndRenderRelatedProdct() {
                     const productCard = `
                         <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;" id="related-product">
                               <a href="productdeteails.html?subcategory_id=${btoa(product.subcategory_id)}">
-                            <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}"
+                            <img src="http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}"
                                 class="card-img-top" alt="${product.subcategory_name}">
                             </a>
                             <div class="card-body">
