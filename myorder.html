@@ -459,65 +459,32 @@
       </footer>
       <!-- Sign in Modal -->
       <!-- 1st -->
-     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-         <div class="modal-dialog modal-lg modal-dialog-centered login-popup-main">
-            <div class="modal-content border-0 shadow overflow-hidden rounded">
-               <div class="modal-body p-0">
-                  <div class="login-popup">
-                     <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
-                     <div class="row g-0">
-
-                        <!-- left side of sign -->
-                       <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
-                        <div class="m-auto text-center">
-                            <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
-                            <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
-                            <p class="small">Fast delivery, fresh products, best prices!</p>
-                        </div>
-                      </div>
-<!-- end -->
-                        <div class="col-md-8 col-lg-8 py-lg-5">
-                           <div class="login p-5">
-                              <div class="mb-4 pb-2">
-                                 <h5 class="mb-2 fw-bold">Hey! what’s your number?</h5>
-                                 <p class="text-muted mb-0"> Enter your WhatsApp number to receive OTP</p>
-                              </div>
-                              <form>
-                                 <div class="input-group bg-white border rounded mb-3 p-2">
-                                    <span class="input-group-text bg-white border-0"><i class="bi bi-phone pe-2"></i> +91 </span>
-                                    <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Enter phone number">
-                                 </div>
-                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label small text-muted border-end pe-1" for="exampleCheck1">I accept the Terms of use & Privacy Policy</label>
-                                    <a href="#" class="text-decoration-none text-success small">View T&C <i class="bi bi-chevron-right"></i></a>
-                                 </div>
-                              </form>
-                              <button class="btn btn-success btn-lg py-3 px-4 text-uppercase w-100 mt-4" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Get OTP <i class="bi bi-arrow-right ms-2"></i></button>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+     <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Your Cart</h5>
+            <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems"></div>
+            <div class="mt-3" id="cartSummary">
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>₹<span id="cartSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>₹<span id="deliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>₹<span id="cartTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
             </div>
-         </div>
-      </div>
-      <!-- 2nd -->
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-         <div class="modal-dialog modal-lg modal-dialog-centered login-popup-main">
-            <div class="modal-content border-0 shadow overflow-hidden rounded">
-               <div class="modal-body p-0">
-                  <div class="login-popup">
-                     <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
-                     <div class="row g-0">
-                         <!-- left side of sign -->
-                       <div class="d-none d-md-flex col-md-4 col-lg-4 login-left p-4 text-white">
-                        <div class="m-auto text-center">
-                            <img src="assets/img/logo/logo-mobile.png" alt="Logo" class="img-fluid mb-3" style="max-width: 100px;">
-                            <h6 class="fw-bold">Welcome to Ocean Online Mart</h6>
-                            <p class="small">Fast delivery, fresh products, best prices!</p>
-                        </div>
-                        </div>
+
+
 
       <!-- location Modal -->
                         <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
@@ -581,13 +548,17 @@
                                 </div>
                               </div>
                           </div>
-                        </div>
+                        </div></div></div></div></div></div></div>
                         <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-                          <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
-                          <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-                          <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-                          <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
-                        </div>
+         <a href="index.html"><span class="bi bi-house"></span>Home</a>
+         <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
+
+
+         <a id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white"><span class="bi bi-basket-fill text-w"></span> Cart</a>
+
+
+         <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
+      </div>
     <!-- Bootstrap core JavaScript -->
         <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

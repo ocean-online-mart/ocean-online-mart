@@ -15,6 +15,7 @@ const inputs = {
     fullName: document.getElementById('fullName'),
     phoneNumber: document.getElementById('phoneNumber'),
     address: document.getElementById('address'),
+     Near: document.getElementById('Near'),
     city: document.getElementById('city'),
     state: document.getElementById('state'),
     pinCode: document.getElementById('pinCode'),
@@ -25,6 +26,7 @@ const errorMessages = {
     fullName: document.getElementById('fullNameError'),
     phoneNumber: document.getElementById('phoneNumberError'),
     address: document.getElementById('addressError'),
+        Near: document.getElementById('nearerror'),
     city: document.getElementById('cityError'),
     state: document.getElementById('stateError'),
     pinCode: document.getElementById('pinCodeError'),
@@ -38,13 +40,15 @@ const touched = {
     city: false,
     state: false,
     pinCode: false,
-    payment: false
+    payment: false,
+    Near:false
 };
 
  const validators = {
     fullName: /^[a-zA-Z\s-]{2,}$/,
     phoneNumber: /^\d{10}$/,
     address: /^.{5,}$/,
+    Near: /^.{5,}$/,
     city: /^[a-zA-Z\s]{2,}$/,
     state: /^[a-zA-Z\s]{2,}$/,
     pinCode: /^\d{6}$/,
@@ -130,7 +134,7 @@ function validateField(fieldName, value, showError = touched[fieldName]) {
         }
         return validateField(fieldName, inputs[fieldName].value, false);
     });
-            
+      return isValid; // ← important      
 }
 // const storedPhone = localStorage.getItem('user_number');
     if (userContactNumber) {
@@ -142,7 +146,7 @@ function validateField(fieldName, value, showError = touched[fieldName]) {
 }
 
 
-['fullName', 'phoneNumber', 'address', 'city', 'state', 'pinCode'].forEach(fieldName => {
+['fullName', 'phoneNumber', 'address', 'city', 'state', 'pinCode','Near'].forEach(fieldName => {
     inputs[fieldName].addEventListener('input', () => {
         touched[fieldName] = true; 
         validateField(fieldName, inputs[fieldName].value);
@@ -189,6 +193,7 @@ proceedButton.addEventListener('click', async (e) => {
         fullName: inputs.fullName.value.trim(),
         phoneNumber: inputs.phoneNumber.value.trim(),
         address: inputs.address.value.trim(),
+        Near: inputs.Near.value.trim(),
         city: inputs.city.value.trim(),
         state: inputs.state.value.trim(),
         pinCode: inputs.pinCode.value.trim(),

@@ -386,6 +386,30 @@
          </div>
       </footer>
       <!-- Sign in Modal -->
+         <div class="offcanvas offcanvas-end" id="cartOffcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Your Cart</h5>
+            <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems"></div>
+            <div class="mt-3" id="cartSummary">
+                <div class="order-summary">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span>₹<span id="cartSubtotal">0.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Delivery Charge</span>
+                        <span>₹<span id="deliveryCharge">5.00</span></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>₹<span id="cartTotal">0.00</span></span>
+                    </div>
+                </div>
+                <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
+            </div>
      
       <!-- location Modal -->
       <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
@@ -449,12 +473,16 @@
                </div>
             </div>
          </div>
-      </div>
-      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-         <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
-         <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
+      </div></div></div>
+   <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+         <a href="index.html"><span class="bi bi-house"></span>Home</a>
+         <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
+
+
+         <a id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white"><span class="bi bi-basket-fill text-w"></span> Cart</a>
+
+
+         <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
       </div>
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>
