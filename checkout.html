@@ -166,6 +166,13 @@
                                     <div class="error-message" id="addressError">
                                        Please enter a valid address (at least 5 characters).
                                     </div>
+                                    
+                                    
+                                    <div class="col mb-3">
+                                        <label class="form-label small">Near by place</label>
+                                        <input type="text" class="form-control" id="Near" placeholder="Nearest place" required>
+                                          <div class="error-message" id="nearerror">Please your enter Near by place.</div>
+                                    </div>
                                 </div>
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-4">
@@ -187,6 +194,7 @@
                                         <input type="text" class="form-control" id="pinCode" placeholder="000000" required>
                                           <div class="error-message" id="pinCodeError">Please enter a valid 6-digit pin code.</div>
                                     </div>
+                                      
                                 </div>
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="checkbox" id="saveAddress">
@@ -429,6 +437,7 @@
             <p class="text-center">Copyright © 2025 | Ocean Online Mart</p>
          </div>
       </footer>
+         
       
       <!-- location Modal -->
       <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
@@ -490,14 +499,23 @@
                      </div>
                   </div>
                </div>
+               
             </div>
          </div>
       </div>
-      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-         <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
-         <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
+    
+
+         
+     
+    <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+         <a href="index.html"><span class="bi bi-house"></span>Home</a>
+         <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
+
+
+       
+
+
+         <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
       </div>
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>

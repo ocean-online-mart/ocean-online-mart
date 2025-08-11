@@ -154,6 +154,13 @@
          .custom-close-btn:hover {
          background-color: #f8f8f8;
          }
+         
+@media (max-width: 576px){
+   .custom-close-btn{
+	position: static;
+   }
+}
+
    </style>
    </head>
    
@@ -401,6 +408,7 @@
             </div>
         </div>
       </div>
+      
       <!-- location Modal -->
       <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered">
@@ -465,11 +473,15 @@
          </div>
       </div>
 
-      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-         <a data-bs-toggle="modal" href="#exampleModalToggle" href="#"><span class="bi bi-unlock-fill"></span> Sign In</a>
-         <a href="listing.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a href="cart.html"><span class="bi bi-basket-fill"></span> Cart <b>2</b></a>
-         <a href="profile.html"><span class="bi bi-person-badge"></span> Account</a>
+          <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+         <a href="index.html"><span class="bi bi-house"></span>Home</a>
+         <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
+
+
+         <a id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white"><span class="bi bi-basket-fill text-w"></span> Cart</a>
+
+
+         <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
       </div>
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>
