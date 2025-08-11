@@ -68,21 +68,20 @@ function fetchAndRenderProductDetails() {
                         <h2 class="fw-bold text-dark mb-2 card-title">${product.subcategory_name}</h2>
                         <p class="text-muted">Category: ${product.category_name || 'Seafood'}</p>
                         <p class="text-muted mb-3">${product.description || 'No description available.'}</p>
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3 mb-3">
+                        <div class="my-3">
+                            <div class="d-flex align-items-center gap-5 mb-3 justify-content-between justify-content-sm-start">
                                 <div class="quantity-control">
                                     <button class="btn btn-outline-secondary btn-sm product-decrement" data-id="${product.subcategory_id}">-</button>
                                     <input type="number" class="form-control product-quantity" data-id="${product.subcategory_id}" value="1" min="1">
-                                    <button class="btn btn-outline-secondary btn-sm product-increment" data-id="${product.subcategory_id}">+</button>
+                                    <button class="btn btn-outline-secondary btn-sm product-increment" data-id="${product.subcategory_id}">+</button> 
+                                    <h6 class="pt-2 px-2"> KG</h6>
                                 </div>
+                                 <h4 class="product-total pt-2" data-id="${product.subcategory_id}">₹${(product.offer_price * 1).toFixed(2)}</h4>
                             </div>
                         </div>
                         <div>
                             <div class="d-flex flex-wrap gap-2">
-                                <p class="card-text">
-                                    <h4 class="product-total pt-3" data-id="${product.subcategory_id}">₹${(product.offer_price * 1).toFixed(2)}</h4>
-                                </p>
-                                <button class="btn btn-outline-success flex-fill flex-md-grow-0 px-4 add-to-cart" 
+                                <button class="btn btn-outline-success btn-lg btn-block flex-fill  flex-md-grow-0 px-4 add-to-cart w-100 " 
                                     data-id="${product.subcategory_id}" 
                                     data-name="${product.subcategory_name}" 
                                     data-price="${product.offer_price}" 
@@ -504,6 +503,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const cartCounts = localStorage.getItem('updatedCount');
         if (cartCounts > 0 ) {
             document.getElementById('cartCount').innerHTML = cartCounts; 
+            document.querySelector('.mobile-cart').innerHTML = cartCounts;
         } else {
             console.log('cart is empty');
         }

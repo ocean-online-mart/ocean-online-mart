@@ -484,8 +484,6 @@
                 <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
             </div>
 
-
-
       <!-- location Modal -->
                         <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
@@ -550,15 +548,14 @@
                           </div>
                         </div></div></div></div></div></div></div>
                         <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-         <a href="index.html"><span class="bi bi-house"></span>Home</a>
-         <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
-
-
-         <a id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white"><span class="bi bi-basket-fill text-w"></span> Cart</a>
-
-
-         <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
-      </div>
+                        <a href="index.html"><span class="bi bi-house"></span>Home</a>
+                        <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
+                        <a id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white">
+                           <span class="bi bi-basket-fill text-w"></span>
+                              Cart<b class="mobile-cart">0</b>
+                        </a>
+                        <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
+                    </div>
     <!-- Bootstrap core JavaScript -->
         <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -657,7 +654,7 @@
                           const btnHtml = (order.order_status === 'delivered') 
                               ? `<button class="btn btn-sm btn-outline-success me-2 disabled">Order ${order.order_status}</button>`
                               : `
-                                  <a href="ordertracking.html?order_status=${btoa(order.order_status)}" class="btn btn-sm btn-outline-secondary me-2">Track Order</a>
+                                  <a href="ordertracking.html?order_status=${btoa(order.order_status)}" class="btn btn-sm btn-outline-secondary m-2">Track Order</a>
                                   ${order.items.map(item => `
                                       <a href="productdeteails.html?subcategory_id=${btoa(item.product_id)}" class="btn btn-sm btn-outline-primary me-2">View product</a>
                                   `).join('')}

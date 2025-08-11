@@ -232,7 +232,7 @@
                   <div class="timeline-progress"></div>
                      <div class="timeline-step" data-status="pending">
                      <div class="step-icon mb-2"><i class="bi bi-box-seam"></i></div>
-                     <p class="small mb-0">Pending</p>
+                     <p class="small mb-0">pending</p>
                   </div>
                   <div class="timeline-step" data-status="confirmed">
                      <div class="step-icon mb-2"><i class="bi bi-bag-check-fill"></i></div>
@@ -251,46 +251,42 @@
                   </div>
                </div>
          </section>
-<!-- after the order tracking -->
- <section class="container text-center my-5">
-  <h3 class="fw-bold mb-3">What would you like to do next?</h3>
-  <p class="text-muted mb-4">Explore more fresh products, check your order history, or contact our support team.</p>
-  <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Continue Shopping</a>
-  <a href="myorder.html" class="btn btn-outline-secondary mx-2 mb-2">View All Orders</a>
-  <a href="contact.html" class="btn btn-outline-primary mx-2 mb-2">Contact Support</a>
-</section>
-
-
-
-<div class="marquee-wrapper">
-      <div class="marquee-track" id="marquee-track">
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
-        </div>
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
-        </div>
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
-        </div>
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
-        </div>
-        <!-- Duplicate to enable infinite scroll effect -->
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
-        </div>
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
-        </div>
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
-        </div>
-        <div class="marquee-card">
-          <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
-        </div>
+         <section class="container text-center my-5">
+         <h3 class="fw-bold mb-3">What would you like to do next?</h3>
+         <p class="text-muted mb-4">Explore more fresh products, check your order history, or contact our support team.</p>
+         <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Continue Shopping</a>
+         <a href="myorder.html" class="btn btn-outline-secondary mx-2 mb-2">View All Orders</a>
+         <a href="contact.html" class="btn btn-outline-primary mx-2 mb-2">Contact Support</a>
+         </section>
+      <div class="marquee-wrapper">
+         <div class="marquee-track" id="marquee-track">
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
+         </div>
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
+         </div>
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
+         </div>
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
+         </div>
+         <!-- Duplicate to enable infinite scroll effect -->
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
+         </div>
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
+         </div>
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
+         </div>
+         <div class="marquee-card">
+            <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
+         </div>
+         </div>
       </div>
-    </div>
        <section id="app-section" class="bg-white py-5 mobile-app-section">
          <div class="container">
             <div class="bg-light rounded px-4 pt-4 px-md-4 pt-md-4 px-lg-5 pt-lg-5 pb-0">
@@ -498,8 +494,7 @@ const encodedStatus = params.get('order_status');
 const status = encodedStatus ? atob(encodedStatus) : null;
 // console.log(status);
 
-// Define status order for timeline
-const statusOrder = ['confirmed', 'pending', 'shipped', 'delivered'];
+const statusOrder = ['pending', 'confirmed', 'shipped', 'delivered'];
 
 function updateOrderStatus(status) {
     if (!status || !statusOrder.includes(status)) {
@@ -524,18 +519,16 @@ function updateOrderStatus(status) {
     // Calculate positions
     let bikePosition, progressWidth;
     if (currentStepIndex === 0) {
-        bikePosition = 55; // Starting position for first step
-        progressWidth = 8; // Minimum progress
+        bikePosition = 55; 
+        progressWidth = 8; 
     } else {
         bikePosition = stepWidth * currentStepIndex;
         progressWidth = (bikePosition / totalWidth) * 100;
     }
 
-    // Apply positions
     bike.style.left = `${bikePosition}px`;
     progressLine.style.width = `${progressWidth}%`;
 
-    // Update step states
     steps.forEach((step, index) => {
         step.classList.toggle('active', index <= currentStepIndex);
     });

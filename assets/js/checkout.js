@@ -258,7 +258,7 @@ proceedButton.addEventListener('click', async (e) => {
                     handler: async function (response) {
                         try {
                             
-                            const verifyResponse = await fetch(`${$config.API_BASE_URL}/verify_payment.php`, {
+                            const verifyResponse = await fetch(`${config.API_BASE_URL}/verify_payment.php`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
