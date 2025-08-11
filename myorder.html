@@ -593,6 +593,7 @@
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="assets/js/custom.js" ></script>
+        <script src="assets/js/config.js"></script>
         <script> 
           function scrollRelated(direction) {
               const scrollBox = document.getElementById('related-scroll');
@@ -618,7 +619,7 @@
             return;
           }
           try {
-            const response = await fetch('http://localhost/Projects/panel.oceanonlinemart.com/ajax/websiteAPI/get_user_orders.php', {
+            const response = await fetch(`${config.API_BASE_URL}/get_user_orders.php`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(
@@ -673,7 +674,7 @@
                               
                             return `
                               <div class="d-flex align-items-center gap-2 mb-2">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com/dynamic_img/sub_product/${productImage}" class="rounded-3 border" style="width: 50px; height: 50px; object-fit: cover;" alt="${item.product_name}">
+                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${productImage}" class="rounded-3 border" style="width: 50px; height: 50px; object-fit: cover;" alt="${item.product_name}">
                                 <div>
                                   <div>${item.product_name} (${item.qty} x ${item.price})</div>
                                 

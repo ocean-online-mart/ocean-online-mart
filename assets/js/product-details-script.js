@@ -33,7 +33,7 @@ function fetchAndRenderProductDetails() {
         return;
     }
     
-    fetch(`http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_product_details.php?subcategory_id=${subcategoryId}`)
+    fetch(`${config.API_BASE_URL}/get_product_details.php?subcategory_id=${subcategoryId}`)
         .then(res => res.json())
         .then(response => {
             const container = document.getElementById('product-details');
@@ -54,13 +54,13 @@ function fetchAndRenderProductDetails() {
                     <div class="col-12 col-lg-6">
                         <div class="position-relative mx-auto text-center">
                             <div class="main-img-wrapper overflow-hidden rounded shadow">
-                                <img id="mainImage" src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" 
+                                <img id="mainImage" src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" 
                                 class="main-img" alt="${product.subcategory_name}">
                             </div>                 
                             <div class="d-flex justify-content-center gap-2 mt-3">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="thumb-img active" onclick="changeImage(this)">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img2}" class="thumb-img" onclick="changeImage(this)">
-                                <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img3}" class="thumb-img" onclick="changeImage(this)">
+                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" class="thumb-img active" onclick="changeImage(this)">
+                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img2}" class="thumb-img" onclick="changeImage(this)">
+                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img3}" class="thumb-img" onclick="changeImage(this)">
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@ function updateCart() {
             cartItems.innerHTML += `
                 <div class="cart-item d-flex justify-content-between align-items-center">
                     <div>
-                         <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="Product" width="50" class="rounded me-2">
+                         <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${item.productImg}" alt="Product" width="50" class="rounded me-2">
                         <h6>${item.name}</h6>
                         <p>₹${item.price.toFixed(2)} x ${item.quantity}</p>
                     </div>
@@ -350,31 +350,6 @@ function handleRemoveItem(e) {
 document.getElementById('cartButton')?.addEventListener('click', (e) => {
     // console.log(cart);
          updateCart();
-    // if (cart.length === 0) {
-    //     e.preventDefault();
-    //      cartItems.innerHTML =
-    //         `<div class="container-fluid mt-100">
-    //             <div class="row">
-    //                 <div class="col-md-12">
-    //                     <div class="card-body cart">
-    //                         <div class="col-sm-12 empty-cart-cls text-center">
-    //                             <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
-    //                             <h4><strong>Your cart awaits your orders</strong></h4>
-    //                             <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>`;
-    //     cartSummary.style.display = 'none';
-    //     paymentSection.style.display = 'none';
-    //     otpSection.style.display = 'none';
-    //     // addressSection.style.display = 'none';
-    //     document.getElementById('proceedToPayment').style.display = 'block';
-    //     return false;
-    // }else{
-       
-    // }
 });
 
 // Proceed to payment
@@ -393,7 +368,7 @@ document.getElementById('sendOtp')?.addEventListener('click', async() => {
     }
                       
      try {    
-        const response = await fetch('http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/otp.php', {
+        const response = await fetch(`${config.API_BASE_URL}/otp.php`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phone })  // Only phone sent during OTP send
@@ -430,7 +405,7 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
     console.log(otp);
 
     if (otp) {
-        const response = await fetch('http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/websiteAPI/verify_otp.php', {
+        const response = await fetch(`${config.API_BASE_URL}/verify_otp.php`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({otp })  // Both phone & OTP required for verification
@@ -438,13 +413,13 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
         console.log(response);
         
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         
         if (data.status === "success") {
             alert("OTP Verified Successfully!");
-             localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('cart', JSON.stringify(cart));
             localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
-            window.location.href = 'http://127.0.0.1:5500/checkout.html';
+            window.location.href = 'checkout.html';
         } else {
             const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
             alert("OTP Verification Failed: " + msg);
@@ -469,7 +444,7 @@ function fetchAndRenderRelatedProdct() {
         console.error('Category ID or Subcategory ID not available');
         return;
     }
-    fetch(`http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_related_products.php?&category_id=${categoryId}`)
+    fetch(`${config.API_BASE_URL}/get_related_products.php?&category_id=${categoryId}`)
         .then(res => res.json())
         .then(response => {
             const container = document.getElementById('related-scroll');
@@ -480,7 +455,7 @@ function fetchAndRenderRelatedProdct() {
                     const productCard = `
                         <div class="card flex-shrink-0 product-image-wrapper mb-4" style="min-width: 220px;" id="related-product">
                               <a href="productdeteails.html?subcategory_id=${btoa(product.subcategory_id)}">
-                            <img src="http://localhost/projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}"
+                            <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}"
                                 class="card-img-top" alt="${product.subcategory_name}">
                             </a>
                             <div class="card-body">

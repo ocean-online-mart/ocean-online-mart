@@ -2,13 +2,17 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const DELIVERY_CHARGE = 5.00;
 let cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
 // Function to fetch and render products based on category
+// console.log(config.API_BASE_URL);
+
 function fetchAndRenderProducts(categoryId) {
     const container = document.getElementById('product-list');
     container.innerHTML = ''; // Clear existing products
-    const url = categoryId === 'all'
-        ? 'http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_products.php'
-        : `http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_products.php?category_id=${categoryId}`;
+    const url = categoryId === 'all' 
+        ? `${config.API_BASE_URL}/get_products.php`
+        : `${config.API_BASE_URL}/get_products.php?category_id=${categoryId}`;
 
+        // console.log(url);
+        
     fetch(url)
         .then(res => res.json())
         .then(response => {
@@ -25,13 +29,13 @@ function fetchAndRenderProducts(categoryId) {
                     
                     products.forEach((product, index) => {
                         const card = `
-                            <div class="col-md-4 col-sm-6 te" data-aos="fade-up">
+                            <div class="col-md-4 col-sm-6 te" data-aos="fade-up" id=${index}>
                                 <div class="product-card shadow-sm rounded overflow-hidden bg-white">
                                      <a href="productdeteails.html?subcategory_id=${btoa(product.subcategory_id)}">
                                         <div class="product-img position-relative">
                                             <span class="discount-badge">${getDiscount(product.actual_price, product.offer_price)}% OFF</span>
-                                            <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="w-100 img-main" alt="Product Image" />
-                                            <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img2}" class="w-100 img-hover" alt="Hover Image" />
+                                            <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" class="w-100 img-main" alt="Product Image" />
+                                            <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img2}" class="w-100 img-hover" alt="Hover Image" />
                                         </div>
                                     </a>
                                     <div class="p-3">
@@ -121,7 +125,7 @@ function updateCart() {
             cartItems.innerHTML += `
                 <div class="cart-item d-flex justify-content-between align-items-center">
                     <div>
-                        <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${item.productImg}" alt="Product" width="50" class="rounded me-2">
+                        <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${item.productImg}" alt="Product" width="50" class="rounded me-2">
                         <h6>${item.name}</h6>
                         <p>₹${item.price} x ${item.quantity}</p>
                     </div>
@@ -309,7 +313,7 @@ document.getElementById('verifyOtp')?.addEventListener('click', () => {
             document.querySelector('.otp-section').style.display = 'none';
             localStorage.setItem('cart', JSON.stringify(cart));
             localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
-            window.location.href = 'http://127.0.0.1:5500/checkout.html';
+            window.location.href = 'checkout.html';
         } else {
             alert(data.message);
         }
@@ -318,7 +322,7 @@ document.getElementById('verifyOtp')?.addEventListener('click', () => {
 });
 
 // Fetch categories and render tabs
-fetch('http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/get_categories.php')
+fetch(`${config.API_BASE_URL}/get_categories.php`)
     .then(res => res.json())
     .then(response => {
         if (response.status === 'success') {
@@ -332,7 +336,7 @@ fetch('http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonline
             `;
             categoryContainer.innerHTML += categories.map(category => `
                 <button class="category-tab" onclick="filterCategory(this, '${category.category_id}')">
-                    <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/cat_product/${category.img}" alt="${category.category_name}">
+                    <img src="${config.CATEGORY_IMAGE_BASE_URL}/${category.img}" alt="${category.category_name}">
                     <span>${category.category_name}</span>
                 </button>
             `).join('');

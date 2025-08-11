@@ -17,393 +17,392 @@
       <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
       <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.js"></script>
-  <style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.0/easyzoom.js"></script>
+      <script src="assets/js/config.js"></script>
+      <style>
 
-    
-/* navbar effect */
+        
+    /* navbar effect */
 
-.nav01 {
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-}
+    .nav01 {
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
 
-.nav01::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(11, 202, 228, 0.8);
-  border-radius: 100%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.nav01:hover::before {
-  width: 200px;
-  height: 200px;
-  animation: ripple78 1s ease-out infinite;
-  opacity: 1;
-}
-
-@keyframes ripple78 {
-  0% { width: 0; height: 0; opacity: 1; }
-  100% { width: 200px; height: 200px; opacity: 0; }
-}
-/* From Uiverse.io by vinodjangid07 */ 
- /* add to cart */
-      .cartBtn {
-  width: 152px;
-  height: 40px;
-  border: none;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  color: white;
-  font-weight: 500;
-  position: relative;
-  background-color: rgba(12, 99, 170, 0.822);
-  box-shadow: 0 20px 30px -7px rgba(27, 27, 27, 0.219);
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  overflow: hidden;
-  padding-bottom: 5px;
-  margin-left: 50px;
-  margin-bottom: 5px;
-
-}
-
-.cart {
-  z-index: 2;
-}
-
-.cartBtn:active {
-  transform: scale(0.96);
-}
-
-
-
-.product {
-  position: absolute;
-  width: 12px;
-  border-radius: 3px;
-  content: "";
-  left: 23px;
-  bottom: 23px;
-  opacity: 0;
-  z-index: 1;
-  fill: rgb(211, 211, 211);
-}
-
-.cartBtn:hover .product {
-  animation: slide-in-top 1.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-@keyframes slide-in-top {
-  0% {
-    transform: translateY(-30px);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(0) rotate(-240deg);
-    opacity: 1;
-  }
-}
-
-.cartBtn:hover .cart {
-  animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-@keyframes slide-in-left {
-  0% {
-    transform: translateX(-10px);
-    opacity: 0;
-  }
-
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* end */
-
-
-.product-image-box {
-  height: 350px;
-  width: 500px;
-  position: relative;
-  overflow: hidden;
-}
-
-      .product-image-wrapper img {
-      max-height: 200px;
-      width: 300px;
-      object-fit: cover;
-      border-radius: 12px;
-      }
-
-      .product-image-box img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-      transition: opacity 0.4s ease;
-      }
-
-      .product-image-box .hover-img {
+    .nav01::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(11, 202, 228, 0.8);
+      border-radius: 100%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 1;
       opacity: 0;
-      z-index: 2;
-      }
-
-.main-image-box:hover .hover-img {
-  opacity: 1;
-}
-
-.main-image-box:hover .main-img {
-  opacity: 0;
-}
-
-.main-img {
-  max-height: 400px;
-  object-fit: cover;
-  transition: all 0.3s ease;
-  
-}
-
-.thumb-img {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.thumb-img:hover,
-.thumb-img.active {
-  border-color: #02aabd;
-  transform: scale(1.05);
-}
-
-.main-img-wrapper {
-  height: 400px;
-  max-width: 90%;
-  overflow: hidden;
-  position: relative;
-  margin-left: 15px;
-}
-
-.main-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.main-img-wrapper:hover .main-img {
-  transform: scale(1.1); /* Zoom on hover */
-}
-
-.thumb-img {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.thumb-img:hover,
-.thumb-img.active {
-  border-color: #02aabd;
-  transform: scale(1.05);
-}
-
-
-@media (max-width: 576px) {
-  
-  .toast-container{
-   display: none;
-  }
-
-  .btn {
-    font-size: 14px;
-    padding: 10px;
-  }
-  .related-pro-arr{
-   padding: 6px;
-  }
-}
-.related-pro-arr{
-   height: 34px;
-    width: 34px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px;
-    border-radius: 50%;
-   cursor: pointer;
-}
-/* scorll area */
-
-      .btn {
-         font-size: 14px;
-         /* padding: 10px; */
-      }
-      .related-pro-arr{
-         padding: 6px;
-      }
-     
-      
-      .related-pro-arr{
-         height: 34px;
-         width: 34px;
-         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px;
-         border-radius: 50%;
-         cursor: pointer;
-      }
-  
- .scroll-smooth::-webkit-scrollbar {
-    display: none; /* hide scrollbar */
-  }
-
-  .scroll-smooth {
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;     /* Firefox */
-  }
- /* related product size */
-   
-    body {
-      font-family: Arial, sans-serif;
-      
+      transition: opacity 0.3s ease-in-out;
     }
 
-    .toast-container {
-      position: fixed;
-      
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
+    .nav01:hover::before {
+      width: 200px;
+      height: 200px;
+      animation: ripple78 1s ease-out infinite;
+      opacity: 1;
     }
 
-    .toast-card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      padding: 12px;
-      width: 280px;
+    @keyframes ripple78 {
+      0% { width: 0; height: 0; opacity: 1; }
+      100% { width: 200px; height: 200px; opacity: 0; }
+    }
+    /* From Uiverse.io by vinodjangid07 */ 
+    /* add to cart */
+          .cartBtn {
+      width: 152px;
+      height: 40px;
+      border: none;
+      border-radius: 50px;
       display: flex;
       align-items: center;
+      justify-content: center;
+      gap: 7px;
+      color: white;
+      font-weight: 500;
+      position: relative;
+      background-color: rgba(12, 99, 170, 0.822);
+      box-shadow: 0 20px 30px -7px rgba(27, 27, 27, 0.219);
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      overflow: hidden;
+      padding-bottom: 5px;
+      margin-left: 50px;
+      margin-bottom: 5px;
+
+    }
+
+    .cart {
+      z-index: 2;
+    }
+
+    .cartBtn:active {
+      transform: scale(0.96);
+    }
+
+
+
+    .product {
+      position: absolute;
+      width: 12px;
+      border-radius: 3px;
+      content: "";
+      left: 23px;
+      bottom: 23px;
       opacity: 0;
-      transform: translateX(100%);
-      transition: all 0.5s ease-in-out;
+      z-index: 1;
+      fill: rgb(211, 211, 211);
     }
 
-    .toast-card.show {
+    .cartBtn:hover .product {
+      animation: slide-in-top 1.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    @keyframes slide-in-top {
+      0% {
+        transform: translateY(-30px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(0) rotate(-240deg);
+        opacity: 1;
+      }
+    }
+
+    .cartBtn:hover .cart {
+      animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    @keyframes slide-in-left {
+      0% {
+        transform: translateX(-10px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* end */
+
+
+    .product-image-box {
+      height: 350px;
+      width: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+          .product-image-wrapper img {
+          max-height: 200px;
+          width: 300px;
+          object-fit: cover;
+          border-radius: 12px;
+          }
+
+          .product-image-box img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+          transition: opacity 0.4s ease;
+          }
+
+          .product-image-box .hover-img {
+          opacity: 0;
+          z-index: 2;
+          }
+
+    .main-image-box:hover .hover-img {
       opacity: 1;
-      transform: translateX(0);
     }
 
-    .toast-img {
-      width: 60px;
-      height: 60px;
+    .main-image-box:hover .main-img {
+      opacity: 0;
+    }
+
+    .main-img {
+      max-height: 400px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-right: 12px;
+      transition: all 0.3s ease;
+      
     }
 
-    .toast-content {
-      flex: 1;
+    .thumb-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
     }
 
-    .toast-title {
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 4px;
+    .thumb-img:hover,
+    .thumb-img.active {
+      border-color: #02aabd;
+      transform: scale(1.05);
     }
 
-    .toast-desc {
-      font-size: 12px;
-      color: #555;
+    .main-img-wrapper {
+      height: 400px;
+      max-width: 90%;
+      overflow: hidden;
+      position: relative;
+      margin-left: 15px;
+    }
+
+    .main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .main-img-wrapper:hover .main-img {
+      transform: scale(1.1); /* Zoom on hover */
+    }
+
+    .thumb-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .thumb-img:hover,
+    .thumb-img.active {
+      border-color: #02aabd;
+      transform: scale(1.05);
     }
 
 
-    .quantity-control button {
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 0px;
-}
-@media (max-width: 576px) {
-  .quantity-control button {
-    font-size: 16px;
-    padding: 2px 8px;
-  }
+    @media (max-width: 576px) {
+      
+      .toast-container{
+      display: none;
+      }
 
-  #quantityValue {
-    font-size: 16px;
-  }
-}
-.cart-icon { position: relative; }
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-        .product-card { margin-bottom: 20px; }
-        .offcanvas { width: 400px !important; }
-        .payment-section, .otp-section, .address-section { display: none; }
-        .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .cart-quantity {min-width:0px}
-        .quantity-control { display: flex;   align-items: center; gap: 5px; }
-        .quantity-control button { 
-          width: 30px; 
-          height: 30px;
-         }
-        .quantity-control input { 
-          width: 50px; 
-          text-align: center;
-           border: none;
-          color: #43484D; 
-        }
+      .btn {
+        font-size: 14px;
+        padding: 10px;
+      }
+      .related-pro-arr{
+      padding: 6px;
+      }
+    }
+    .related-pro-arr{
+      height: 34px;
+        width: 34px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px;
+        border-radius: 50%;
+      cursor: pointer;
+    }
+    /* scorll area */
+
+          .btn {
+            font-size: 14px;
+            /* padding: 10px; */
+          }
+          .related-pro-arr{
+            padding: 6px;
+          }
         
-        button[class*=canbtn] {
-          width: 30px;
-          height: 30px;
-          background-color: #E1E8EE;
-          border-radius: 6px;
-          border: none;
-          cursor: pointer;
+          
+          .related-pro-arr{
+            height: 34px;
+            width: 34px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+      
+    .scroll-smooth::-webkit-scrollbar {
+        display: none; /* hide scrollbar */
+      }
+
+      .scroll-smooth {
+        scroll-behavior: smooth;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;     /* Firefox */
+      }
+    /* related product size */
+      
+        body {
+          font-family: Arial, sans-serif;
+          
         }
-        button:focus,
-        input:focus{
-          outline: 0;
+
+        .toast-container {
+          position: fixed;
+          
+          bottom: 20px;
+          right: 20px;
+          z-index: 9999;
         }
-        .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
-            .product-title {
-                inline-size: 165px;
-              overflow: hidden;
+
+        .toast-card {
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 12px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          padding: 12px;
+          width: 280px;
+          display: flex;
+          align-items: center;
+          opacity: 0;
+          transform: translateX(100%);
+          transition: all 0.5s ease-in-out;
+        }
+
+        .toast-card.show {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        .toast-img {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 8px;
+          margin-right: 12px;
+        }
+
+        .toast-content {
+          flex: 1;
+        }
+
+        .toast-title {
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 4px;
+        }
+
+        .toast-desc {
+          font-size: 12px;
+          color: #555;
+        }
+
+
+        .quantity-control button {
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 0px;
+    }
+    @media (max-width: 576px) {
+      .quantity-control button {
+        font-size: 16px;
+        padding: 2px 8px;
+      }
+
+      #quantityValue {
+        font-size: 16px;
+      }
+    }
+    .cart-icon { position: relative; }
+            .cart-count {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: red;
+                color: white;
+                border-radius: 50%;
+                padding: 2px 6px;
+                font-size: 12px;
             }
-  </style>
-</head>
-
-
+            .product-card { margin-bottom: 20px; }
+            .offcanvas { width: 400px !important; }
+            .payment-section, .otp-section, .address-section { display: none; }
+            .cart-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+            .cart-quantity {min-width:0px}
+            .quantity-control { display: flex;   align-items: center; gap: 5px; }
+            .quantity-control button { 
+              width: 30px; 
+              height: 30px;
+            }
+            .quantity-control input { 
+              width: 50px; 
+              text-align: center;
+              border: none;
+              color: #43484D; 
+            }
+            
+            button[class*=canbtn] {
+              width: 30px;
+              height: 30px;
+              background-color: #E1E8EE;
+              border-radius: 6px;
+              border: none;
+              cursor: pointer;
+            }
+            button:focus,
+            input:focus{
+              outline: 0;
+            }
+            .order-summary { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
+                .product-title {
+                    inline-size: 165px;
+                  overflow: hidden;
+                }
+      </style>
+  </head>
   <body class="bg-light" id="bg-light">
       <!-- Navbar -->
        <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">

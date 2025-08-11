@@ -16,6 +16,8 @@
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+      <script src="assets/js/config.js"></script>
+
       <style>
       .nav01 {
          text-decoration: none;
@@ -491,7 +493,7 @@
       }
       function applyPriceFilter() {
       const maxPrice = document.getElementById('priceRange').value;
-      fetch(`http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/ajax/filter_product.php?max_price=${maxPrice}`)
+      fetch(`${config.API_BASE_URL}/filter_product.php?max_price=${maxPrice}`)
          .then(res => res.json())
          .then(data => {
             const productList = document.getElementById('product-list');
@@ -514,8 +516,8 @@
                               <a href="productdeteails.html?subcategory_id=${btoa(product.subcategory_id)}">
                                  <div class="product-img position-relative">
                                  <span class="discount-badge">20% OFF</span>
-                                 <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img1}" class="w-100 img-main" alt="Product Image" />
-                                 <img src="http://localhost/Projects/panel.oceanonlinemart.com-zip/panel.oceanonlinemart.com/dynamic_img/sub_product/${product.img3}" class="w-100 img-hover" alt="Hover Image" />
+                                 <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" class="w-100 img-main" alt="Product Image" />
+                                 <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img3}" class="w-100 img-hover" alt="Hover Image" />
                                  </div>
                               </a>
                               <div class="p-3">
