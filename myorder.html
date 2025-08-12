@@ -706,6 +706,21 @@
           fetchOrders(phone);
         } else {
           console.log('phone number missing');
+             const container = document.getElementById('order-list');
+             container.innerHTML += 
+             `<div class="container-fluid mt-100">
+                <div class="row">
+                 <div class="col-md-12">
+                        <div class="card-body cart d-flex justify-content-center">
+                             <div class="col-sm-6 empty-cart-cls text-center">
+                                <h4><strong>Your orders list is empty</strong></h4>
+                                <h6>Let's fill with a seafood!</h6>
+                                <a href="listingpage.html" class="btn btn-success w-50 mt-2" data-abc="true">Order Now</a>
+                            </div>
+                         </div>
+                   </div>
+                </div>
+            </div>`;
         }
       });
 </script>

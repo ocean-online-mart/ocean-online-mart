@@ -197,8 +197,13 @@ function updateCart() {
     });
 }
 
+document.getElementById('mobileCart')?.addEventListener('click',(e)=>{
+    // console.log(cart);
+     updateCart();
+});
+
 // Prevent offcanvas opening when cart is empty
-document.getElementById('cartButton')?.addEventListener('click', (e) => {
+document.querySelector('.cartButton')?.addEventListener('click', (e) => {
     updateCart();
     // if (cart.length === 0) {
     //     e.preventDefault();
@@ -256,69 +261,81 @@ function initializeProductControls() {
 
 // Proceed to payment
 document.getElementById('proceedToPayment')?.addEventListener('click', () => {
-    if (cart.length === 0) {
-        return;
-    }
+    if (cart.length === 0) return;
     document.querySelector('.payment-section').style.display = 'block';
     document.getElementById('proceedToPayment').style.display = 'none';
 });
 
 // Send OTP
 // Send OTP
-document.getElementById('sendOtp')?.addEventListener('click', () => {
-    const phone = document.getElementById('phoneNumber').value.trim();
-    if (phone.length < 10) {
-        alert('Please enter a valid phone number');
+document.getElementById('sendOtp')?.addEventListener('click', async() => {
+    const phone = document.getElementById('phoneNumber').value;
+    if (phone.length < 10 || isNaN(phone)) {
+        alert('Enter a valid 10-digit phone number');
         return;
     }
+                      
+     try {    
+        const response = await fetch(`${config.API_BASE_URL}/otp.php`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone })  
+        });
 
-    fetch('http://localhost/sendotp.php', { // change URL to your PHP path
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // ✅ keep same PHP session
-        body: JSON.stringify({ phone })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === 'success') {
-            document.querySelector('.payment-section').style.display = 'none';
+        const data = await response.json();
+        console.log(data);
+        
+        if (data.status === "success") {
+            alert("OTP sent to WhatsApp number: " + phone);
+            localStorage.setItem('user_number', JSON.stringify(phone));
             document.querySelector('.otp-section').style.display = 'block';
-            alert('OTP sent to ' + phone);
+            document.querySelector('.payment-section').style.display = 'none';
         } else {
-            alert(data.message);
+            const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
+            alert("Error: " + msg);
+            console.error("Server responded with error:", data);
         }
-    })
-    .catch(err => console.error('Error sending OTP:', err));
+    } catch (error) {
+        alert("Failed to send OTP. Server not reachable.");
+        console.error("Fetch error (sendOtp):", error);
+    }
 });
 
 // Verify OTP
-document.getElementById('verifyOtp')?.addEventListener('click', () => {
+document.getElementById('verifyOtp')?.addEventListener('click', async() => {
     const phone = document.getElementById('phoneNumber').value.trim();
     const otp = document.getElementById('otpInput').value.trim();
 
-    if (otp.length !== 6) { // our PHP sends 6-digit OTP
-        alert('Please enter the 6-digit OTP');
+    if (otp.length !== 4 || isNaN(otp)) {
+        alert('Please enter a valid 4-digit OTP');
         return;
     }
 
-    fetch('http://localhost/verifyotp.php', { // change URL to your PHP path
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // ✅ keep same PHP session
-        body: JSON.stringify({ phone, otp })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === 'success') {
-            document.querySelector('.otp-section').style.display = 'none';
+    if (otp) {
+        const response = await fetch(`${config.API_BASE_URL}/verify_otp.php`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({otp })  // Both phone & OTP required for verification
+        });
+        console.log(response);
+        
+        const data = await response.json();
+        // console.log(data);
+        
+        if (data.status === "success") {
+            alert("OTP Verified Successfully!");
             localStorage.setItem('cart', JSON.stringify(cart));
             localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
             window.location.href = 'checkout.html';
         } else {
-            alert(data.message);
+            const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
+            alert("OTP Verification Failed: " + msg);
+            console.error("Server responded with error:", data);
         }
-    })
-    .catch(err => console.error('Error verifying OTP:', err));
+    } else {
+        alert("Failed to verify OTP. Server not reachable.");
+        console.error("Fetch error (verifyOtp):", error); 
+    }
 });
 
 // Fetch categories and render tabs
@@ -423,7 +440,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const cartCount = localStorage.getItem('updatedCount');
                if (cartCount > 0 ) {
                   document.getElementById('cartCount').innerHTML = cartCount; 
-                  document.querySelector('.mobile-cart').innerHTML = cartCount;
+   document.querySelector('.mobile-cart').innerHTML = cartCount;
                } else {
                   console.log('cart is empty');
                }

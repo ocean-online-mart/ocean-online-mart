@@ -345,9 +345,13 @@ function handleRemoveItem(e) {
     updateCart();
 }
 
+document.getElementById('mobileCart')?.addEventListener('click',(e)=>{
+     console.log(cart);
+     updateCart();
+});
 // Prevent offcanvas opening when cart is empty
-document.getElementById('cartButton')?.addEventListener('click', (e) => {
-    // console.log(cart);
+document.querySelector('.cartButton')?.addEventListener('click', (e) => {
+    console.log(cart);
          updateCart();
 });
 
@@ -401,7 +405,7 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
         alert('Please enter a valid 4-digit OTP');
         return;
     }
-    console.log(otp);
+    // console.log(otp);
 
     if (otp) {
         const response = await fetch(`${config.API_BASE_URL}/verify_otp.php`, {
