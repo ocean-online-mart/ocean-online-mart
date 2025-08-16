@@ -221,6 +221,7 @@ function updateCart() {
     const cartSubtotal = document.getElementById('cartSubtotal');
     const cartTotal = document.getElementById('cartTotal');
     const cartCount = document.getElementById('cartCount');
+    const mobileCartCount = document.querySelector('.mobile-cart');
     const cartSummary = document.getElementById('cartSummary');
     const paymentSection = document.querySelector('.payment-section');
     const otpSection = document.querySelector('.otp-section');
@@ -284,6 +285,7 @@ function updateCart() {
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
    cartCount.textContent = cart.length;
    cartTotalCount = cart.length;
+   mobileCartCount.textContent = cart.length;
    localStorage.setItem('cart', JSON.stringify(cart));
    localStorage.setItem('updatedCount',cartTotalCount);
     // Add event listeners for cart quantity controls
@@ -346,12 +348,12 @@ function handleRemoveItem(e) {
 }
 
 document.getElementById('mobileCart')?.addEventListener('click',(e)=>{
-     console.log(cart);
+    //  console.log(cart);
      updateCart();
 });
 // Prevent offcanvas opening when cart is empty
 document.querySelector('.cartButton')?.addEventListener('click', (e) => {
-    console.log(cart);
+    // console.log(cart);
          updateCart();
 });
 
@@ -378,7 +380,7 @@ document.getElementById('sendOtp')?.addEventListener('click', async() => {
         });
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         
         if (data.status === "success") {
             alert("OTP sent to WhatsApp number: " + phone);
@@ -413,7 +415,7 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({otp })  // Both phone & OTP required for verification
         });
-        console.log(response);
+        // console.log(response);
         
         const data = await response.json();
         // console.log(data);

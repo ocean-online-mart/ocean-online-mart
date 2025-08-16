@@ -93,6 +93,7 @@ function updateCart() {
     const otpSection = document.querySelector('.otp-section');
     const finalSubtotal = document.getElementById('finalSubtotal');
     const finalTotal = document.getElementById('finalTotal');
+     const mobileCartCount = document.querySelector('.mobile-cart');
     cartItems.innerHTML = '';
     let subtotal = 0;
     let totalQuantity = 0;
@@ -148,6 +149,7 @@ function updateCart() {
     // cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = cart.length;
     cartTotalCount = cart.length;
+    mobileCartCount.textContent = cart.length;
     localStorage.setItem('updatedCount',cartTotalCount);
      localStorage.setItem('cart', JSON.stringify(cart));
     // Add event listeners for cart quantity controls
@@ -204,29 +206,10 @@ document.getElementById('mobileCart')?.addEventListener('click',(e)=>{
 
 // Prevent offcanvas opening when cart is empty
 document.querySelector('.cartButton')?.addEventListener('click', (e) => {
+    // console.log(cart);
+    
     updateCart();
-    // if (cart.length === 0) {
-    //     e.preventDefault();
-    //      cartItems.innerHTML =
-    //         `<div class="container-fluid mt-100">
-    //             <div class="row">
-    //                 <div class="col-md-12">
-    //                     <div class="card-body cart">
-    //                         <div class="col-sm-12 empty-cart-cls text-center">
-    //                             <img src="assets/img/cart-asset/empty-cart.gif" class="img-fluid mb-4 mr-3">
-    //                             <h4><strong>Your cart awaits your orders</strong></h4>
-    //                             <a href="listingpage.html" class="btn btn-success w-100 mt-2" data-abc="true">continue shopping</a>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>`;
-    //     cartSummary.style.display = 'none';
-    //     paymentSection.style.display = 'none';
-    //     otpSection.style.display = 'none';
-    //     document.getElementById('proceedToPayment').style.display = 'block';
-    //     return false;
-    // }
+   
 });
 
 // Product quantity controls
@@ -283,7 +266,7 @@ document.getElementById('sendOtp')?.addEventListener('click', async() => {
         });
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         
         if (data.status === "success") {
             alert("OTP sent to WhatsApp number: " + phone);
@@ -317,7 +300,7 @@ document.getElementById('verifyOtp')?.addEventListener('click', async() => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({otp })  // Both phone & OTP required for verification
         });
-        console.log(response);
+        // console.log(response);
         
         const data = await response.json();
         // console.log(data);
@@ -442,7 +425,7 @@ window.addEventListener('DOMContentLoaded', () => {
                   document.getElementById('cartCount').innerHTML = cartCount; 
    document.querySelector('.mobile-cart').innerHTML = cartCount;
                } else {
-                  console.log('cart is empty');
+                //   console.log('cart is empty');
                }
 });
 

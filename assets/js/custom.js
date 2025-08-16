@@ -79,8 +79,16 @@ function renderProducts(list) {
   });
 }
 
+ document.addEventListener('DOMContentLoaded', () => {
+    const cartCount = localStorage.getItem('updatedCount');
+        if (cartCount > 0 ) {
+          document.getElementById('cartCount').innerHTML = cartCount; 
+            document.querySelector('.mobile-cart').innerHTML = cartCount;
+        } else {
+          // console.log('cart is empty');
+        }
 
-
+  });
 
 
 // add to offcanva script

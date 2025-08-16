@@ -212,7 +212,7 @@
                   <a href="#" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon"
+                  <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon cartButton"
                      id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                      <i class="bi bi-cart3"></i>
                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
@@ -474,14 +474,25 @@
          </div>
       </div>
 
-         <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-            <a href="index.html"><span class="bi bi-house"></span>Home</a>
-            <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
-            <a id="mobileCart" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white">
-               <span class="bi bi-basket-fill text-w"></span>
-               Cart<b class="mobile-cart">0</b>
-            </a>   
-            <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
+         <div class="mobile-nav-bottom">
+         <a href="index.html" class="nav-item">
+            <img src="assets/img/mobile-nav/icons8-home.gif" alt="Home">
+            <small>Home</small>
+         </a>
+         <a href="listingpage.html" class="nav-item">
+            <img src="assets/img/mobile-nav/task.gif" alt="Listing">
+            <small>Listing</small>
+         </a>
+         <a data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" id="mobileCart" class="nav-item cart-item">
+            <img src="assets/img/mobile-nav/shopping-cart.gif" alt="Cart">
+            <small>Cart</small>
+            <b class="mobile-cart">0</b>
+         </a>
+         <a href="myorder.html" class="nav-item">
+            <img src="assets/img/mobile-nav/boxing.gif" alt="Orders">
+            <small>Orders</small>
+         </a>
+      </div>
       </div>
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>

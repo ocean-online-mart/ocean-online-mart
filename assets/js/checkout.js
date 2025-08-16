@@ -26,7 +26,7 @@ const errorMessages = {
     fullName: document.getElementById('fullNameError'),
     phoneNumber: document.getElementById('phoneNumberError'),
     address: document.getElementById('addressError'),
-        Near: document.getElementById('nearerror'),
+    Near: document.getElementById('nearerror'),
     city: document.getElementById('cityError'),
     state: document.getElementById('stateError'),
     pinCode: document.getElementById('pinCodeError'),
@@ -326,6 +326,6 @@ window.addEventListener('DOMContentLoaded', () => {
                   document.getElementById('cartCount').innerHTML = cartCount; 
                    document.querySelector('.mobile-cart').innerHTML = cartCount;
                } else {
-                  console.log('cart is empty');
+                //   console.log('cart is empty');
                }
 });

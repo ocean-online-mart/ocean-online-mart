@@ -218,7 +218,7 @@
                </button>
             </div>
             <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 g-4">
-               <div class="col"><a href="coming-soon.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col"><a href="listingpage.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
                <div class="col"><a href="coming-soon.html"><img src="assets/img/l2.png" alt="#" class="img-fluid rounded-3"></a></div>
                <div class="col"><a href="coming-soon.html"><img src="assets/img/l3.png" alt="#" class="img-fluid rounded-3"></a></div>
                <div class="col"><a href="coming-soon.html"><img src="assets/img/l4.png" alt="#" class="img-fluid rounded-3"></a></div>
@@ -544,7 +544,26 @@
             </div>
          </div>
       </div>
-      <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
+      <div class="mobile-nav-bottom">
+         <a href="index.html" class="nav-item">
+            <img src="assets/img/mobile-nav/icons8-home.gif" alt="Home">
+            <small>Home</small>
+         </a>
+         <a href="listingpage.html" class="nav-item">
+            <img src="assets/img/mobile-nav/task.gif" alt="Listing">
+            <small>Listing</small>
+         </a>
+         <a data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" id="mobileCart" class="nav-item cart-item">
+            <img src="assets/img/mobile-nav/shopping-cart.gif" alt="Cart">
+            <small>Cart</small>
+            <b class="mobile-cart" id="cartCount">0</b>
+         </a>
+         <a href="myorder.html" class="nav-item">
+            <img src="assets/img/mobile-nav/boxing.gif" alt="Orders">
+            <small>Orders</small>
+         </a>
+      </div>
+      <!-- <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
          <a href="index.html"><span class="bi bi-house"></span>Home</a>
          <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
          <a  data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white" id="mobileCart">
@@ -552,15 +571,14 @@
             Cart<b class="mobile-cart">0</b>
          </a>
          <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
-      </div>
+      </div> -->
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
+      <script src="assets/js/config.js"></script>
       <script src="assets/js/custom.js" ></script>
       <script src="assets/js/product-details-script.js"></script>
-      <!-- <script src="assets/js/products-listing-script.js"></script> -->
-      <script src="assets/js/config.js"></script>
 
       <script>
          document.addEventListener('DOMContentLoaded', () => {
@@ -569,7 +587,7 @@
                   document.getElementById('cartCount').innerHTML = cartCount; 
                    document.querySelector('.mobile-cart').innerHTML = cartCount;
                } else {
-                  console.log('cart is empty');
+                  // console.log('cart is empty');
                }
     // Fetch categories from the API
     
