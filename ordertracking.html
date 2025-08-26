@@ -62,41 +62,35 @@
   padding-top: 40px;
   margin: 0 20px;
 }
-
 .timeline-line {
   position: absolute;
   top: 20px;
   left: 0;
   right: 0;
   height: 4px;
-  background: #dee2e6;
+  background: #DEE2E6;
   z-index: 1;
 }
-
 .timeline-progress {
   position: absolute;
   top: 20px;
   left: 0;
   height: 4px;
-  background: #00c3e6;
+  background: #00C3E6;
   z-index: 2;
   width: 0%;
   transition: width 0.8s ease-in-out;
-  /* Ensure progress line is always visible even at start */
   min-width: 2px;
-  transform-origin: left center; 
+  transform-origin: left center;
 }
-
 .timeline-step {
   position: relative;
   z-index: 3;
   text-align: center;
   flex: 1;
 }
-
 .timeline-step .step-icon {
-  background: #dee2e6;
-  color: white;
+  background: #DEE2E6;
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -109,11 +103,9 @@
   transform: translateX(-50%);
   margin-top: -32px;
 }
-
 .timeline-step.active .step-icon {
-  background: #00c3e6;
+  background: #00C3E6;
 }
-
 .bike {
   position: absolute;
   top: 4px;
@@ -123,12 +115,48 @@
   z-index: 4;
   width: 30px;
   height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-}  
-
+}
+/* --- Mobile Responsive Fix --- */
+@media (max-width: 976px) {
+  .tracking-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 70px;   /* more space for text */
+    padding-top: 0;
+    position: relative;
+  }
+  .timeline-line {
+    top: 0;
+    left: 30px;
+    width: 4px;
+    height: 100%;
+  }
+  .timeline-progress {
+    top: 0;
+    left: 30px;
+    width: 4px;
+    height: 0%;
+    transition: height 0.8s ease-in-out;
+    transform-origin: top center;
+  }
+  .timeline-step {
+    position: relative;
+    text-align: left;
+    margin: 50px 0; /* increased spacing between steps */
+    padding-left: 10px;
+  }
+  .timeline-step .step-icon {
+    position: absolute;
+    left: -37px;
+    top: 50%;
+    margin: 0;
+  }
+  .bike {
+    left: 50px;
+    top: 0;
+    transform: translate(-50%, -50%) rotate(90deg); /* face downward */
+  }
+}
 
 /* offer section */
 .marquee-wrapper {
@@ -254,7 +282,7 @@
          <section class="container text-center my-5">
          <h3 class="fw-bold mb-3">What would you like to do next?</h3>
          <p class="text-muted mb-4">Explore more fresh products, check your order history, or contact our support team.</p>
-         <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Continue Shopping</a>
+         <a href="listingpage.html" class="btn btn-success mx-2 mb-2">Continue Shopping</a>
          <a href="myorder.html" class="btn btn-outline-secondary mx-2 mb-2">View All Orders</a>
          <a href="contact.html" class="btn btn-outline-primary mx-2 mb-2">Contact Support</a>
          </section>
@@ -494,9 +522,12 @@
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
-   
+             <script src="assets/js/product-details-script.js"></script>
+
    <!-- ORDER TRACKING -->
    <script>
+
+
 // Get status from query parameter
 const params = new URLSearchParams(window.location.search);
 const encodedStatus = params.get('order_status'); 
@@ -551,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Optional: Show a fallback message to the user
         document.querySelector('.order-tracking').innerHTML += `
             <p class=" text-center mt-3">
-               <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Expoler Prodcuts</a>
+               <a href="listingpage.html" class="btn btn-success mx-2 mb-2">Expoler Prodcuts</a>
             </p>
         `;
     }

@@ -147,51 +147,52 @@
                             <form id="checkoutForm" class="needs-validation" novalidate>
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label small">Full Name</label>
-                                        <input type="text" class="form-control" id="fullName" placeholder="John Doe" required>
+                                        <label class="form-label small">Full Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="fullName" placeholder="Your Name" required>
                                           <div class="error-message" id="fullNameError">
                                              Please enter a valid name (at least 2 characters, letters, spaces, or hyphens only).
                                           </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label small">Phone Number</label>
-                                        <input type="text" class="form-control" id="phoneNumber" placeholder="+91 0000000000" required>
-                                         <div class="error-message" id="phoneNumberError">
-                                             Please enter a valid phone number (e.g., +919876543210).
+                                        <label class="form-label small">Email Address <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" placeholder="example@example.com" required>
+                                         <div class="error-message" id="emailError">
+                                             Please enter a valid email address (e.g.,example@example.com).
                                           </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label small">Address</label>
-                                    <input type="text" class="form-control" id="address" placeholder="123, Street name, City" required>
-                                    <div class="error-message" id="addressError">
-                                       Please enter a valid address (at least 5 characters).
+                                 <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                       <label class="form-label small">Phone Number <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="phoneNumber" placeholder="9876-5432-10" required>
+                                         <div class="error-message" id="phoneNumberError">
+                                             Please enter a valid phone number (e.g., 9876543210).
+                                          </div>
                                     </div>
-                                    
-                                    
-                                    <div class="col mb-3">
-                                        <label class="form-label small">Near by place</label>
+                                    <div class="col-md-6">
+                                         <label class="form-label small">Near by Location <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="Near" placeholder="Nearest place" required>
                                           <div class="error-message" id="nearerror">Please your enter Near by place.</div>
                                     </div>
                                 </div>
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label small">City</label>
-                                        <input type="text" class="form-control" id="city" placeholder="Chennai" required>
-                                         <div class="error-message" id="cityError">
-                                             Please enter a valid city (at least 2 characters, letters or spaces only).
-                                          </div>
+                                <div class="mb-3">
+                                    <label class="form-label small">Address Details <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="address" placeholder="123, Street name, City" required>
+                                    <div class="error-message" id="addressError">
+                                       Please enter a valid address (at least 5 characters).
                                     </div>
-                                    <div class="col-md-4">
+                                </div>
+                                <div class="row g-3 mb-3">
+                                   
+                                    <div class="col-md-6">
                                         <label class="form-label small">State</label>
-                                        <input type="text" class="form-control" id="state" placeholder="Tamil Nadu" required>
+                                        <input type="text" class="form-control" id="state" placeholder="Puducherry" required>
                                           <div class="error-message" id="stateError">
                                              Please enter a valid state (at least 2 characters, letters or spaces only).
                                           </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label small">Pin Code</label>
+                                    <div class="col-md-6">
+                                        <label class="form-label small">Pin Code <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="pinCode" placeholder="000000" required>
                                           <div class="error-message" id="pinCodeError">Please enter a valid 6-digit pin code.</div>
                                     </div>
@@ -516,7 +517,7 @@
         
          <a href="myorder.html" class="nav-item">
             <img src="assets/img/mobile-nav/boxing.gif" alt="Orders">
-            <small>Orders</small>
+            <small>Orders</small> 
          </a>
       </div>
       <!-- Bootstrap core JavaScript -->

@@ -212,7 +212,12 @@
     opacity: 1;
   }
 }
-
+@media (max-width: 767.98px) { /* Bootstrap's md breakpoint */
+  .custom-gap-mobile {
+    gap: 0.5rem !important; 
+  
+  }
+}
 /* end */
 </style>
    </head>
@@ -385,8 +390,8 @@
           <div class="container">
             <h4 class="fw-bold mb-3 stay-updated">Stay Updated!</h4>
             <p class="mb-4">Subscribe to get exclusive offers & fresh product alerts.</p>
-            <form class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
-              <input type="email" class="form-control rounded-pill mb-2 mb-sm-0 w-75 w-sm-25 text-center" placeholder="Enter your email">
+            <form class="d-flex flex-column flex-sm-row justify-content-center gap-2 align-items-center">
+              <input type="email" class="form-control rounded-pill mb-2 mb-sm-0 w-50 w-sm-25 text-center" placeholder="Enter your email">
               <button type="submit" class="btn btn-light rounded-pill px-3">Subscribe</button>
             </form>
           </div>
@@ -572,6 +577,7 @@
         <!-- Custom scripts for all pages-->
         <script src="assets/js/custom.js" ></script>
         <script src="assets/js/config.js"></script>
+      <script src="assets/js/product-details-script.js"></script>
 
 
         <script> 
@@ -654,10 +660,13 @@
                               
                             return `
                               <div class="d-flex align-items-center gap-2 mb-2">
-                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${productImage}" class="rounded-3 border" style="width: 50px; height: 50px; object-fit: cover;" alt="${item.product_name}">
+                                <a href="productdeteails.html?subcategory_id=${btoa(item.product_id)}" class="me-2">
+                                  <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${productImage}" class="rounded-3 border" style="width: 50px; height: 50px; object-fit: cover;" 
+                                  alt="${item.product_name}">
+                                </a>
                                 <div>
                                   <div>${item.product_name} (${item.qty} x ${item.price})</div>
-                                
+                                  
                                 </div>
                               </div>
                             `;
@@ -667,9 +676,7 @@
                               ? `<button class="btn btn-sm btn-outline-success me-2 disabled">Order ${order.order_status}</button>`
                               : `
                                   <a href="ordertracking.html?order_status=${btoa(order.order_status)}" class="btn btn-sm btn-outline-secondary m-2">Track Order</a>
-                                  ${order.items.map(item => `
-                                      <a href="productdeteails.html?subcategory_id=${btoa(item.product_id)}" class="btn btn-sm btn-outline-primary me-2">View product</a>
-                                  `).join('')}
+                                 
                               `;
 
                               container.innerHTML += `
@@ -677,12 +684,12 @@
                                 <div class="card-body p-3 border-bottom">
                                   <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
                                     <div class="flex-grow-1">
-                                      <div class="d-flex justify-content-between flex-column flex-md-row">
+                                      <div class="d-flex justify-content-start gap-3 flex-column flex-md-row custom-gap-mobile">
                                         <div>
                                           <h6 class="fw-semibold mb-1">Order #${order.formatted_order_id}</h6>
                                            <small class="text-muted">Placed on: ${formattedDate}</small>
                                         </div>
-                                        <div class="text-md-end mt-2 mt-md-0">
+                                        <div class="text-md-end my-2 mt-md-0 ">
                                             <span class="badge ${statusClass} px-3 py-1 rounded-pill">${order.order_status}</span>
                                           </div>
                                       </div>
@@ -696,7 +703,7 @@
                                       </div>
                                     </div>
                                    
-                                    <div class="text-end mt-3 mt-md-0">
+                                    <div class="text-start mt-3 mt-md-0">
                                         ${btnHtml}
                                     </div>
                                   </div>
@@ -713,6 +720,7 @@
       // Initialize on DOM load
       document.addEventListener('DOMContentLoaded', () => {
         const phone = localStorage.getItem('user_phone');
+        
        const cartCount = localStorage.getItem('updatedCount');
       //  console.log(cartCount);
        

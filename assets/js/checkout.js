@@ -1,22 +1,19 @@
 // Retrieve cart data from localStorage
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
-const userContactNumber = JSON.parse(localStorage.getItem('user_number')) || '';
+const userContactMail = JSON.parse(localStorage.getItem('user_mail')) || '';
 const cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
-// console.log(userContactNumber);
-// console.log(cart);
-
-const DELIVERY_CHARGE = 25.00; // As per your HTML
-const DISCOUNT = 20.00; // As per your HTML
+const DELIVERY_CHARGE = 25.00;
+const DISCOUNT = 20.00;
 
 const form = document.getElementById('checkoutForm');
 const proceedButton = document.getElementById('proceedToPayment');
 
 const inputs = {
     fullName: document.getElementById('fullName'),
+    email: document.getElementById('email'),
     phoneNumber: document.getElementById('phoneNumber'),
+    Near: document.getElementById('Near'),
     address: document.getElementById('address'),
-     Near: document.getElementById('Near'),
-    city: document.getElementById('city'),
     state: document.getElementById('state'),
     pinCode: document.getElementById('pinCode'),
     payment: document.querySelectorAll('input[name="payment"]')
@@ -24,10 +21,10 @@ const inputs = {
 
 const errorMessages = {
     fullName: document.getElementById('fullNameError'),
+    email: document.getElementById('emailError'),
     phoneNumber: document.getElementById('phoneNumberError'),
-    address: document.getElementById('addressError'),
     Near: document.getElementById('nearerror'),
-    city: document.getElementById('cityError'),
+    address: document.getElementById('addressError'),
     state: document.getElementById('stateError'),
     pinCode: document.getElementById('pinCodeError'),
     payment: document.getElementById('paymentError')
@@ -35,21 +32,21 @@ const errorMessages = {
 
 const touched = {
     fullName: false,
+    email: false,
     phoneNumber: false,
+    Near: false,
     address: false,
-    city: false,
     state: false,
     pinCode: false,
-    payment: false,
-    Near:false
+    payment: false
 };
 
- const validators = {
+const validators = {
     fullName: /^[a-zA-Z\s-]{2,}$/,
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     phoneNumber: /^\d{10}$/,
-    address: /^.{5,}$/,
     Near: /^.{5,}$/,
-    city: /^[a-zA-Z\s]{2,}$/,
+    address: /^.{5,}$/,
     state: /^[a-zA-Z\s]{2,}$/,
     pinCode: /^\d{6}$/,
     payment: () => document.querySelector('input[name="payment"]:checked') !== null
@@ -63,7 +60,6 @@ function displayOrderSummary() {
     const discountSpan = document.getElementById('discountAmount');
     const totalSpan = document.getElementById('finalTotal');
 
-    // Clear existing product items (but keep the structure)
     const existingItems = cartItemsContainer.querySelectorAll('.d-flex.justify-content-between.align-items-center.mb-2');
     existingItems.forEach(item => item.remove());
 
@@ -77,13 +73,11 @@ function displayOrderSummary() {
         shippingSpan.textContent = '₹0.00';
         discountSpan.textContent = '- ₹0.00';
         totalSpan.textContent = '₹0.00';
-        document.querySelector('.paymnet-submit').disabled = true; // Disable Proceed to Payment
+        document.querySelector('.paymnet-submit').disabled = true;
         return;
     }
 
     let subtotal = 0;
-    // console.log(cart);
-    
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         subtotal += itemTotal;
@@ -127,74 +121,88 @@ function validateField(fieldName, value, showError = touched[fieldName]) {
     return isValid;
 }
 
- function validateForm() {
+function validateForm() {
     const isValid = Object.keys(inputs).every(fieldName => {
         if (fieldName === 'payment') {
             return validateField('payment', null, false);
         }
         return validateField(fieldName, inputs[fieldName].value, false);
     });
-      return isValid; // ← important      
-}
-// const storedPhone = localStorage.getItem('user_number');
-    if (userContactNumber) {
-        // console.log(storedPhone);
-        
-        inputs.phoneNumber.value = userContactNumber;
-        touched.phoneNumber = true; 
-        validateField('phoneNumber', userContactNumber);
+    return isValid;
 }
 
+if (userContactMail) {
+    inputs.email.value = userContactMail;
+    touched.email = true;
+    validateField('email', userContactMail);
+}
 
-['fullName', 'phoneNumber', 'address', 'city', 'state', 'pinCode','Near'].forEach(fieldName => {
+function loadSavedAddress() {
+    const savedAddress = JSON.parse(localStorage.getItem('savedAddress')) || null;
+    if (savedAddress) {
+        inputs.fullName.value = savedAddress.fullName || '';
+        inputs.email.value = savedAddress.email || userEmail || '';
+        inputs.phoneNumber.value = savedAddress.phoneNumber || '';
+        inputs.Near.value = savedAddress.Near || '';
+        inputs.address.value = savedAddress.address || '';
+        inputs.state.value = savedAddress.state || '';
+        inputs.pinCode.value = savedAddress.pinCode || '';
+        document.getElementById('notes').value = savedAddress.notes || '';
+        document.getElementById('saveAddress').checked = savedAddress.saveAddress || false;
+
+        // Mark fields as touched and validate
+        ['fullName', 'email', 'phoneNumber', 'Near', 'address', 'state', 'pinCode'].forEach(fieldName => {
+            if (inputs[fieldName].value) {
+                touched[fieldName] = true;
+                validateField(fieldName, inputs[fieldName].value);
+            }
+        });
+    } else if (userEmail) {
+        inputs.email.value = userEmail;
+        touched.email = true;
+        validateField('email', userEmail);
+    }
+}
+
+['fullName', 'email', 'phoneNumber', 'Near', 'address', 'state', 'pinCode'].forEach(fieldName => {
     inputs[fieldName].addEventListener('input', () => {
-        touched[fieldName] = true; 
+        touched[fieldName] = true;
         validateField(fieldName, inputs[fieldName].value);
-        if (fieldName === 'phoneNumber') {
-            localStorage.setItem('phoneNumber', inputs[fieldName].value.trim());
-        }
         validateForm();
     });
 });
 
 inputs.payment.forEach(radio => {
     radio.addEventListener('change', () => {
-        touched.payment = true; 
+        touched.payment = true;
         validateField('payment');
         validateForm();
     });
 });
 
-inputs.payment.forEach(radio => {
-    radio.addEventListener('change', () => {
-        touched.payment = true; 
-        validateField('payment');
-        validateForm();
-    });
-});
-validateForm();
-
-proceedButton.addEventListener('click', async (e) => {     
+proceedButton.addEventListener('click', async (e) => {
     e.preventDefault();
-            
+
     Object.keys(touched).forEach(field => touched[field] = true);
     const isValid = Object.keys(inputs).every(fieldName => {
-        if (fieldName === 'payment') return validateField('payment', null, true);
+        if (fieldName === 'payment') {
+            return validateField('payment', null, true);
+        }
         return validateField(fieldName, inputs[fieldName].value, true);
     });
-    
+
     if (!form.checkValidity() || !isValid) {
         form.classList.add('was-validated');
         form.reportValidity();
         return;
     }
-       
+
     const shippingDetails = {
         fullName: inputs.fullName.value.trim(),
+        email: inputs.email.value.trim(),
         phoneNumber: inputs.phoneNumber.value.trim(),
-        address: inputs.address.value.trim(),
         Near: inputs.Near.value.trim(),
-        city: inputs.city.value.trim(),
+        address: inputs.address.value.trim(),
         state: inputs.state.value.trim(),
         pinCode: inputs.pinCode.value.trim(),
         notes: document.getElementById('notes').value.trim(),
@@ -211,121 +219,115 @@ proceedButton.addEventListener('click', async (e) => {
         discount: DISCOUNT,
         total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + DELIVERY_CHARGE - DISCOUNT
     };
-
-        try {
-            // console.log(orderData);
+    // console.log(orderData);
+    
+    try {
+        if (paymentMethod === 'cod') {
+            const response = await fetch(`${config.API_BASE_URL}/create_order.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            });
+            const result = await response.json();
+            // console.log(result);
             
-            if (paymentMethod === 'cod') {    
-                const response = await fetch(`${config.API_BASE_URL}/create_order.php`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                });
-                const result = await response.json();
-                // console.log(result);
-                
-                if (result.status) {
-                    localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
-                    localStorage.removeItem('cart');
-                    localStorage.removeItem('deliveryCharge');
-                      localStorage.removeItem('updatedCount');
-                    window.location.href = 'success-order.html';
-                } else {
-                    alert('Error processing order: ' + result.message);
-                }
+            if (result.status) {
+                localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
+                localStorage.removeItem('cart');
+                localStorage.removeItem('deliveryCharge');
+                localStorage.removeItem('updatedCount');
+                window.location.href = 'success-order.html';
             } else {
-                // console.log(orderData);
-                
-                const response = await fetch(`${config.API_BASE_URL}/create_order.php`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                });
-                const result = await response.json();
-                if (!result.status) {
-                    alert('Error creating order: ' + result.message);
-                    return;
-                }
+                alert('Error processing order: ' + result.message);
+            }
+        } else {
+            const response = await fetch(`${config.API_BASE_URL}/create_order.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            });
+            const result = await response.json();
+            if (!result.status) {
+                alert('Error creating order: ' + result.message);
+                return;
+            }
 
-                const options = {
-                    key: 'rzp_test_HxdZAvLisBCGfP',
-                    amount: orderData.total * 100,
-                    currency: 'INR',
-                    name: 'Ocean Online Mart',
-                    description: 'Order Payment',
-                    image: 'assets/img/logo/logo-1.png',
-                    order_id: result.order_id,
-                    handler: async function (response) {
-                        try {
-                            
-                            const verifyResponse = await fetch(`${config.API_BASE_URL}/verify_payment.php`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_order_id: response.razorpay_order_id,
-                                    razorpay_signature: response.razorpay_signature,
-                                    orderData
-                                })
-                            });
-                            const verifyResult = await verifyResponse.json();
-                            if (verifyResult.status) {
-                                localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
-                                localStorage.removeItem('cart');
-                                localStorage.removeItem('deliveryCharge');
-                                localStorage.removeItem('updatedCount');
-                                window.location.href = 'success-order.html';
-                            } else {
-                                alert('Payment verification failed: ' + verifyResult.message);
-                            }
-                        } catch (error) {
-                            console.error('Verification error:', error);
-                            alert('Error verifying payment: ' + error.message);
+            const options = {
+                key: 'rzp_test_HxdZAvLisBCGfP',
+                amount: orderData.total * 100,
+                currency: 'INR',
+                name: 'Ocean Online Mart',
+                description: 'Order Payment',
+                image: 'assets/img/logo/logo-1.png',
+                order_id: result.order_id,
+                handler: async function (response) {
+                    try {
+                        const verifyResponse = await fetch(`${config.API_BASE_URL}/verify_payment.php`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                                orderData
+                            })
+                        });
+                        const verifyResult = await verifyResponse.json();
+
+                        if (verifyResult.status) {
+                            localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
+                            localStorage.removeItem('cart');
+                            localStorage.removeItem('deliveryCharge');
+                            localStorage.removeItem('updatedCount');
+                            window.location.href = 'success-order.html';
+                        } else {
+                            alert('Payment verification failed: ' + verifyResult.message);
                         }
-                    },
-                    prefill: {
-                        name: shippingDetails.fullName,
-                        contact: shippingDetails.phoneNumber,
-                        email: 'customer@example.com'
-                    },
-                    theme: {
-                        color: '#3cb0e6ff'
-                    },
-                    method: {
+                    } catch (error) {
+                        console.error('Verification error:', error);
+                        alert('Error verifying payment: ' + error.message);
+                    }
+                },
+                prefill: {
+                    name: shippingDetails.fullName,
+                    contact: shippingDetails.phoneNumber,
+                    email: shippingDetails.email
+                },
+                theme: {
+                    color: '#3cb0e6ff'
+                },
+                method: {
+                    upi: {
+                        flow: 'intent'
+                    }
+                },
+                config: {
+                    display: {
+                        prefer: ['upi'],
                         upi: {
-                            flow: 'intent' // Enable UPI Intent Flow
-                        }
-                    },
-                    config: {
-                        display: {
-                            prefer: ['upi'], // Prioritize UPI in checkout
-                            upi: {
-                                intent: true // Explicitly enable Intent Flow
-                            }
+                            intent: true
                         }
                     }
-                };
+                }
+            };
 
-                const rzp = new Razorpay(options);
-                rzp.open();
-                rzp.on('payment.failed', function (response) {
-                    alert('Payment failed: ' + response.error.description);
-                });
-            }
-        } catch (error) {
-            console.error('Error processing order:', error);
-            alert('An error occurred while processing your order: ' + error.message);
+            const rzp = new Razorpay(options);
+            rzp.open();
+            rzp.on('payment.failed', function (response) {
+                alert('Payment failed: ' + response.error.description);
+            });
         }
+    } catch (error) {
+        console.error('Error processing order:', error);
+        alert('An error occurred while processing your order: ' + error.message);
+    }
 });
 
-// Initialize order summary on page load
 window.addEventListener('DOMContentLoaded', () => {
     displayOrderSummary();
     const cartCount = localStorage.getItem('updatedCount');
-               if (cartCount > 0 ) {
-                  document.getElementById('cartCount').innerHTML = cartCount; 
-                   document.querySelector('.mobile-cart').innerHTML = cartCount;
-               } else {
-                //   console.log('cart is empty');
-               }
+    if (cartCount > 0) {
+        document.getElementById('cartCount').innerHTML = cartCount;
+        document.querySelector('.mobile-cart').innerHTML = cartCount;
+    }
 });

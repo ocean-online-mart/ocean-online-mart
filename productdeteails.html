@@ -449,7 +449,7 @@
                   <a href="coming-soon.html" class="btn btn-light position-relative rounded-pill rounded-icon">
                   <i class="icofont-search"></i>
                   </a>
-                  <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon"
+                  <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon cartButton"
                   id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" >
                      <i class="bi bi-cart3"></i>
                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
@@ -592,20 +592,20 @@
 
             <!-- Payment Section -->
             <div class="payment-section mt-3">
-                <h5>Enter Phone Number</h5>
-                   <div class="input-group bg-white border rounded mb-3 p-2">
-                      <span class="input-group-text bg-white border-0"><i class="bi bi-phone pe-2"></i> +91 </span>
-                        <input type="tel" class="form-control bg-white border-0 ps-0" id="phoneNumber" placeholder="Enter phone number">
+                <h5>Order Confirmation</h5>
+                    <div class="input-group flex-nowrap mb-3 p-2">
+                      <span class="input-group-text" id="addon-wrapping"><i class="icofont-email fs-4"></i></span>
+                      <input type="email" class="form-control" id="emailID" placeholder="Enter E-mail Address" aria-label="E-mail" aria-describedby="addon-wrapping">
                     </div>
-                <!-- <input type="tel" class="form-control mb-2" id="phoneNumber" placeholder="Enter phone number"> -->
-                <button class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
+                <button type="button" class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
             </div>
 
             <!-- OTP Section -->
             <div class="otp-section mt-3">
-                 <h5 class="mb-2 fw-bold">Confirm your number</h5>
-                    <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by Whatapp
-                        <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" class="text-success text-decoration-none" href="#"><i class="bi bi-pencil-square"></i> Edit</a>
+                 <h5 class="mb-2 fw-bold">Confirm your Order</h5>
+                    <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by E-mail
+                        <a  class="text-success text-decoration-none edit-mail" href="#">
+                          <i class="bi bi-pencil-square"></i> Edit</a>
                     </p>
                 <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
                 <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
@@ -724,7 +724,7 @@
        <script src="assets/js/product-details-script.js"></script>
 
 <!-- Toast Notification -->
-<div class="toast-container" id="toastContainer"></div>
+<!-- <div class="toast-container" id="toastContainer"></div> -->
 
 <!-- JS -->
 <script>

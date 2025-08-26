@@ -353,6 +353,7 @@ document.getElementById('mobileCart')?.addEventListener('click',(e)=>{
 });
 // Prevent offcanvas opening when cart is empty
 document.querySelector('.cartButton')?.addEventListener('click', (e) => {
+    // alert('hi');
     // console.log(cart);
          updateCart();
 });
@@ -360,37 +361,41 @@ document.querySelector('.cartButton')?.addEventListener('click', (e) => {
 // Proceed to payment
 document.getElementById('proceedToPayment')?.addEventListener('click', () => {
     if (cart.length === 0) return;
-    document.querySelector('.payment-section').style.display = 'block';
+   document.querySelector('.payment-section').style.display = 'block';
     document.getElementById('proceedToPayment').style.display = 'none';
+    //  window.location.href = 'checkout.html';
 });
 
 // Send OTP
 document.getElementById('sendOtp')?.addEventListener('click', async() => {
-    const phone = document.getElementById('phoneNumber').value;
-    if (phone.length < 10 || isNaN(phone)) {
-        alert('Enter a valid 10-digit phone number');
-        return;
-    }
-                      
+    const email = document.getElementById('emailID').value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Enter a valid email address');
+            return;
+        }
+        document.getElementById('sendOtp').disabled = true;
+            // document.querySelector('.otp-section').style.display = 'block';
+            // document.querySelector('.payment-section').style.display = 'none';
      try {    
         const response = await fetch(`${config.API_BASE_URL}/otp.php`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone })  // Only phone sent during OTP send
+            body: JSON.stringify({ email })  // Only phone sent during OTP send
         });
 
         const data = await response.json();
         // console.log(data);
         
-        if (data.status === "success") {
-            alert("OTP sent to WhatsApp number: " + phone);
-            localStorage.setItem('user_number', JSON.stringify(phone));
+        if (data.status) {
+            alert("OTP sent to this email address: " + email); 
+            document.getElementById('sendOtp').disabled = false;
+            localStorage.setItem('user_mail', JSON.stringify(email));
             document.querySelector('.otp-section').style.display = 'block';
             document.querySelector('.payment-section').style.display = 'none';
         } else {
             const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
             alert("Error: " + msg);
-            console.error("Server responded with error:", data);
+            console.error("Server responded with error:", data);  
         }
     } catch (error) {
         alert("Failed to send OTP. Server not reachable.");
@@ -398,11 +403,18 @@ document.getElementById('sendOtp')?.addEventListener('click', async() => {
     }
 });
 
-
+document.querySelector('.edit-mail')?.addEventListener('click', (e) => {
+    e.preventDefault(); 
+    document.querySelector('.otp-section').style.display = 'none';
+    document.querySelector('.payment-section').style.display = 'block';
+    document.getElementById('emailID').value = JSON.parse(localStorage.getItem('user_mail') || '""'); 
+    document.getElementById('emailID').focus(); 
+});
 document.getElementById('verifyOtp').addEventListener('click', async () => {
     const otp = document.getElementById('otpInput').value.trim();
-    const phone = document.getElementById('phoneNumber').value.trim();
-
+    const email = JSON.parse(localStorage.getItem('user_mail') || '""');
+    console.log(email);
+    
     if (otp.length !== 4 || isNaN(otp)) {
         alert('Please enter a valid 4-digit OTP');
         return;
@@ -413,7 +425,7 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
         const response = await fetch(`${config.API_BASE_URL}/verify_otp.php`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({otp })  // Both phone & OTP required for verification
+            body: JSON.stringify({otp , email })  
         });
         // console.log(response);
         
@@ -423,12 +435,12 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
         if (data.status === "success") {
             alert("OTP Verified Successfully!");
             localStorage.setItem('cart', JSON.stringify(cart));
+            
             localStorage.setItem('deliveryCharge', DELIVERY_CHARGE.toFixed(2));
             window.location.href = 'checkout.html';
         } else {
             const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
-            alert("OTP Verification Failed: " + msg);
-            console.error("Server responded with error:", data);
+             console.error("Server responded with error:", data);
         }
     } else {
         alert("Failed to verify OTP. Server not reachable.");
