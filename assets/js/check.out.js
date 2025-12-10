@@ -1,9 +1,8 @@
-// Retrieve cart data from localStorage
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
-const userContactNum = JSON.parse(localStorage.getItem('user_number')) || '';
+const userContactMail = JSON.parse(localStorage.getItem('user_number')) || '';
 const cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
 const DELIVERY_CHARGE = 25.00;
-const DISCOUNT = 20.00;
+let DISCOUNT = 0.00;
 
 const form = document.getElementById('checkoutForm');
 const proceedButton = document.getElementById('proceedToPayment');
@@ -51,14 +50,68 @@ const validators = {
     pinCode: /^\d{6}$/,
     payment: () => document.querySelector('input[name="payment"]:checked') !== null
 };
+console.log(cart);
 
-// console.log(cart);
+// Fetch and select the best coupon
+async function fetchAndSelectBestCoupon(cart) {
+    try {
+        // console.log('Sending cart:', JSON.stringify({ cart }, null, 2));
+        const response = await fetch(`${config.API_BASE_URL}/validate_coupon.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cart)
+        });
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! Status: ${response.status}`);
+        // }
+        const result = await response.json();
+        console.log('Coupon response:', JSON.stringify(result, null, 2));
 
+        if (result.status && result.coupons && result.coupons.length > 0) {
+            let bestCoupon = null;
+            let maxDiscount = 0;
 
+            // Check if cart contains only premium products
+            const premiumIds = new Set();
+            result.coupons.forEach(coupon => {
+                if (coupon.required_products && coupon.required_products.length > 0) {
+                    coupon.required_products.forEach(id => premiumIds.add(id));
+                }
+            });
+            const isPremiumOnlyCart = cart.every(item => premiumIds.has(parseInt(item.id, 10)));
 
+            for (const coupon of result.coupons) {
+                // console.log(`Evaluating ${coupon.coupon_code}: discount=₹${coupon.discount}`);
+                // Prioritize coupons with required_products for premium-only carts
+                const isPremiumCoupon = coupon.required_products && coupon.required_products.length > 0;
+                const isBetter = isPremiumOnlyCart
+                    ? (isPremiumCoupon && coupon.discount >= maxDiscount)
+                    : (coupon.discount > maxDiscount || 
+                       (coupon.discount === maxDiscount && !isPremiumCoupon));
+                if (isBetter) {
+                    maxDiscount = coupon.discount;
+                    DISCOUNT = coupon.discount;
+                    bestCoupon = coupon;
+                }
+            }
+            // console.log(`Selected coupon: ${bestCoupon?.coupon_code || 'none'}, discount: ₹${maxDiscount}`);
+            return { coupon: bestCoupon, discount: maxDiscount , DISCOUNT: DISCOUNT};
+        }
+        console.log('No applicable coupons found');
+        return { coupon: null, discount: 0 , DISCOUNT:0};
+    } catch (error) {
+        console.log(error);
+        
+        alert('Error fetching coupons:', error);
+        const offerMessages = document.getElementById('offer-messages');
+        offerMessages.style.display = 'block';
+        offerMessages.textContent = 'Failed to fetch coupons. Please try again.';
+        return { coupon: null, discount: 0 };
+    }
+}
 
 // Display order summary
-function displayOrderSummary() {
+async function displayOrderSummary() {
     const cartItemsContainer = document.querySelector('.card-body .d-flex.mb-2').parentElement;
     const subtotalSpan = document.querySelector('.d-flex.justify-content-between.small.mb-2 span:last-child');
     const shippingSpan = document.getElementById('shippingCharge');
@@ -83,11 +136,11 @@ function displayOrderSummary() {
     }
 
     let subtotal = 0;
-    let productId = [];
+    let productIds = [];
 
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
-        productId.push(item.id);
+        productIds.push(item.id);
         subtotal += itemTotal;
         cartItemsContainer.insertAdjacentHTML('afterbegin', `
             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -103,11 +156,23 @@ function displayOrderSummary() {
                 </div>
             </div>`);
     });
-    
+
+    // Fetch and apply coupon
+    const { coupon, discount } = await fetchAndSelectBestCoupon(cart);
+  
     subtotalSpan.textContent = `₹${subtotal.toFixed(2)}`;
     shippingSpan.textContent = `₹${DELIVERY_CHARGE.toFixed(2)}`;
-    discountSpan.textContent = `- ₹${DISCOUNT.toFixed(2)}`;
-    totalSpan.textContent = `₹${(subtotal + DELIVERY_CHARGE - DISCOUNT).toFixed(2)}`;
+    discountSpan.textContent = `- ₹${discount.toFixed(2)}`;
+    // ${coupon ? ` (${coupon.coupon_code})` : ''}`
+    totalSpan.textContent = `₹${(subtotal + DELIVERY_CHARGE - discount).toFixed(2)}`;
+    const offerMessages = document.getElementById('offer-messages');
+    
+    offerMessages.style.display = 'block';
+   offerMessages.textContent = coupon?.coupon_code 
+    ? `Offer Coupon ${coupon.coupon_code} Applied!` 
+    : '';
+    // Store coupon and discount for orderData
+    window.currentOrderData = { subtotal, discount, coupon };
 }
 
 function validateField(fieldName, value, showError = touched[fieldName]) {
@@ -139,17 +204,17 @@ function validateForm() {
     return isValid;
 }
 
-if (userContactNum) {
-    inputs.phoneNumber.value = userContactNum;
+if (userContactMail) {
+    inputs.phoneNumber.value = userContactMail;
     touched.phoneNumber = true;
-    validateField('phoneNumber', userContactNum);
+    validateField('phoneNumber', userContactMail);
 }
 
 function loadSavedAddress() {
     const savedAddress = JSON.parse(localStorage.getItem('savedAddress')) || null;
     if (savedAddress) {
         inputs.fullName.value = savedAddress.fullName || '';
-        inputs.email.value = savedAddress.email || userEmail || '';
+        inputs.email.value = savedAddress.email || userContactMail || '';
         inputs.phoneNumber.value = savedAddress.phoneNumber || '';
         inputs.Near.value = savedAddress.Near || '';
         inputs.address.value = savedAddress.address || '';
@@ -158,17 +223,16 @@ function loadSavedAddress() {
         document.getElementById('notes').value = savedAddress.notes || '';
         document.getElementById('saveAddress').checked = savedAddress.saveAddress || false;
 
-        // Mark fields as touched and validate
         ['fullName', 'email', 'phoneNumber', 'Near', 'address', 'state', 'pinCode'].forEach(fieldName => {
             if (inputs[fieldName].value) {
                 touched[fieldName] = true;
                 validateField(fieldName, inputs[fieldName].value);
             }
         });
-    } else if (userContactNum) {
-        inputs.phoneNumber.value = userContactNum;
-        touched.email = true;
-        validateField('phoneNumber', userContactNum);
+    } else if (userContactMail) {
+        inputs.phoneNumber.value = userContactMail;
+        touched.phoneNumber = true;
+        validateField('phoneNumber', userContactMail);
     }
 }
 
@@ -227,8 +291,8 @@ proceedButton.addEventListener('click', async (e) => {
         discount: DISCOUNT,
         total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + DELIVERY_CHARGE - DISCOUNT
     };
-    // console.log(orderData);
-    
+// console.log(orderData);
+
     try {
         if (paymentMethod === 'cod') {
             const response = await fetch(`${config.API_BASE_URL}/create_order.php`, {
@@ -237,8 +301,7 @@ proceedButton.addEventListener('click', async (e) => {
                 body: JSON.stringify(orderData)
             });
             const result = await response.json();
-            // console.log(result);
-            
+
             if (result.status) {
                 localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
                 localStorage.removeItem('cart');
@@ -285,7 +348,7 @@ proceedButton.addEventListener('click', async (e) => {
                         if (verifyResult.status) {
                             localStorage.setItem('user_phone', orderData.shippingDetails.phoneNumber);
                             localStorage.removeItem('cart');
-                            localStorage.removeItem('deliveryCharge');    
+                            localStorage.removeItem('deliveryCharge');
                             localStorage.removeItem('updatedCount');
                             window.location.href = 'success-order.html';
                         } else {
@@ -332,6 +395,7 @@ proceedButton.addEventListener('click', async (e) => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
+    getUserLocation();
     displayOrderSummary();
     const cartCount = localStorage.getItem('updatedCount');
     if (cartCount > 0) {

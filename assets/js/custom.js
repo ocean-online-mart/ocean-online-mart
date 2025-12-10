@@ -10,6 +10,30 @@ Version: 0.1
 - Tooltip
 */
 
+// Immediate zoom prevention - runs before page loads
+(function() {
+    // Prevent zoom immediately
+    document.addEventListener('touchstart', function(event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+    document.addEventListener('touchmove', function(event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+    // Prevent gesture events immediately
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+})();
 (function($) {
   "use strict"; // Start of use strict
 
@@ -79,7 +103,61 @@ function renderProducts(list) {
   });
 }
 
- document.addEventListener('DOMContentLoaded', () => {
+ 
+ function getUserLocation() {
+            if (navigator.geolocation) {
+               navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+               alert("Geolocation is not supported by this browser.");
+            }
+         }    
+
+         function showPosition(position) {
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
+
+           
+
+            fetch(`https://oceanonlinemart.com/panel/ajax/websiteAPI/calculate_shipping.php`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ latitude: lat, longitude: lng })
+            })  
+            .then(res => res.json())
+            .then(data => {
+              //  console.log(data);
+               
+               if (data.status === "not_deliverable") {
+                     document.getElementById("location").innerHTML = `
+                        🚫 Sorry, we don’t deliver to your location.<br>
+                        Location: ${data.city}, ${data.state}<br>
+                        
+                     `;
+               } else {
+                     localStorage.setItem("deliveryCost" , data.shippingCost);
+                     document.getElementById("location").innerHTML = `Delivery in ${data.deliveryTimeMinutes} minutes!`
+                     document.getElementById("delivery-info").innerHTML = `
+                     ${data.city}, ${data.state}`;
+               }
+            });
+         }
+
+         function showError(error) {
+            switch(error.code) {
+               case error.PERMISSION_DENIED:
+                     alert("User denied the request for Geolocation.");
+                     break;
+               case error.POSITION_UNAVAILABLE:
+                     alert("Location information is unavailable.");
+                     break;
+               case error.TIMEOUT:
+                     alert("The request to get user location timed out.");
+                     break;
+            }
+         }
+
+document.addEventListener('DOMContentLoaded', () => {
+    getUserLocation();
     const cartCount = localStorage.getItem('updatedCount');
         if (cartCount > 0 ) {
           document.getElementById('cartCount').innerHTML = cartCount; 
@@ -89,7 +167,6 @@ function renderProducts(list) {
         }
 
   });
-
 
 // add to offcanva script
 

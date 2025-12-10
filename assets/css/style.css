@@ -923,12 +923,19 @@ hr {
           width: 30px; 
           height: 30px;
          }
-        .quantity-control input { 
-          width: 50px; 
-          text-align: center;
-           border: none;
-          color: #43484D; 
-        }
+       .quantity-control input { 
+              width: 50px; 
+              max-width: 120px;
+              min-width: 80px;
+              text-align: center;
+              border: none;
+              color: #43484D; 
+              text-align: center;
+              font-weight: bold;
+              border-radius: 4px;
+              color: #333;
+              background: #fff;
+            }
         
         button[class*=canbtn] {
           width: 30px;
@@ -1044,5 +1051,21 @@ hr {
 @media (min-width: 769px) {
   .mobile-nav-bottom {
     display: none;
+  }
+}
+
+@media (max-width: 976px) {
+  .main-img-wrapper {
+    width: 100%;
+    height: auto;         /* allow height to adjust */
+    margin: 0 auto;
+    position: relative;
+    margin-left: -12;       /* remove left margin for mobile */
+  }
+  .main-img {
+    width: 100%;
+    height: auto;         /* auto height keeps proportions */
+    object-fit: contain;  /* show full image without cropping */
+    transition: transform 0.4s ease, opacity 0.4s ease;
   }
 }

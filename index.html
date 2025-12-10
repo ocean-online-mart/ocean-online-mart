@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover" />
       <meta name="description" content="">
       <meta name="author" content="">
+    
       <link rel="icon" type="image/png" href="assets/img/logo/logo-1.png">
       <title>Ocean Online Mart</title>
       <!-- Bootstrap core CSS -->
@@ -14,6 +15,8 @@
       <!-- Bootstraps icon -->
       <link rel="stylesheet" href="assets/vendor/icons/bootstrap-icons.css">
       <link href="assets/css/style.css" rel="stylesheet">
+       <link href="assets/css/common.css" rel="stylesheet">
+     
        <style>
 .nav01 {
   text-decoration: none;
@@ -112,33 +115,104 @@
     transform: translateX(-50%);
   }
 }
-
-
-#fish-cursor {
-  position: fixed;
-  width: 40px; /* Adjust size */
-  height: auto;
-  pointer-events: none; /* So it doesn't block clicks */
-  z-index: 9999;
-  transition: transform 0.05s linear;
+.skeleton {
+  position: relative;
+  background: #E0E0E0;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 180px; /* adjust to match image height */
 }
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.real-img {
+  filter: blur(12px);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: filter 2s ease, opacity 1s ease, transform 1s ease;
+}
+.real-img.loaded {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
+}
+.card-shine {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px; /* match rounded-3 */
+}
+.card-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine 4s infinite;
+}
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 120%;
+    opacity: .5;
+  }
+  100% {
+    left: 120%;
+    opacity: .3;
+  }
+}
+
+
+.hover-img {
+    width:50px;   /* change size if needed */
+    height: 50px;
+    cursor: pointer;
+    margin-top: 12px;
+    margin-left: -90px;
+    /* margin-top: -1350px; margin-left: -190px;
+    z-index: 1000;
+    position: sticky; */
+}
+
 
  </style> 
    </head>
    <body class="bg-light">
       <!-- Navbar -->
+   
       <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm osahan-header py-0">
          <div class="container">
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
-               <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
+               <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-md-block">
             </a>
-            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
-               <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
+            <button class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto">
+               <i class="bi bi-geo-alt-fill fs-5 text-success d-none d-md-block"></i> 
                <span>
-                  <b>Delivery in 30 minutes!</b>
-                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+                  <b id="location">Puducherry, puducherry</b>
+                  <div class="small text-success" id="delivery-info"></div>
                </span>
-            </a>
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                aria-label="Toggle navigation">
@@ -146,6 +220,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav ms-auto me-3 top-link">
+                   <li class="nav-item dropdown">
+                  <a href="myorder.html"><img src="assets/img/logo/protection.gif" class="hover-img  d-none d-md-block " id="gifIcon"/></a>
+               </li>
                   <li class="nav-item dropdown">
                      <a class="nav-link nav01" href="listingpage.html">
                      Fish & Seafoods
@@ -168,9 +245,7 @@
                   </li>
                </ul>
                <div class="d-flex align-items-center gap-2">
-                  <a href="#" class="btn btn-light position-relative rounded-pill rounded-icon">
-                  <i class="icofont-search"></i>
-                  </a>
+                 
                    <button type="button" class="btn btn-light position-relative rounded-pill rounded-icon cartButton"
                      id="cartButton" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                      <i class="bi bi-cart3"></i>
@@ -183,18 +258,49 @@
          </div>
       </nav>
       <!-- app link -->
-      <section class="bg-success">
+      <!-- <section class="bg-success">
          <div class="container">
             <div class="row py-3">
                <div class="d-flex gap-3 align-items-center">
-                  <img src="assets/img/logo/logo-app.png" class="img-fluid d-none d-md-block h-40">
-                  <div class="text-white fs-6">Download the app and get <b class="text-warning-light rounded-pill">25% OFF</b> on your first order!</div>
-                  <a href="#app-section" class="text-nowrap ms-auto text-decoration-none d-flex align-items-center text-success border-0 btn btn-light rounded-pill">Download <span class="ms-1 d-none d-md-block">an App Now&nbsp;</span><span><i class="bi bi-chevron-right text-success"></i></span></a>
+                     <div class="coupenmarquee">
+                        <div class="coupenmarqueetrack">
+                           <div class="coupencontent">&nbsp;
+                             <span class="text-white" data-code="OCEAN20">
+                                 <b class="text-warning-light rounded-pill px-2">Get 20% OFF</b>on your first order worth ₹500 and above!
+                                 Use code <strong>OCEAN20</strong>
+                              </span>
+                              <span class="separator">|</span>
+                             <span class="text-white" data-code="FEAST20">
+                                 <b class="text-warning-light rounded-pill px-2">Get 20% OFF</b> on your order worth ₹1000 and above!
+                                 Use code <strong>FEAST20</strong>
+                              </span>
+                              <span class="separator">|</span>
+                              <span class="text-white" data-code="PREMIUM20">
+                                  <b class="text-warning-light rounded-pill px-2">Get 20% OFF</b> on Lobster and King Crab products worth ₹1000 and above!
+                                 Use code <strong>PREMIUM20</strong>
+                              </span>
+                              <span class="separator">|</span>
+                               <span class="text-white" data-code="OCEAN20">
+                                  <b class="text-warning-light rounded-pill px-2">Get 20% OFF</b> on your first order worth ₹500 and above!
+                                 Use code <strong>OCEAN20</strong>
+                              </span>
+                              <span class="separator">|</span>
+                             <span class="text-white" data-code="FEAST20">
+                                  <b class="text-warning-light rounded-pill px-2">Get 20% OFF</b> on your order worth ₹1000 and above!
+                                 Use code <strong>FEAST20</strong>
+                              </span>
+                              <span class="separator">|</span>
+                              <span class="text-white" data-code="PREMIUM20">
+                                  <b class="text-warning-light rounded-pill px-2">Get 20% OFF</b> on Lobster and King Crab products worth ₹1000 and above!
+                                 Use code <strong>PREMIUM20</strong>
+                              </span>
+                           </div>
+                        </div>
+                     </div>
                </div>
             </div>
          </div>
-      </section>
-
+      </section> -->
 
       <!-- Search Hero Section -->
       <section class="main-banner bg-white pt-4">
@@ -202,10 +308,10 @@
             <div id="carouselExampleFade" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel">
                <div class="carousel-inner rounded">
                   <div class="carousel-item active">
-                     <a href="listing.html"><img src="assets/img/banner1.png" class="d-block w-100" alt="..."></a>
+                     <a href="listingpage.html"><img src="assets/img/banner1.png" class="d-block w-100" alt="..."></a>
                   </div>
                   <div class="carousel-item">
-                     <a href="packages.html"><img src="assets/img/banner2.png" class="d-block w-100" alt="..."></a>
+                     <a href="listingpage.html"><img src="assets/img/banner2.png" class="d-block w-100" alt="..."></a>
                   </div>
                </div>
                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -218,10 +324,10 @@
                </button>
             </div>
             <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 g-4">
-               <div class="col"><a href="listingpage.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="coming-soon.html"><img src="assets/img/l2.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="coming-soon.html"><img src="assets/img/l3.png" alt="#" class="img-fluid rounded-3"></a></div>
-               <div class="col"><a href="coming-soon.html"><img src="assets/img/l4.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col card-shine"><a href="listingpage.html"><img src="assets/img/l1.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col card-shine"><a href="coming-soon.html"><img src="assets/img/l2.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col card-shine"><a href="coming-soon.html"><img src="assets/img/l3.png" alt="#" class="img-fluid rounded-3"></a></div>
+               <div class="col card-shine"><a href="coming-soon.html"><img src="assets/img/l4.png" alt="#" class="img-fluid rounded-3"></a></div>
             </div>
          </div>
       </section>
@@ -243,119 +349,116 @@
             <div class="text-center mb-4">
                <h4 class="fw-bold">Fresh Deals You'll Love</h4>
             </div>
-
             <div class="marquee-wrapper">
                <div class="marquee-track" id="marquee-track">
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider1.png" alt=""></a>
                </div>
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider2.png" alt=""></a>
                </div>
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider3.png" alt=""></a>
                </div>
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider4.png" alt=""></a>
                </div>
                <!-- Duplicate to enable infinite scroll effect -->
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider1.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider1.png" alt=""></a>
                </div>
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider2.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider2.png" alt=""></a>
                </div>
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider3.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider3.png" alt=""></a>
                </div>
                <div class="marquee-card">
-                  <a href="listing.html"><img src="assets/img/slider4.png" alt=""></a>
+                  <a href="listingpage.html"><img src="assets/img/slider4.png" alt=""></a>
                </div>
                </div>
             </div>
          </div>
       </section>
-      <section id="app-section" class="bg-white py-5 mobile-app-section">
-         <div class="container">
-            <div class="bg-light rounded px-4 pt-4 px-md-4 pt-md-4 px-lg-5 pt-lg-5 pb-0">
-               <div class="row justify-content-center align-items-center app-2 px-lg-4">
-                  <div class="col-md-7 px-lg-5">
-                     <div class="text-md-start text-center">
-                        <h1 class="fw-bold mb-2 text-dark">Get the Ocean Online Mart app</h1>
-                        <div class="m-0 text-muted">We will send you a link, open it on your phone to download the app</div>
-                     </div>
-                     <div class="my-4 me-lg-5">
-                        <div class="input-group bg-white shadow-sm rounded-pill p-2">
-                           <span class="input-group-text bg-white border-0"><i class="bi bi-phone pe-2"></i> +91 </span>
-                           <input type="text" class="form-control bg-white border-0 ps-0 me-1" placeholder="Enter phone number">
-                           <button class="btn btn-warning rounded-pill py-2 px-4 border-0" type="button">Send app link</button>
-                        </div>
-                     </div>
-                     <div class="text-md-start text-center mt-5 mt-md-1 pb-md-4 pb-lg-5">
-                        <p class="mb-3">Download app from</p>
-                        <a href="#/"><img alt="#" src="assets/img/play-store.svg" class="img-fluid mobile-app-icon"></a>
-                     </div>
-                  </div>
-                  <div class="col-md-5 pe-lg-5 mt-3 mt-md-0 mt-lg-0">
-                     <img alt="#" src="assets/img/mobile-app.png" class="img-fluid">
-                  </div>
+     <section id="app-section" class="bg-white py-5 mobile-app-section">
+   <div class="container">
+      <div class="bg-light rounded px-4 pt-4 px-md-4 pt-md-4 px-lg-5 pt-lg-5 pb-0">
+         <div class="row justify-content-center align-items-center app-2 px-lg-4">
+            <div class="col-md-7 px-lg-5">
+               <div class="text-md-start text-center">
+                  <h1 class="fw-bold mb-2 text-dark">Get the Ocean Online Mart App</h1>
+                  <div class="m-0 text-muted">Ocean Online Mart is now available publicly on the Google Play Store. Download the app and start shopping now!</div>
+               </div>
+
+               <div class="text-md-start text-center mt-4 pb-md-4 pb-lg-5">
+                  <p class="mb-3">Download the app from</p>
+                  <a target="_blank" href="https://play.google.com/store/apps/details?id=com.oceanonlinemart.app">
+                     <img alt="Play Store" src="assets/img/play-store.svg" class="img-fluid mobile-app-icon">
+                  </a>
                </div>
             </div>
+
+            <div class="col-md-5 pe-lg-5 mt-3 mt-md-0 mt-lg-0">
+               <img alt="Mobile App" src="assets/img/mobile-app-img.png" class="img-fluid">
+            </div>
          </div>
-      </section>
+      </div>
+   </div>
+</section>
+
       <!-- Footer -->
-      <section class="footer py-5">
+      <section class="footer bg-white py-5">
          <div class="container">
             <div class="row">
                <h5 class="mb-4 fw-bold text-dark">Areas we deliver to</h5>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Pondicherry</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Cuddalore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Chennai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Coimbatore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Ariyalur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Dharmapuri </a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Dindigul</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Pondicherry</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Cuddalore</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Chennai</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Coimbatore</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Ariyalur</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Dharmapuri </a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Dindigul</a></li>
                   </ul>
                </div>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Erode</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Kanchipuram</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Viluppuram</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Karur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Krishnagiri</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Madurai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruvannamalai</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Erode</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Kanchipuram</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Viluppuram</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Karur</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Krishnagiri</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Madurai</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Tiruvannamalai</a></li>
                   </ul>
                </div>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Namakkal</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Perambalur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Pudukkottai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Vellore</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Salem</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Sivagangai</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thanjavur</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Namakkal</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Perambalur</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Pudukkottai</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Vellore</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Salem</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Sivagangai</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Thanjavur</a></li>
                   </ul>
                </div>
                <div class="col-lg-3 col-md-6 col-6">
                   <ul class="list-unstyled d-grid gap-2 mb-0">
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Nilgiris</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Theni</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thiruvallur</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Thoothukudi</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tiruchirappalli</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirunelveli</a></li>
-                     <li><a href="listing.html" class="text-decoration-none text-muted">Tirupur</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Nilgiris</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Theni</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Thiruvallur</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Thoothukudi</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Tiruchirappalli</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Tirunelveli</a></li>
+                     <li><a href="#" class="text-decoration-none text-muted">Tirupur</a></li>
                   </ul>
                </div>
             </div>
          </div>
       </section>
-      <footer class="bg-footer py-1 pt-4 d-none d-md-block">
+      <footer class="bg-footer py-1 pt-4 ">
          <div class="container">
             <div class="row mb-5">
                <div class="col-12 text-white">
@@ -368,7 +471,7 @@
                <div class="col-md-4 col-12">
                   <div><img src="assets/img/footer.png" alt="" class="img-fluid footer-logo"></div>
                </div>
-               <div class="col-md-2 col-6">
+               <div class="col-md-2 mt-3 col-6">
                   <h6 class="text-uppercase mb-4 fw-bold">Quick Link</h6>
                   <ul class="list-unstyled d-grid gap-2 text-decoration-none">
                      <li><a class="text-decoration-none text-white-50" href="#">About us</a></li>
@@ -380,18 +483,18 @@
 
                   </ul>
                </div>
-               <div class="col-md-2 col-6">
+               <div class="col-md-2 mt-3 col-6">
                   <h6 class="text-uppercase mb-4 fw-bold">Privacy & Terms</h6>
                   <ul class="list-unstyled d-grid gap-2">
                      <li><a class="text-decoration-none text-white-50" href="#">FAQ</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Terms and conditions</a></li>
+                      <li><a class="text-decoration-none text-white-50" href="privacy-policy.html">Privacy Policy</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Refund Policy</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Cancellation Policy</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Shipping Policy</a></li>
                      <li><a class="text-decoration-none text-white-50" href="#">Support / Help</a></li>
                   </ul>
                </div>
-               <div class="col-md-2 col-6">
+               <div class="col-md-2 mt-3 col-6">
                   <h6 class="text-uppercase mb-4 fw-bold">My Profile</h6>
                   <ul class="list-unstyled d-grid gap-2">
                      <li><a class="text-decoration-none text-white-50" href="#">Search Products</a></li>
@@ -402,15 +505,14 @@
                      <li><a class="text-decoration-none text-white-50" href="success-order.html">Success Order</a></li>
                   </ul>
                </div>
-               <div class="col-md-2 col-6">
+               <div class="col-md-2 mt-3 col-6">
                   <h6 class="text-uppercase mb-4 fw-bold">get in touch</h6>
                   <ul class="list-unstyled d-grid gap-2">
-                     <li><a class="text-decoration-none text-white-50" href="#">Contact us</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Email</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Facebook</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Instagram</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Youtube</a></li>
-                     <li><a class="text-decoration-none text-white-50" href="#">Google Business</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="tel:+917449009142">Contact us</a></li>
+                     <li><a class="text-decoration-none text-white-50" target="_blank" href="mailto:support@oceanonlinemart.com">Email</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="https://www.instagram.com/oceanonlinemart?igsh=ejh1aHVzYWYyeXBr">Instagram</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="https://youtube.com/@oceanonlinemart?si=1qpYeoQqEB1tifID">Youtube</a></li>
+                     <li><a class="text-decoration-none text-white-50" href="https://share.google/deOCxo2ZXZZBaTGB4">Google Business</a></li>
                   </ul>
                </div>
             </div>
@@ -445,21 +547,27 @@
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
             </div>
-
-            <!-- Payment Section -->
+             <!-- Payment Section -->
             <div class="payment-section mt-3">
-                <h5>Enter Phone Number</h5>
-                <input type="tel" class="form-control mb-2" id="phoneNumber" placeholder="Enter phone number">
-                <button class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
+                <h5>Order Confirmation</h5>
+                    <div class="input-group flex-nowrap mb-3 p-2">
+                      <span class="input-group-text" id="addon-wrapping"><i class="icofont-phone fs-4"></i></span>
+                      <input type="text" class="form-control" id="phoneNum" placeholder="Enter Mobile Number" aria-label="Mobile Number" aria-describedby="addon-wrapping">
+                    </div>
+                <button type="button" class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
             </div>
 
             <!-- OTP Section -->
             <div class="otp-section mt-3">
-                <h5>Enter OTP</h5>
+                 <h5 class="mb-2 fw-bold">Confirm your Order</h5>
+                    <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by E-mail
+                        <a  class="text-success text-decoration-none edit-mail" href="#">    
+                           <i class="bi bi-pencil-square"></i> Edit</a>
+                    </p>
                 <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
                 <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
             </div>
-
+           
             <!-- Address & Payment Section -->
             <div class="address-section mt-3">
                 <div class="order-summary">
@@ -481,69 +589,6 @@
         </div>
       </div>
     
-      <!-- location Modal -->
-      <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-               <div class="modal-header px-4">
-                  <h5 class="h6 modal-title fw-bold">Add Your Location</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <form>
-                     <div class="input-group border p-1 overflow-hidden osahan-search-icon shadow-sm rounded mb-3">
-                        <span class="input-group-text bg-white border-0"><i class="icofont-search"></i></span>
-                        <input type="text" class="form-control bg-white border-0 ps-0" placeholder="Search for area, location name">
-                     </div>
-                  </form>
-                  <div class="mb-4">
-                     <a href="#" data-bs-dismiss="modal" aria-label="Close" class="text-success d-flex gap-2 text-decoration-none fw-bold">
-                        <i class="bi bi-compass text-success"></i>
-                        <div>Use Current Location</div>
-                     </a>
-                  </div>
-                  <div class="text-muted text-uppercase small">Search Results</div>
-                  <div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore</p>
-                           <p class="text-muted small m-0">Karnataka, India</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore internaltional airport</p>
-                           <p class="text-muted small m-0">Karmpegowda.in't Airport, Hunachur, karnataka, India</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Railway Station back gate</p>
-                           <p class="text-muted small m-0">M.G. Railway Colony, Majestic, Bangaluru, Karnataka.</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 border-bottom py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore Cant</p>
-                           <p class="text-muted small m-0">Cantonent Railway Station Road, Contonment Railway.</p>
-                        </div>
-                     </div>
-                     <div data-bs-dismiss="modal" aria-label="Close" class="d-flex align-items-center gap-3 py-3">
-                        <i class="icofont-search h6"></i>
-                        <div>
-                           <p class="mb-1 fw-bold">Bangalore Contonement Railway Station</p>
-                           <p class="text-muted small m-0">Contonement Railway Quarters, Shivaji nagar.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
       <div class="mobile-nav-bottom">
          <a href="index.html" class="nav-item">
             <img src="assets/img/mobile-nav/icons8-home.gif" alt="Home">
@@ -563,15 +608,7 @@
             <small>Orders</small>
          </a>
       </div>
-      <!-- <div class="w-100 d-block d-md-none d-lg-none mobile-nav-bottom position-fixed d-flex align-items-center justify-content-around shadow-sm">
-         <a href="index.html"><span class="bi bi-house"></span>Home</a>
-         <a href="listingpage.html"><span class="bi bi-card-heading"></span> Listing</a>
-         <a  data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" class="text-white" id="mobileCart">
-            <span class="bi bi-basket-fill text-w"></span>
-            Cart<b class="mobile-cart">0</b>
-         </a>
-         <a href="myorder.html"><span class="bi bi-box"></span>My Orders</a>
-      </div> -->
+     
       <!-- Bootstrap core JavaScript -->
       <script src="assets/vendor/jquery/jquery.min.js"></script>
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -579,74 +616,178 @@
       <script src="assets/js/config.js"></script>
       <script src="assets/js/custom.js" ></script>
       <script src="assets/js/product-details-script.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+     <script>
+document.addEventListener('DOMContentLoaded', () => {
 
-      <script>
-         document.addEventListener('DOMContentLoaded', () => {
-             const cartCount = localStorage.getItem('updatedCount');
-               if (cartCount > 0 ) {
-                  document.getElementById('cartCount').innerHTML = cartCount; 
-                   document.querySelector('.mobile-cart').innerHTML = cartCount;
-               } else {
-                  // console.log('cart is empty');
-               }
-    // Fetch categories from the API
-    
-    fetch(`${config.API_BASE_URL}/get_category_with_productcount.php`, {
-        method: 'GET',
-    })
-        .then(res => {
-            if (!res.ok) throw new Error('Network response was not ok');
-            return res.json();
-        })
-        .then(response => {
-            const container = document.querySelector('.homepage-products-range');
-            if (!container) {
-                console.error('Container .homepage-products-range not found');
-                return;
-            }
-
-            if (response.data && response.data.length > 0) {
-                container.innerHTML = ''; // Clear static content
-               // console.log(response);
-               
-                // Loop through categories and generate cards
-                response.data.forEach(category => {
-                    const cardHtml = `
-                        <div class="col">
-                            <div class="text-center position-relative border rounded pb-4">
-                                <img src="${config.CATEGORY_IMAGE_BASE_URL}/${category.img}"
-                                     class="img-fluid rounded-3 p-3" alt="${category.category_name}">
-                                <div class="listing-card-body pt-0">
-                                    <h6 class="card-title mb-1 fs-14">${category.category_name}</h6>
-                                    <p class="card-text small text-success">${category.product_count} Item${category.product_count !== 1 ? 's' : ''}</p>
-                                </div>
-                                <a href="listingpage.html" class="stretched-link"></a>
-                            </div>
-                        </div>`;
-                    container.insertAdjacentHTML('beforeend', cardHtml);
-                });
-            } else {
-                container.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <h4>No categories found</h4>
-                        <p>Please try again later.</p>
-                    </div>`;
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching categories:', error);
-            const container = document.querySelector('.homepage-products-range');
-            if (container) {
-                container.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <h4>Error loading categories</h4>
-                        <p>Please check your connection and try again.</p>
-                    </div>`;
-            }
-        });
+ const itemsCount = localStorage.getItem('updatedCount');
+   // console.log(itemsCount);
+   if(itemsCount > 0){
+      document.querySelector(".mobile-cart").innerHTML = itemsCount;
+      document.getElementById("cartCount").innerHTML = itemsCount;
+   }else{
+      document.querySelector(".mobile-cart").innerHTML = 0;
+      document.getElementById("cartCount").innerHTML = 0;
+   }
+  
+   const container = document.querySelector('.homepage-products-range');
+   fetch(`${config.API_BASE_URL}/get_category_with_productcount.php`, {
+      method: 'GET',
+   })
+      .then(res => {
+         if (!res.ok) throw new Error('Network response was not ok');
+         return res.json();
+      })
+      .then(response => {
+         if (!container) return;
+         if (response.data && response.data.length > 0) {
+            // console.log(response.data);
+            
+            container.innerHTML = '';
+            response.data.forEach(category => {
+               const cardHtml = `
+                  <div class="col">
+                     <div class="text-center position-relative border rounded pb-4">
+                        <div class="skeleton skeleton-img"></div>
+                        <img data-src="${config.CATEGORY_IMAGE_BASE_URL}/${category.img}"
+                             class="real-img img-fluid rounded-3 p-3"
+                             alt="${category.category_name}">
+                        <div class="listing-card-body pt-0">
+                           <h6 class="card-title mb-1 fs-14">${category.category_name}</h6>
+                           <p class="card-text small text-success">${category.product_count} Item${category.product_count !== 1 ? 's' : ''}</p>
+                        </div>
+                        <a href="listingpage.html?catid=${btoa(category.category_id)}" class="stretched-link"></a>
+                     </div>
+                  </div>`;
+               container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+            // Lazy load with IntersectionObserver
+            const observer = new IntersectionObserver((entries) => {
+               entries.forEach((entry, index) => {
+                  if (entry.isIntersecting) {
+                     const img = entry.target;
+                     const skeleton = img.previousElementSibling;
+                     // Assign src when visible
+                     if (!img.src) {
+                        img.src = img.dataset.src;
+                     }
+                     img.onload = () => {
+                        setTimeout(() => {
+                           if (skeleton && skeleton.classList.contains('skeleton')) {
+                              skeleton.remove();
+                           }
+                           img.classList.add('loaded');
+                        }, index * 200); // stagger reveal
+                     };
+                     observer.unobserve(img); // stop observing once loaded
+                  }
+               });
+            }, { threshold: 0.2 });
+            document.querySelectorAll('.real-img').forEach(img => {
+               observer.observe(img);
+            });
+         } else {
+            container.innerHTML = `
+               <div class="col-12 text-center py-5">
+                  <h4>No categories found</h4>
+                  <p>Please try again later.</p>
+               </div>`;
+         }
+      })
+      .catch(error => {
+         console.error('Error fetching categories:', error);
+         if (container) {
+            container.innerHTML = `
+               <div class="col-12 text-center py-5">
+                  <h4>Error loading categories</h4>
+                  <p>Please check your connection and try again.</p>
+               </div>`;
+         }
+      });
 });
-      </script>
-   
+   gsap.registerPlugin(ScrollTrigger);
+// Mobile detection
+const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+ScrollTrigger.create({
+   trigger: "#appTitle",
+   start: isMobile ? "top 80%" : "top 50%", // Different trigger point for mobile
+   markers: false, // Disable markers on production
+   once: true,
+   onEnter: () => {
+      // Optimized logo animation for mobile
+      gsap.to(".app-logo", {
+         x: 0,
+         opacity: 1,
+         duration: isMobile ? 3 : 6, // Shorter duration on mobile
+         ease: "power3.out"
+      });
+      // Adjusted delay for mobile
+      setTimeout(() => {
+         document.getElementById("appTitle").style.opacity = 1;
+         new Typed("#appTitle", {
+            strings: ["Ocean Online Mart"],
+            typeSpeed: isMobile ? 80 : 100, // Slightly faster on mobile
+            showCursor: false,
+            onComplete: function(self) {
+               // Optional: Do something when typing is complete
+            }
+         });
+      }, isMobile ? 900 : 1000); // Shorter delay on mobile
+   }
+});
+// Force ScrollTrigger refresh on mobile orientation change
+window.addEventListener('orientationchange', () => {
+   setTimeout(() => {
+      ScrollTrigger.refresh();
+   }, 500);
+});
+// Handle mobile scroll performance
+if (isMobile) {
+   // Optimize scroll performance on mobile
+   ScrollTrigger.config({
+      limitCallbacks: true,
+      syncInterval: 150
+   });
+}
+      document.addEventListener('DOMContentLoaded', () => {
+         const video = document.getElementById('background-video');
+         if (video) {
+            // This function continuously checks the video's progress
+            function loopVideo() {
+               const duration = video.duration;
+               const currentTime = video.currentTime;
+               // Reset the video if it's within a very short duration of the end
+               if (duration > 0 && currentTime >= duration - 0.1) {
+                  video.currentTime = 0;
+                  video.play();
+               }
+               requestAnimationFrame(loopVideo);
+            }
+            // Start the loop
+            video.play();
+            loopVideo();
+         }
+
+      });
+
+    
+
+
+
+//   window.addEventListener("load", function(){
+//       // Add exit animation to logo
+//       setTimeout(() => {
+//         document.getElementById("logo").classList.add("fade-out");
+//       }, 1000); // delay before exit starts
+//       // Hide preloader after animation
+//       setTimeout(() => {
+//         document.getElementById("preloader").style.display = "none";
+//         document.getElementById("main-content").style.display = "block";
+//       }, 2500); // wait for animation to finish
+//     });
+   </script>
 </body>
 
 </html>

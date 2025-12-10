@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Pomfret - Ocean Online Mart</title>
+  <link rel="icon" type="image/png" href="assets/img/logo/logo-1.png">
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  
+  <style>
+    body { background-color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+    .main-image { height: 320px; object-fit: cover; border-radius: 16px; }
+    .variant-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    .variant-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+    .variant-img {
+      height: 140px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .qty-btn {
+      width: 36px; height: 36px; border-radius: 8px; font-size: 18px;
+    }
+    .qty-input {
+      width: 70px; text-align: center; font-weight: 600; border-radius: 8px;
+    }
+    .price-final { font-size: 1.4rem; color: #28a745; }
+    .net-weight { font-size: 0.875rem; color: #6c757d; }
+    
+    /* Mobile First Adjustments */
+    @media (max-width: 576px) {
+      .main-image { height: 240px; border-radius: 12px; }
+      .qty-btn { width: 32px; height: 32px; font-size: 16px; }
+      .qty-input { width: 60px; }
+      .price-final { font-size: 1.2rem; }
+      h3.display-5 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+<section class="py-4 py-md-5">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Left: Main Product Info -->
+      <div class="col-lg-5">
+        <img src="https://oceanonlinemart.com/panel/dynamic_img/sub_product/7885vivva.jpg" class="img-fluid w-100 main-image shadow" alt="Black Pomfret Whole">
+
+        <div class="bg-white p-4 rounded-4 shadow-sm mt-4">
+          <h4 class="fw-bold">Whole</h4>
+          <p class="text-danger mb-1"><del>₹799.00</del></p>
+          <p class="fw-bold text-dark fs-4">₹349.00 <span class="fs-6 text-muted fw-normal">/500g</span></p>
+          
+          <div class="small text-muted mb-3">
+            <p class="mb-1"><strong>MRP:</strong> ₹799.00/500g</p>
+            <p class="mb-1"><strong>USP:</strong> ₹0.70/g</p>
+            <p class="mb-1"><strong>Sale price:</strong> ₹349.00/500g</p>
+          </div>
+
+          <hr>
+          <p class="text-dark">
+            Easily one of the most popular fish in India along with its silver cousin. Very fleshy fish with less bones and ideal for most Indian preparations including the Biriyani.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Product Title + Pack Options -->
+      <div class="col-lg-7">
+        <h3 class=" fw-bold text-dark mb-3">Black Pomfret / Karutha Avoli / Halwa Fish</h3>
+        <!-- Pack Option 1 -->
+        
+         <div class="variant-card mb-4 overflow-hidden shadow-sm">
+                  <div class="row g-0">
+                     <!-- Image -->
+                     <div class="col-12 col-sm-4 col-md-3">
+                        <img src="https://oceanonlinemart.com/panel/dynamic_img/sub_product/7885vivva.jpg" 
+                           class="img-fluid w-100 h-100" 
+                           style="object-fit: cover; height: 180px;" 
+                           alt="Steaks with Skin">
+                     </div>
+
+                     <!-- Content -->
+                     <div class="col-12 col-sm-8 col-md-9 p-3 p-sm-4 d-flex flex-column justify-content-center">
+                        <h5 class="fw-bold mb-2">whole (With Skin)</h5>
+
+                        <!-- This whole thing stays in ONE line on mobile too -->
+                        <div class="d-flex flex-wrap align-items-center gap-2 gap-md-3">
+                        <!-- Quantity Group -->
+                        <div class="d-flex align-items-center border rounded-pill overflow-hidden">
+                           <button class="btn btn-outline-secondary px-3 decrement">-</button>
+                           <input type="text" 
+                                 class="form-control text-center border-0 qty-input" 
+                                 value="0.5" 
+                                 readonly 
+                                 style="width: 60px;">
+                           <button class="btn btn-outline-secondary px-3 increment">+</button>
+                        </div>
+
+                        <span class="fw-bold text-dark me-2">Kg</span>
+
+                        <!-- Add to Cart Button - stays right next to Kg -->
+                           <!-- <button class="btn btn-success px-4 ms-3 flex-shrink-0">Add to Cart</button> -->
+                        <button class="btn btn-success px-4  flex-shrink-0">
+                           Add to Cart
+                        </button>
+                        </div>
+
+                        <!-- Price & Weight - below the buttons -->
+                        <div class="mt-3">
+                        <p class="price-final fw-bold mb-1 text-success fs-4">₹607.5</p>
+                        <p class="net-weight text-muted small mb-0">
+                           Gross wt: 0.87 Kg | Net wt: 0.5 Kg
+                        </p>
+                        </div>
+                     </div>
+                  </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<script>
+   document.querySelectorAll('.increment').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const input = btn.parentElement.querySelector('.qty-input');
+    input.value = (parseFloat(input.value) + 0.5).toFixed(1);
+  });
+});
+
+document.querySelectorAll('.decrement').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const input = btn.parentElement.querySelector('.qty-input');
+    if (parseFloat(input.value) > 0.5) {
+      input.value = (parseFloat(input.value) - 0.5).toFixed(1);
+    }
+  });
+});
+</script>

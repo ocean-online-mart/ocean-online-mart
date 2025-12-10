@@ -208,13 +208,13 @@
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
                <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
             </a>
-            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
+             <button class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
-               <span>
-                  <b>Delivery in 30 minutes!</b>
-                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+              <span>
+                  <b id="location">Puducherry, puducherry</b>
+                  <div class="small text-success" id="delivery-info"></div>
                </span>
-            </a>
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                aria-label="Toggle navigation">
@@ -497,7 +497,9 @@
                </div>
             </div>
          </div>
-      </div></div></div>
+      </div>
+   </div>
+</div>
    <div class="mobile-nav-bottom">
          <a href="index.html" class="nav-item">
             <img src="assets/img/mobile-nav/icons8-home.gif" alt="Home">
@@ -522,75 +524,107 @@
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
-             <script src="assets/js/product-details-script.js"></script>
+      <script src="assets/js/product-details-script.js"></script>    
+      <script>
+         // Get order ID from query parameter
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('order_id');
 
-   <!-- ORDER TRACKING -->
-   <script>
+      function updateOrderStatus(status) {
+          const statusOrder = ['pending', 'confirmed', 'shipped', 'delivered'];
+          if (!status || !statusOrder.includes(status)) {
+              console.error('Invalid or missing status:', status);
+              return;
+          }
+          const currentStepIndex = statusOrder.indexOf(status);
+          const steps = document.querySelectorAll('.timeline-step');
+          const timeline = document.querySelector('.tracking-timeline');
+          const bike = document.querySelector('.bike');
+          const progressLine = document.querySelector('.timeline-progress');
+          if (!timeline || !bike || !progressLine) {
+              console.error('Timeline elements not found');
+              return;
+          }
+          if (window.innerWidth > 976) {
+              /* -------- Desktop (Horizontal) -------- */
+              bike.style.display = 'block'; // Show bike in desktop
+              bike.style.transform = "translateX(-50%) rotate(0deg)"; // face right
+              const totalWidth = timeline.offsetWidth;
+              const stepWidth = totalWidth / (steps.length - 1);
+              let bikePosition, progressWidth;
+              if (currentStepIndex === 0) {
+                  bikePosition = 55;
+                  progressWidth = 8;
+              } else {
+                  bikePosition = stepWidth * currentStepIndex;
+                  progressWidth = (bikePosition / totalWidth) * 100;
+              }
+              bike.style.left = `${bikePosition}px`;
+              progressLine.style.width = `${progressWidth}%`;
+          } else {
+              /* -------- Mobile (Vertical) -------- */
+              bike.style.display = 'none'; // Hide bike in mobile
+              bike.style.transform = "translate(-50%, -50%) rotate(90deg)"; // face down
+              const currentStep = steps[currentStepIndex];
+              const firstStep = steps[0];
+              if (currentStep && firstStep) {
+                  // distance between first step and current step
+                  const distance = currentStep.offsetTop - firstStep.offsetTop;
+                  // fine-tuning offset (adjust this number until bike sits perfectly on icon)
+                  const offsetFix = 100;
+                  // place bike (hidden but keep for compatibility)
+                  bike.style.top = `${distance + currentStep.offsetHeight / 2 + offsetFix}px`;
+                  // progress line to reach current step icon properly
+                  progressLine.style.height = `${distance + currentStep.offsetHeight / 2 + 55}px`;
+              }
+          }
+          // mark completed steps
+          steps.forEach((step, index) => {
+              step.classList.toggle('active', index <= currentStepIndex);
+          });
+      }
 
-
-// Get status from query parameter
-const params = new URLSearchParams(window.location.search);
-const encodedStatus = params.get('order_status'); 
-const status = encodedStatus ? atob(encodedStatus) : null;
-// console.log(status);
-
-const statusOrder = ['pending', 'confirmed', 'shipped', 'delivered'];
-
-function updateOrderStatus(status) {
-    if (!status || !statusOrder.includes(status)) {
-        console.error('Invalid or missing status:', status);
-        return;
-    }
-
-    const currentStepIndex = statusOrder.indexOf(status);
-    const steps = document.querySelectorAll('.timeline-step');
-    const timeline = document.querySelector('.tracking-timeline');
-    const bike = document.querySelector('.bike');
-    const progressLine = document.querySelector('.timeline-progress');
-
-    if (!timeline || !bike || !progressLine) {
-        console.error('Timeline elements not found');
-        return;
-    }
-
-    const totalWidth = timeline.offsetWidth;
-    const stepWidth = totalWidth / (steps.length - 1);
-
-    // Calculate positions
-    let bikePosition, progressWidth;
-    if (currentStepIndex === 0) {
-        bikePosition = 55; 
-        progressWidth = 8; 
-    } else {
-        bikePosition = stepWidth * currentStepIndex;
-        progressWidth = (bikePosition / totalWidth) * 100;
-    }
-
-    bike.style.left = `${bikePosition}px`;
-    progressLine.style.width = `${progressWidth}%`;
-
-    steps.forEach((step, index) => {
-        step.classList.toggle('active', index <= currentStepIndex);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (status) {
-        updateOrderStatus(status);
-    } else {
-        console.error('No status provided in URL');
-        // Optional: Show a fallback message to the user
-        document.querySelector('.order-tracking').innerHTML += `
-            <p class=" text-center mt-3">
-               <a href="listingpage.html" class="btn btn-success mx-2 mb-2">Expoler Prodcuts</a>
-            </p>
-        `;
-    }
-});
-</script>
-
-
-   
+      document.addEventListener('DOMContentLoaded', function () {
+          if (orderId) {
+              // Make AJAX call to fetch order status
+              fetch('get_order_status.php', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: `order_id=${encodeURIComponent(orderId)}`
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success && data.status) {
+                      updateOrderStatus(data.status);
+                  } else {
+                      console.error('Failed to fetch order status:', data.message);
+                      document.querySelector('.order-tracking').innerHTML += `
+                          <p class="text-center mt-3">
+                              <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Explore Products</a>
+                          </p>
+                      `;
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching order status:', error);
+                  document.querySelector('.order-tracking').innerHTML += `
+                      <p class="text-center mt-3">
+                          <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Explore Products</a>
+                      </p>
+                  `;
+              });
+          } else {
+              console.error('No order ID provided in URL');
+              document.querySelector('.order-tracking').innerHTML += `
+                  <p class="text-center mt-3">
+                      <a href="productdeteails.html" class="btn btn-success mx-2 mb-2">Explore Products</a>
+                  </p>
+              `;
+          }
+      });
+      </script>
 </body>
 
 </html>       

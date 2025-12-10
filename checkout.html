@@ -79,13 +79,13 @@
                <img src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
                <img src="assets/img/logo/logo-mobile.png" alt="#" class="d-block d-md-none d-lg-none img-fluid">
             </a>
-            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
+            <button class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
-                  <b>Delivery in 30 minutes!</b>
-                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+                  <b id="location">Delivery in 30 minutes!</b>
+                  <div class="small text-success" id="delivery-info"><i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
                </span>
-            </a>
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                aria-label="Toggle navigation">
@@ -164,7 +164,7 @@
                                  <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                        <label class="form-label small">Phone Number <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="phoneNumber" placeholder="9876-5432-10" required>
+                                        <input type="text" class="form-control" id="phoneNumber" placeholder="9999999999" required>
                                          <div class="error-message" id="phoneNumberError">
                                              Please enter a valid phone number (e.g., 9876543210).
                                           </div>
@@ -251,11 +251,12 @@
                                 <span>Shipping</span>
                                 <span id="shippingCharge"></span>
                             </div>
-                            <div class="d-flex justify-content-between small mb-2">
-                                <span>Discount</span>
-                                <span id="discountAmount"></span>
-                            </div>
-                            <hr>
+                              <div class="d-flex justify-content-between small mb-2" id="discountRow" style="display:none;">
+                                 <span id="discount-label">Discount</span>
+                                 <span id="discountAmount" class="text-success fw-bold"></span>
+                              </div>
+                              <div id="offer-messages" class="text-success small fw-bold" style="display:none;"></div>
+                              <hr>
                             <div class="d-flex justify-content-between fw-bold mb-3">
                                 <span>Total</span>
                                 <span id="finalTotal"></span>
@@ -525,8 +526,8 @@
       <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="assets/js/custom.js" ></script>
-      <script src="assets/js/checkout.js"></script>
-   
+      <!-- <script src="assets/js/checkout.js"></script> -->
+      <script src="assets/js/check.out.js"></script>
 </body>
 
 </html>

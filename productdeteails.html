@@ -23,7 +23,7 @@
 
         
     /* navbar effect */
-
+ 
     .nav01 {
       text-decoration: none;
       position: relative;
@@ -379,9 +379,16 @@
             }
             .quantity-control input { 
               width: 50px; 
+              max-width: 120px;
+              min-width: 80px;
               text-align: center;
               border: none;
               color: #43484D; 
+              text-align: center;
+              font-weight: bold;
+              border-radius: 4px;
+              color: #333;
+              background: #fff;
             }
             
             button[class*=canbtn] {
@@ -401,6 +408,37 @@
                     inline-size: 165px;
                   overflow: hidden;
                 }
+             .main-image { height: 320px; object-fit: cover; border-radius: 16px; }
+    .variant-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    .variant-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+    .variant-img {
+      height: 140px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .qty-btn {
+      width: 36px; height: 36px; border-radius: 8px; font-size: 18px;
+    }
+    .qty-input {
+      width: 70px; text-align: center; font-weight: 600; border-radius: 8px;
+    }
+    .price-final { font-size: 1.4rem; color: #28a745; }
+    .net-weight { font-size: 0.875rem; color: #6c757d; }
+    
+    /* Mobile First Adjustments */
+    @media (max-width: 576px) {
+      .main-image { height: 240px; border-radius: 12px; }
+      .qty-btn { width: 32px; height: 32px; font-size: 16px; }
+      .qty-input { width: 60px; }
+      .price-final { font-size: 1.2rem; }
+      h3.display-5 { font-size: 1.8rem; }
+    }
       </style>
   </head>
   <body class="bg-light" id="bg-light">
@@ -410,13 +448,13 @@
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
                <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
             </a>
-            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
+            <button class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
-                  <b>Delivery in 30 minutes!</b>
-                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+                  <b id="location">Puducherry, puducherry</b>
+                  <div class="small text-success" id="delivery-info"></div>
                </span>
-            </a>
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                aria-label="Toggle navigation">
@@ -589,22 +627,21 @@
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
             </div>
-
-            <!-- Payment Section -->
-            <div class="payment-section mt-3">
+            
+             <!-- Payment Section -->
+             <div class="payment-section mt-3">
                 <h5>Order Confirmation</h5>
                     <div class="input-group flex-nowrap mb-3 p-2">
-                      <span class="input-group-text" id="addon-wrapping"><i class="icofont-email fs-4"></i></span>
-                      <input type="email" class="form-control" id="emailID" placeholder="Enter E-mail Address" aria-label="E-mail" aria-describedby="addon-wrapping">
+                      <span class="input-group-text" id="addon-wrapping"><i class="icofont-phone fs-4"></i></span>
+                      <input type="text" class="form-control" id="phoneNum" placeholder="Enter Mobile Number" aria-label="Mobile Number" aria-describedby="addon-wrapping">
                     </div>
                 <button type="button" class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
             </div>
-
             <!-- OTP Section -->
-            <div class="otp-section mt-3">
+           <div class="otp-section mt-3">
                  <h5 class="mb-2 fw-bold">Confirm your Order</h5>
-                    <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by E-mail
-                        <a  class="text-success text-decoration-none edit-mail" href="#">
+                    <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by whatsapp
+                        <a  class="text-success text-decoration-none edit-number" href="#">
                           <i class="bi bi-pencil-square"></i> Edit</a>
                     </p>
                 <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">

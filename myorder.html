@@ -228,13 +228,13 @@
             <a class="navbar-brand me-0 me-lg-3 me-md-3" href="index.html">
                <img  src="assets/img/logo/logo.png" alt="#" class="img-fluid d-none d-md-block">
             </a>
-            <a href="#" class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto" data-bs-toggle="modal" data-bs-target="#add-delivery-location">
+            <button class="ms-3 text-left d-flex text-dark align-items-center gap-2 text-decoration-none bg-white border-0 me-auto">
                <i class="bi bi-geo-alt-fill fs-5 text-success"></i> 
                <span>
-                  <b>Delivery in 30 minutes!</b>
-                  <div class="small text-success">Pondicherry, India..<i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
+                  <b id="location">Delivery in 30 minutes!</b>
+                  <div class="small text-success" id="delivery-info"><i class="bi bi-arrow-right-circle-fill ms-1"></i></div>
                </span>
-            </a>
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                aria-label="Toggle navigation">
@@ -488,6 +488,27 @@
                 </div>
                 <button class="btn btn-success w-100 mt-2" id="proceedToPayment">Proceed to Payment</button>
             </div>
+             <!-- Payment Section -->
+            <div class="payment-section mt-3">
+                <h5>Order Confirmation</h5>
+                    <div class="input-group flex-nowrap mb-3 p-2">
+                      <span class="input-group-text" id="addon-wrapping"><i class="icofont-email fs-4"></i></span>
+                      <input type="email" class="form-control" id="emailID" placeholder="Enter E-mail Address" aria-label="E-mail" aria-describedby="addon-wrapping">
+                    </div>
+                <button type="button" class="btn btn-primary w-100" id="sendOtp">Send OTP</button>
+            </div>
+
+            <!-- OTP Section -->
+            <div class="otp-section mt-3">
+                 <h5 class="mb-2 fw-bold">Confirm your Order</h5>
+                    <p class="text-muted mb-0">Enter the 4 digit OTP we’ve sent by E-mail
+                        <a  class="text-success text-decoration-none edit-mail" href="#">
+                          <i class="bi bi-pencil-square"></i> Edit</a>
+                    </p>
+                <input type="text" class="form-control mb-2" id="otpInput" placeholder="Enter OTP">
+                <button class="btn btn-primary w-100" id="verifyOtp">Verify OTP</button>
+            </div>
+        </div>
 
       <!-- location Modal -->
                         <div class="modal fade" id="add-delivery-location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">

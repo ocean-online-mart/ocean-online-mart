@@ -1,5 +1,5 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-const DELIVERY_CHARGE = 5.00;
+const DELIVERY_CHARGE = JSON.parse(localStorage.getItem('deliveryCost')) || 5.00;
 let cartTotalCount = JSON.parse(localStorage.getItem('updatedCount')) || '';
 // Get subcategory_id from URL query parameter
 const params = new URLSearchParams(window.location.search);
@@ -27,100 +27,162 @@ function fetchAndRenderProductDetails() {
         document.getElementById('product-details').innerHTML = `
             <div class="col-12 text-center py-5">
                 <h4>Product not found</h4>
-                <p>Please select a valid product.</p>
                 <a href="listingpage.html" class="btn btn-success mt-2">Back to Products</a>
             </div>`;
         return;
     }
-    
+
     fetch(`${config.API_BASE_URL}/get_product_details.php?subcategory_id=${subcategoryId}`)
         .then(res => res.json())
         .then(response => {
             const container = document.getElementById('product-details');
             if (response.status === 'success' && response.data) {
                 const product = response.data.product;
-                categoryId = product.category_id; // Set categoryId for related products
+                categoryId = product.category_id;
                 const variations = response.data.variations || [];
+                console.log(variations);
                 
-                let variationsHtml = variations.length > 0 ? variations.map(v => `
-                    <p class="text-dark" style="margin-top:16px;">${v.variety_name}</p>
-                    <h5 class="${v.qty > 0 ? 'text-success' : 'text-danger'}">${v.qty > 0 ? 'In Stock' : 'Out of Stock'}</h5>
-                `).join('') : `
-                    <p class="text-dark" style="margin-top:16px;">${product.subcategory_name} (Default)</p>
-                    <h5 class="text-success">In Stock</h5>
-                `;
-                
-                container.innerHTML = `
-                    <div class="col-12 col-lg-6">
-                        <div class="position-relative mx-auto text-center">
-                            <div class="main-img-wrapper overflow-hidden rounded shadow">
-                                <img id="mainImage" src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" 
-                                class="main-img" alt="${product.subcategory_name}">
-                            </div>                 
-                            <div class="d-flex justify-content-center gap-2 mt-3">
-                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" class="thumb-img active" onclick="changeImage(this)">
-                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img2}" class="thumb-img" onclick="changeImage(this)">
-                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img3}" class="thumb-img" onclick="changeImage(this)">
+                let variationsHtml = variations.length > 0 ? variations.map(v => {
+                    const isOutOfStock = parseFloat(v.gross_weight) <= 0;
+                    const pricePerKg = parseFloat(v.v_actual_price);
+                    const variantId = v.variation_id || v.subcategory_id || subcategoryId; // unique ID
+
+                    return `
+                    <div class="variant-card mb-4 overflow-hidden shadow-sm position-relative">
+                        <div class="row g-0">
+                            <div class="col-12 col-sm-4 col-md-3">
+                                <img src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img2 || product.img1}"
+                                     class="img-fluid w-100 h-100" 
+                                     style="object-fit: cover; height: 180px;" 
+                                     alt="${v.variety_name}">
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <h2 class="fw-bold text-dark mb-2 card-title">${product.subcategory_name}</h2>
-                        <p class="text-muted">Category: ${product.category_name || 'Seafood'}</p>
-                        <p class="text-muted mb-3">${product.description || 'No description available.'}</p>
-                        <div class="my-3">
-                            <div class="d-flex align-items-center gap-5 mb-3 justify-content-between justify-content-sm-start">
-                                <div class="quantity-control">
-                                    <button class="btn btn-outline-secondary btn-sm product-decrement" data-id="${product.subcategory_id}">-</button>
-                                    <input type="number" class="form-control product-quantity" data-id="${product.subcategory_id}" value="1" min="1">
-                                    <button class="btn btn-outline-secondary btn-sm product-increment" data-id="${product.subcategory_id}">+</button> 
-                                    <h6 class="pt-2 px-2"> KG</h6>
+                            <div class="col-12 col-sm-8 col-md-9 p-3 p-sm-4 d-flex flex-column justify-content-center">
+                                <h5 class="fw-bold mb-2">${v.variety_name}</h5>
+
+                                <div class="d-flex flex-wrap align-items-center gap-2 gap-md-3">
+                                    <!-- Quantity Controls -->
+                                    <div class="d-flex align-items-center border rounded-pill overflow-hidden ${isOutOfStock ? 'opacity-50' : ''}">
+                                        <button class="btn btn-outline-secondary px-3 decrement-variant" 
+                                                data-variant="${variantId}" ${isOutOfStock ? 'disabled' : ''}>−</button>
+                                        <input type="text" 
+                                               class="form-control text-center border-0 qty-input-variant" 
+                                               data-variant="${variantId}"
+                                               value="0.5" readonly style="width:60px;">
+                                        <button class="btn btn-outline-secondary px-3 increment-variant" 
+                                                data-variant="${variantId}" ${isOutOfStock ? 'disabled' : ''}>+</button>
+                                    </div>
+
+                                    <span class="fw-bold text-dark">${v.unit}</span>
+
+                                    <!-- Add to Cart Button -->
+                                    <button class="btn px-4 flex-shrink-0 add-to-cart-variant
+                                            ${isOutOfStock ? 'btn-secondary' : 'btn-success'}"
+                                            data-id="${variantId}"
+                                            data-name="${v.variety_name}"
+                                            data-price="${pricePerKg}"
+                                            data-img="${product.img2 || product.img1}"
+                                            ${isOutOfStock ? 'disabled' : ''}
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#cartOffcanvas"
+                                            >
+                                        ${isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+                                    </button>
                                 </div>
-                                 <h4 class="product-total pt-2" data-id="${product.subcategory_id}">₹${(product.offer_price * 1).toFixed(2)}</h4>
+
+                                <div class="mt-3">
+                                    <p class="price-final fw-bold mb-1 fs-4 
+                                          ${isOutOfStock ? 'text-muted' : 'text-success'}">
+                                        ₹${(pricePerKg * 0.5).toFixed(2)}
+                                    </p>
+                                    <p class="net-weight text-muted small mb-0">
+                                        Gross wt: ${v.gross_weight} Kg | Net wt: ${v.net_weight} Kg
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div class="d-flex flex-wrap gap-2">
-                                <button class="btn btn-outline-success btn-lg btn-block flex-fill  flex-md-grow-0 px-4 add-to-cart w-100 " 
-                                    data-id="${product.subcategory_id}" 
-                                    data-name="${product.subcategory_name}" 
-                                    data-price="${product.offer_price}" 
-                                    data-img="${product.img1}"
-                                    style="margin-top: 5px;" 
-                                    data-bs-toggle="offcanvas" 
-                                    data-bs-target="#cartOffcanvas">Add to Cart</button>
-                            </div>
-                            <div class="text-dark" style="font-size: medium; font-weight:bolder;">
-                                ${variationsHtml}
-                            </div>
-                            <div class="mt-3 small text-muted">Delivered within 1 hour • Quality guaranteed • Freshly packed</div>
                         </div>
                     </div>`;
-                
-                initializeProductControls();
-                initializeAddToCart();
-                updateProductTotal(product.subcategory_id);
-                fetchAndRenderRelatedProdct(); // Fetch related products after setting categoryId
-            } else {
+                }).join('') : `
+                    <div class="text-center py-4 text-muted">
+                        <p>No variants available</p>
+                    </div>`;
+
                 container.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <h4>Product not found</h4>
-                        <p>Please select a valid product.</p>
-                        <a href="listingpage.html" class="btn btn-success mt-2">Back to Products</a>
+                    <div class="row g-4">
+                        <div class="col-lg-5">
+                            <img id="mainImage" src="${config.PRODUCTS_IMAGE_BASE_URL}/${product.img1}" 
+                                 class="img-fluid w-100 rounded shadow" style="max-height:500px; object-fit:cover;" 
+                                 alt="${product.subcategory_name}">
+                            <div class="bg-white p-4 rounded-4 shadow-sm mt-4">
+                                <h4 class="fw-bold">Whole</h4>
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <span class="text-muted fs-5"><del>₹${(product.actual_price * 0.5).toFixed(2)}</del></span>
+                                    <span class="text-dark fs-4">₹${(product.offer_price * 0.5).toFixed(2)} <span class="fs-6 text-muted">/500g</span></span>
+                                </div>
+                                <hr>
+                                <p class="text-dark">${product.description || 'Fresh premium quality seafood'}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <h2 class="fw-bold mb-4">${product.subcategory_name}</h2>
+                            ${variationsHtml}
+                        </div>
                     </div>`;
+
+                // Attach event listeners after HTML is rendered
+                attachVariantControls();
+                initializeAddToCart(); // This will now catch .add-to-cart-variant too
+
+                fetchAndRenderRelatedProdct();
             }
         })
-        .catch(error => {
-            console.error('Error fetching product details:', error);
-            document.getElementById('product-details').innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <h4>Error loading product details</h4>
-                    <p>Please try again later.</p>
-                    <a href="listingpage.html" class="btn btn-success mt-2">Back to Products</a>
-                </div>`;
+        .catch(err => {
+            console.error(err);
+            container.innerHTML = `<div class="text-center text-danger py-5">Error loading product</div>`;
         });
 }
 
+function attachVariantControls() {
+    // INCREMENT
+    document.querySelectorAll('.increment-variant').forEach(btn => {
+        btn.onclick = function () {
+            const card = this.closest('.variant-card'); // Find parent card
+            if (!card) return;
+
+            const input = card.querySelector('.qty-input-variant');
+            const priceEl = card.querySelector('.price-final');
+            const addBtn = card.querySelector('.add-to-cart-variant');
+
+            const basePrice = parseFloat(addBtn.dataset.price);
+            let qty = parseFloat(input.value);
+
+            qty += 0.5;
+            input.value = qty.toFixed(1);
+            priceEl.textContent = `₹${(basePrice * qty).toFixed(2)}`;
+        };
+    });
+
+    // DECREMENT
+    document.querySelectorAll('.decrement-variant').forEach(btn => {
+        btn.onclick = function () {
+            const card = this.closest('.variant-card');
+            if (!card) return;
+
+            const input = card.querySelector('.qty-input-variant');
+            const priceEl = card.querySelector('.price-final');
+            const addBtn = card.querySelector('.add-to-cart-variant');
+
+            const basePrice = parseFloat(addBtn.dataset.price);
+            let qty = parseFloat(input.value);
+
+            if (qty > 0.5) {
+                qty -= 0.5;
+                input.value = qty.toFixed(1);
+                priceEl.textContent = `₹${(basePrice * qty).toFixed(2)}`;
+            }
+        };
+    });
+}
 // Change main image on thumbnail click
 function changeImage(element) {
     document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
@@ -134,7 +196,8 @@ function initializeProductControls() {
         button.addEventListener('click', () => {
             const id = button.dataset.id;
             const input = document.querySelector(`.product-quantity[data-id="${id}"]`);
-            input.value = parseInt(input.value) + 1;
+            let currentValue = parseFloat(input.value) || 0.5;
+            input.value = (currentValue + 0.5).toFixed(1); // Increase by 0.5
             updateProductTotal(id);
         });
     });
@@ -143,8 +206,9 @@ function initializeProductControls() {
         button.addEventListener('click', () => {
             const id = button.dataset.id;
             const input = document.querySelector(`.product-quantity[data-id="${id}"]`);
-            if (parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
+            let currentValue = parseFloat(input.value) || 0.5;
+            if (currentValue > 0.5) { // Minimum is 0.5 KG
+                input.value = (currentValue - 0.5).toFixed(1); // Decrease by 0.5
                 updateProductTotal(id);
             }
         });
@@ -153,8 +217,14 @@ function initializeProductControls() {
     document.querySelectorAll('.product-quantity').forEach(input => {
         input.addEventListener('change', () => {
             const id = input.dataset.id;
-            if (parseInt(input.value) < 1) {
-                input.value = 1;
+            let value = parseFloat(input.value);
+
+            if (isNaN(value) || value < 0.5) {
+                input.value = 0.5;
+            } else {
+                // Round to nearest 0.5
+                value = Math.round(value * 2) / 2;
+                input.value = value.toFixed(1);
             }
             updateProductTotal(id);
         });
@@ -163,56 +233,48 @@ function initializeProductControls() {
 
 // Add to cart functionality
 function initializeAddToCart() {
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        // Remove existing listeners to prevent duplicates
+    document.querySelectorAll('.add-to-cart, .add-to-cart-variant').forEach(button => {
         button.removeEventListener('click', handleAddToCart);
         button.addEventListener('click', handleAddToCart);
     });
 }
 
 function handleAddToCart(e) {
-    const button = e.target.closest('.add-to-cart');
-    if (!button) return;
-    
+    const button = e.target.closest('.add-to-cart, .add-to-cart-variant');
+    if (!button || button.disabled) return;
+
+    const card = button.closest('.variant-card');
+    const qtyInput = card ? card.querySelector('.qty-input-variant') : null;
+
     const id = button.dataset.id;
     const name = button.dataset.name;
     const price = parseFloat(button.dataset.price);
-    const quantityInput = document.querySelector(`.product-quantity[data-id="${id}"]`);
-    const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
-    const productImg = button.dataset.img;
-    // console.log(productImg);
-    
+    const img = button.dataset.img;
+    const quantity = qtyInput ? parseFloat(qtyInput.value) : 0.5;
 
-    if (isNaN(price) || isNaN(quantity) || quantity < 1) {
-        console.error('Invalid price or quantity');
-        return;
-    }
+    if (quantity < 0.5 || isNaN(price)) return;
 
     const existingItem = cart.find(item => item.id === id);
     if (existingItem) {
-        existingItem.quantity += quantity;
+        existingItem.quantity = (parseFloat(existingItem.quantity) + quantity).toFixed(1);
     } else {
-        cart.push({ id, name, price, quantity,productImg });
+        cart.push({
+            id,
+            name,
+            price,
+            quantity: quantity.toFixed(1),
+            productImg: img
+        });
     }
-    
+
     updateCart();
-    
-    // Reset quantity input if it exists
-    if (quantityInput) {
-        quantityInput.value = 1;
-        updateProductTotal(id);
+
+    // Reset quantity
+    if (qtyInput) {
+        qtyInput.value = "0.5";
+        const priceEl = card.querySelector('.price-final');
+        priceEl.textContent = `₹${(price * 0.5).toFixed(2)}`;
     }
-
-    //  const offcanvasElement = document.getElementById('cartOffcanvas');
-    //     const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-    //     offcanvas.show();
-
-    // Open the offcanvas
-    // const offcanvasElement = document.getElementById('cartOffcanvas');
-    // if (offcanvasElement) {
-    //     const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-    //     offcanvas.show();
-    // }
 }
 
 // Update cart display
@@ -285,6 +347,8 @@ function updateCart() {
     finalTotal.textContent = (subtotal + DELIVERY_CHARGE).toFixed(2);
    cartCount.textContent = cart.length;
    cartTotalCount = cart.length;
+   console.log(cart.length);
+   
    mobileCartCount.textContent = cart.length;
    localStorage.setItem('cart', JSON.stringify(cart));
    localStorage.setItem('updatedCount',cartTotalCount);
@@ -315,7 +379,7 @@ function handleCartIncrement(e) {
     const id = e.target.dataset.id;
     const item = cart.find(item => item.id === id);
     if (item) {
-        item.quantity++;
+        item.quantity = (parseFloat(item.quantity) + 0.5).toFixed(1);
         updateCart();
     }
 }
@@ -323,21 +387,27 @@ function handleCartIncrement(e) {
 function handleCartDecrement(e) {
     const id = e.target.dataset.id;
     const item = cart.find(item => item.id === id);
-    if (item && item.quantity > 1) {
-        item.quantity--;
+    if (item && parseFloat(item.quantity) > 0.5) {
+        item.quantity = (parseFloat(item.quantity) - 0.5).toFixed(1);
         updateCart();
     }
 }
 
 function handleCartQuantityChange(e) {
     const id = e.target.dataset.id;
-    const value = parseInt(e.target.value);
+    let value = parseFloat(e.target.value);
     const item = cart.find(item => item.id === id);
-    if (item && value >= 1) {
-        item.quantity = value;
-        updateCart();
-    } else if (item) {
+
+    if (!item) return;
+
+    if (isNaN(value) || value < 0.5) {
         e.target.value = item.quantity;
+    } else {
+        // Snap to nearest 0.5 kg
+        value = Math.round(value * 2) / 2;
+        e.target.value = value.toFixed(1);
+        item.quantity = value.toFixed(1);
+        updateCart();
     }
 }
 
@@ -368,28 +438,29 @@ document.getElementById('proceedToPayment')?.addEventListener('click', () => {
 
 // Send OTP
 document.getElementById('sendOtp')?.addEventListener('click', async() => {
-    const email = document.getElementById('emailID').value.trim();
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Enter a valid email address');
+    const phone_number = document.getElementById('phoneNum').value.trim();
+        if (!/^[6-9]\d{9}$/.test(phone_number)) {
+            alert('Enter a valid 10-digit phone number');
             return;
         }
+
         document.getElementById('sendOtp').disabled = true;
             // document.querySelector('.otp-section').style.display = 'block';
             // document.querySelector('.payment-section').style.display = 'none';
      try {    
-        const response = await fetch(`${config.API_BASE_URL}/otp.php`, {
+        const response = await fetch(`${config.API_BASE_URL}/mobileOtp.php`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email })  // Only phone sent during OTP send
+            body: JSON.stringify({ phone_number })  // Only phone sent during OTP send
         });
 
         const data = await response.json();
-        // console.log(data);
+        console.log(data);
         
         if (data.status) {
-            alert("OTP sent to this email address: " + email); 
+            alert("OTP sent to this whatApp number: " + phone_number); 
             document.getElementById('sendOtp').disabled = false;
-            localStorage.setItem('user_mail', JSON.stringify(email));
+            localStorage.setItem('user_number', JSON.stringify(phone_number));
             document.querySelector('.otp-section').style.display = 'block';
             document.querySelector('.payment-section').style.display = 'none';
         } else {
@@ -402,18 +473,18 @@ document.getElementById('sendOtp')?.addEventListener('click', async() => {
         console.error("Fetch error (sendOtp):", error);
     }
 });
-
-document.querySelector('.edit-mail')?.addEventListener('click', (e) => {
+// Verify OTP
+document.querySelector('.edit-number')?.addEventListener('click', (e) => {
     e.preventDefault(); 
     document.querySelector('.otp-section').style.display = 'none';
     document.querySelector('.payment-section').style.display = 'block';
-    document.getElementById('emailID').value = JSON.parse(localStorage.getItem('user_mail') || '""'); 
-    document.getElementById('emailID').focus(); 
+    document.getElementById('phoneNum').value = JSON.parse(localStorage.getItem('user_number') || '""'); 
+    document.getElementById('phoneNum').focus(); 
 });
 document.getElementById('verifyOtp').addEventListener('click', async () => {
     const otp = document.getElementById('otpInput').value.trim();
-    const email = JSON.parse(localStorage.getItem('user_mail') || '""');
-    console.log(email);
+    const phone = JSON.parse(localStorage.getItem('user_number') || '""');
+    // console.log(email);
     
     if (otp.length !== 4 || isNaN(otp)) {
         alert('Please enter a valid 4-digit OTP');
@@ -425,7 +496,7 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
         const response = await fetch(`${config.API_BASE_URL}/verify_otp.php`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({otp , email })  
+            body: JSON.stringify({otp , phone })  
         });
         // console.log(response);
         
@@ -440,13 +511,15 @@ document.getElementById('verifyOtp').addEventListener('click', async () => {
             window.location.href = 'checkout.html';
         } else {
             const msg = typeof data.message === 'object' ? JSON.stringify(data.message) : data.message;
-             console.error("Server responded with error:", data);
+            //  console.error(data.message);
+            alert(data.message);
         }
     } else {
         alert("Failed to verify OTP. Server not reachable.");
         console.error("Fetch error (verifyOtp):", error); 
     }
 });
+
 
 
 // Calculate discount
@@ -517,6 +590,7 @@ function fetchAndRenderRelatedProdct() {
 
 // Initialize product details on page load
 window.addEventListener('DOMContentLoaded', () => {
+      getUserLocation();
     fetchAndRenderProductDetails();
       const cartCounts = localStorage.getItem('updatedCount');
         if (cartCounts > 0 ) {
